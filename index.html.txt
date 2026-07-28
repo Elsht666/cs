@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>CS2 控制台指令速查</title>
     <style>
         :root {
@@ -56,7 +56,6 @@
             line-height: 1.5;
         }
 
-        /* 主容器 - 模拟控制台窗口 */
         .console-window {
             width: 100%;
             max-width: 900px;
@@ -70,7 +69,6 @@
                 0 1px 0 rgba(255, 255, 255, 0.02) inset;
         }
 
-        /* 标题栏 */
         .console-header {
             display: flex;
             align-items: center;
@@ -111,21 +109,18 @@
             overflow: hidden;
             text-overflow: ellipsis;
             padding-right: 38px;
-            /* 平衡左侧dots宽度 */;
         }
         .console-title .prompt {
             color: var(--cmd-color);
             font-weight: 600;
         }
 
-        /* 内容区域 */
         .console-body {
             padding: 6px 0;
             max-height: none;
             overflow-y: visible;
         }
 
-        /* 分类标题 */
         .section-label {
             display: flex;
             align-items: center;
@@ -150,7 +145,6 @@
             padding-top: 8px;
         }
 
-        /* 指令行 */
         .cmd-row {
             display: flex;
             align-items: center;
@@ -164,11 +158,7 @@
             background: var(--surface-hover);
             border-left-color: rgba(78, 255, 78, 0.3);
         }
-        .cmd-row:active {
-            background: rgba(78, 255, 78, 0.03);
-        }
 
-        /* 指令文本容器 */
         .cmd-text-wrapper {
             flex: 1;
             min-width: 0;
@@ -178,7 +168,6 @@
             gap: 4px 8px;
         }
 
-        /* 指令代码 */
         code.cmd-code {
             font-family: var(--font-mono);
             font-size: 0.9rem;
@@ -204,7 +193,6 @@
             color: #fff;
         }
 
-        /* 注释 */
         span.comment {
             font-family: var(--font-mono);
             font-size: 0.82rem;
@@ -221,7 +209,6 @@
             letter-spacing: 0.01em;
         }
 
-        /* 复制按钮 */
         .copy-btn {
             flex-shrink: 0;
             font-family: var(--font-ui);
@@ -243,6 +230,7 @@
             user-select: none;
             position: relative;
             overflow: hidden;
+            touch-action: manipulation;
         }
         .copy-btn:hover {
             border-color: var(--btn-hover-border);
@@ -259,7 +247,6 @@
             outline-offset: 2px;
         }
 
-        /* 复制成功状态 */
         .copy-btn.copied {
             border-color: var(--btn-copied-border);
             color: var(--btn-copied-text);
@@ -277,7 +264,6 @@
             }
         }
 
-        /* 页脚 */
         .console-footer {
             padding: 14px 18px;
             border-top: 1px solid var(--border);
@@ -308,7 +294,6 @@
             }
         }
 
-        /* 页面底部 */
         .page-footer {
             margin-top: 24px;
             text-align: center;
@@ -318,7 +303,6 @@
             letter-spacing: 0.04em;
         }
 
-        /* Toast 提示（全局复制反馈） */
         .toast {
             position: fixed;
             top: 20px;
@@ -342,7 +326,6 @@
             transform: translateX(-50%) translateY(0);
         }
 
-        /* 响应式 */
         @media (max-width: 640px) {
             body {
                 padding: 8px 6px 24px;
@@ -430,12 +413,9 @@
 </head>
 <body>
 
-    <!-- Toast -->
     <div class="toast" id="toast" aria-live="polite"></div>
 
-    <!-- 主控制台窗口 -->
     <main class="console-window">
-        <!-- 标题栏 -->
         <div class="console-header">
             <div class="console-dots">
                 <span class="console-dot red"></span>
@@ -447,7 +427,6 @@
             </span>
         </div>
 
-        <!-- 指令列表 -->
         <div class="console-body" id="cmdList">
 
             <!-- 机器人 -->
@@ -537,462 +516,405 @@
                     <code class="cmd-code">mp_roundtime_defuse 60</code>
                     <span class="comment">// 拆弹图每局时长60分钟</span>
                 </div>
-                <button class="copy-btn" data-cmd="mp_roundtime_defuse 60"
-            aria-label="复制指令 mp_roundtime_defuse 60">复制</button>
-        </div>
-        <div class="cmd-row">
-            <div class="cmd-text-wrapper">
-                <code class="cmd-code">mp_limitteams 0</code>
-                <span class="comment">// 取消队伍人数限制</span>
+                <button class="copy-btn" data-cmd="mp_roundtime_defuse 60" aria-label="复制指令 mp_roundtime_defuse 60">复制</button>
             </div>
-            <button class="copy-btn" data-cmd="mp_limitteams 0" aria-label="复制指令 mp_limitteams 0">复制</button>
-        </div>
-        <div class="cmd-row">
-            <div class="cmd-text-wrapper">
-                <code class="cmd-code">mp_autoteambalance 0</code>
-                <span class="comment">// 关闭自动平衡队伍</span>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_limitteams 0</code>
+                    <span class="comment">// 取消队伍人数限制</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_limitteams 0" aria-label="复制指令 mp_limitteams 0">复制</button>
             </div>
-            <button class="copy-btn" data-cmd="mp_autoteambalance 0" aria-label="复制指令 mp_autoteambalance 0">复制</button>
-        </div>
-        <div class="cmd-row">
-            <div class="cmd-text-wrapper">
-                <code class="cmd-code">mp_overtime_enable 1</code>
-                <span class="comment">// 允许加时赛</span>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_autoteambalance 0</code>
+                    <span class="comment">// 关闭自动平衡队伍</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_autoteambalance 0" aria-label="复制指令 mp_autoteambalance 0">复制</button>
             </div>
-            <button class="copy-btn" data-cmd="mp_overtime_enable 1" aria-label="复制指令 mp_overtime_enable 1">复制</button>
-        </div>
-        <div class="cmd-row">
-            <div class="cmd-text-wrapper">
-                <code class="cmd-code">changelevel de_dust2</code>
-                <span class="comment">// 切换地图（可替换地图名）</span>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_overtime_enable 1</code>
+                    <span class="comment">// 允许加时赛</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_overtime_enable 1" aria-label="复制指令 mp_overtime_enable 1">复制</button>
             </div>
-            <button class="copy-btn" data-cmd="changelevel de_dust2" aria-label="复制指令 changelevel de_dust2">复制</button>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel de_dust2</code>
+                    <span class="comment">// 切换地图（可替换地图名）</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel de_dust2" aria-label="复制指令 changelevel de_dust2">复制</button>
+            </div>
+
+            <!-- 练习/作弊 -->
+            <div class="section-label">🔧 练习与作弊（需 sv_cheats 1）</div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_cheats 1</code>
+                    <span class="comment">// 开启作弊指令（仅本地/人机）</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_cheats 1" aria-label="复制指令 sv_cheats 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">god</code>
+                    <span class="comment">// 无敌模式</span>
+                </div>
+                <button class="copy-btn" data-cmd="god" aria-label="复制指令 god">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">noclip</code>
+                    <span class="comment">// 穿墙飞行模式</span>
+                </div>
+                <button class="copy-btn" data-cmd="noclip" aria-label="复制指令 noclip">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_infinite_ammo 1</code>
+                    <span class="comment">// 无限弹药（无需换弹）</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_infinite_ammo 1" aria-label="复制指令 sv_infinite_ammo 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_infinite_ammo 2</code>
+                    <span class="comment">// 无限弹药（需换弹）</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_infinite_ammo 2" aria-label="复制指令 sv_infinite_ammo 2">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_grenade_trajectory 1</code>
+                    <span class="comment">// 显示手雷飞行轨迹</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_grenade_trajectory 1" aria-label="复制指令 sv_grenade_trajectory 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_grenade_trajectory_time 20</code>
+                    <span class="comment">// 轨迹显示20秒</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_grenade_trajectory_time 20" aria-label="复制指令 sv_grenade_trajectory_time 20">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_rethrow_last_grenade</code>
+                    <span class="comment">// 重放最后一颗手雷轨迹</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_rethrow_last_grenade" aria-label="复制指令 sv_rethrow_last_grenade">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_showimpacts 1</code>
+                    <span class="comment">// 显示子弹弹着点</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_showimpacts 1" aria-label="复制指令 sv_showimpacts 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_showimpacts_time 10</code>
+                    <span class="comment">// 弹着点显示10秒</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_showimpacts_time 10" aria-label="复制指令 sv_showimpacts_time 10">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">r_drawOtherModels 2</code>
+                    <span class="comment">// 显示玩家轮廓线（透视效果）</span>
+                </div>
+                <button class="copy-btn" data-cmd="r_drawOtherModels 2" aria-label="复制指令 r_drawOtherModels 2">复制</button>
+            </div>
+
+            <!-- 经济设置 -->
+            <div class="section-label">💰 经济与购买</div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_startmoney 16000</code>
+                    <span class="comment">// 起始资金16000</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_startmoney 16000" aria-label="复制指令 mp_startmoney 16000">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_maxmoney 65535</code>
+                    <span class="comment">// 最高资金上限65535</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_maxmoney 65535" aria-label="复制指令 mp_maxmoney 65535">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_buytime 9999</code>
+                    <span class="comment">// 购买时间9999秒（整局可买）</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_buytime 9999" aria-label="复制指令 mp_buytime 9999">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_buy_anywhere 1</code>
+                    <span class="comment">// 随地购买（无需在购买区）</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_buy_anywhere 1" aria-label="复制指令 mp_buy_anywhere 1">复制</button>
+            </div>
+
+            <!-- 武器 -->
+            <div class="section-label">🔫 武器获取</div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">give weapon_ak47</code>
+                    <span class="comment">// 获取AK-47</span>
+                </div>
+                <button class="copy-btn" data-cmd="give weapon_ak47" aria-label="复制指令 give weapon_ak47">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">give weapon_awp</code>
+                    <span class="comment">// 获取AWP</span>
+                </div>
+                <button class="copy-btn" data-cmd="give weapon_awp" aria-label="复制指令 give weapon_awp">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">give weapon_m4a1_silencer</code>
+                    <span class="comment">// 获取M4A1-S</span>
+                </div>
+                <button class="copy-btn" data-cmd="give weapon_m4a1_silencer" aria-label="复制指令 give weapon_m4a1_silencer">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">give weapon_deagle</code>
+                    <span class="comment">// 获取沙漠之鹰</span>
+                </div>
+                <button class="copy-btn" data-cmd="give weapon_deagle" aria-label="复制指令 give weapon_deagle">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">give weapon_hegrenade</code>
+                    <span class="comment">// 获取手雷</span>
+                </div>
+                <button class="copy-btn" data-cmd="give weapon_hegrenade" aria-label="复制指令 give weapon_hegrenade">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">give weapon_flashbang</code>
+                    <span class="comment">// 获取闪光弹</span>
+                </div>
+                <button class="copy-btn" data-cmd="give weapon_flashbang" aria-label="复制指令 give weapon_flashbang">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">give weapon_smokegrenade</code>
+                    <span class="comment">// 获取烟雾弹</span>
+                </div>
+                <button class="copy-btn" data-cmd="give weapon_smokegrenade" aria-label="复制指令 give weapon_smokegrenade">复制</button>
+            </div>
+
+            <!-- 服务器/网络 -->
+            <div class="section-label">🌐 服务器与连接</div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">status</code>
+                    <span class="comment">// 查看服务器状态及玩家信息</span>
+                </div>
+                <button class="copy-btn" data-cmd="status" aria-label="复制指令 status">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">disconnect</code>
+                    <span class="comment">// 断开当前服务器连接</span>
+                </div>
+                <button class="copy-btn" data-cmd="disconnect" aria-label="复制指令 disconnect">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">retry</code>
+                    <span class="comment">// 重新连接上一次的服务器</span>
+                </div>
+                <button class="copy-btn" data-cmd="retry" aria-label="复制指令 retry">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">ping</code>
+                    <span class="comment">// 显示当前延迟</span>
+                </div>
+                <button class="copy-btn" data-cmd="ping" aria-label="复制指令 ping">复制</button>
+            </div>
+
+            <!-- 显示/界面 -->
+            <div class="section-label">🖥️ 显示与界面</div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">cl_draw_only_deathnotices 1</code>
+                    <span class="comment">// 仅显示击杀信息（隐藏HUD）</span>
+                </div>
+                <button class="copy-btn" data-cmd="cl_draw_only_deathnotices 1" aria-label="复制指令 cl_draw_only_deathnotices 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">net_graph 1</code>
+                    <span class="comment">// 显示网络状态图表</span>
+                </div>
+                <button class="copy-btn" data-cmd="net_graph 1" aria-label="复制指令 net_graph 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">fps_max 0</code>
+                    <span class="comment">// 解除FPS上限</span>
+                </div>
+                <button class="copy-btn" data-cmd="fps_max 0" aria-label="复制指令 fps_max 0">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">fps_max 144</code>
+                    <span class="comment">// 限制FPS为144</span>
+                </div>
+                <button class="copy-btn" data-cmd="fps_max 144" aria-label="复制指令 fps_max 144">复制</button>
+            </div>
+
+            <!-- 其他实用 -->
+            <div class="section-label">⚡ 其他实用指令</div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">kill</code>
+                    <span class="comment">// 自杀（重新出生）</span>
+                </div>
+                <button class="copy-btn" data-cmd="kill" aria-label="复制指令 kill">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">say 大家好</code>
+                    <span class="comment">// 发送公屏消息</span>
+                </div>
+                <button class="copy-btn" data-cmd="say 大家好" aria-label="复制指令 say 大家好">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">clear</code>
+                    <span class="comment">// 清空控制台屏幕</span>
+                </div>
+                <button class="copy-btn" data-cmd="clear" aria-label="复制指令 clear">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">find map</code>
+                    <span class="comment">// 搜索包含"map"的指令</span>
+                </div>
+                <button class="copy-btn" data-cmd="find map" aria-label="复制指令 find map">复制</button>
+            </div>
         </div>
 
-        <!-- 练习/作弊 -->
-        <div class="section-label">🔧 练习与作弊（需 sv_cheats 1）</div>
-        <div class="cmd-row">
-            <div class="cmd-text-wrapper">
-                <code class="cmd-code">sv_cheats 1</code>
-                <span class="comment">// 开启作弊指令（仅本地/人机）</span>
-            </div>
-            <button class="copy-btn" data-cmd="sv_cheats 1" aria-label="复制指令 sv_cheats 1">复制</button>
+        <div class="console-footer">
+            <span class="dot-indicator"></span>
+            注释仅供阅读，复制内容不含注释&nbsp;&nbsp;|&nbsp;&nbsp;点击「复制」按钮仅复制纯指令文本
+            <span class="dot-indicator"></span>
         </div>
-        <div class="cmd-row">
-            <div class="cmd-text-wrapper">
-                <code class="cmd-code">god</code>
-                <span class="comment">// 无敌模式</span>
-            </div>
-            <button class="copy-btn" data-cmd="god" aria-label="复制指令 god">复制</button>
-        </div>
-        <div class="cmd-row">
-            <div class="cmd-text-wrapper">
-                <code class="cmd-code">noclip</code>
-                <span class="comment">// 穿墙飞行模式</span>
-            </div>
-            <button class="copy-btn" data-cmd="noclip" aria-label="复制指令 noclip">复制</button>
-        </div>
-        <div class="cmd-row">
-            <div class="cmd-text-wrapper">
-                <code class="cmd-code">sv_infinite_ammo 1</code>
-                <span class="comment">// 无限弹药（无需换弹）</span>
-            </div>
-            <button class="copy-btn" data-cmd="sv_infinite_ammo 1" aria-label="复制指令 sv_infinite_ammo 1">复制</button>
-        </div>
-        <div class="cmd-row">
-            <div class="cmd-text-wrapper">
-                <code class="cmd-code">sv_infinite_ammo 2</code>
-                <span class="comment">// 无限弹药（需换弹）</span>
-            </div>
-            <button class="copy-btn" data-cmd="sv_infinite_ammo 2" aria-label="复制指令 sv_infinite_ammo 2">复制</button>
-        </div>
-        <div class="cmd-row">
-            <div class="cmd-text-wrapper">
-                <code class="cmd-code">sv_grenade_trajectory 1</code>
-                <span class="comment">// 显示手雷飞行轨迹</span>
-            </div>
-            <button class="copy-btn" data-cmd="sv_grenade_trajectory 1"
-        aria-label="复制指令 sv_grenade_trajectory 1">复制</button>
-    </div>
-    <div class="cmd-row">
-        <div class="cmd-text-wrapper">
-            <code class="cmd-code">sv_grenade_trajectory_time 20</code>
-            <span class="comment">// 轨迹显示20秒</span>
-        </div>
-        <button class="copy-btn" data-cmd="sv_grenade_trajectory_time 20"
-    aria-label="复制指令 sv_grenade_trajectory_time 20">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">sv_rethrow_last_grenade</code>
-        <span class="comment">// 重放最后一颗手雷轨迹</span>
-    </div>
-    <button class="copy-btn" data-cmd="sv_rethrow_last_grenade" aria-label="复制指令 sv_rethrow_last_grenade">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">sv_showimpacts 1</code>
-        <span class="comment">// 显示子弹弹着点</span>
-    </div>
-    <button class="copy-btn" data-cmd="sv_showimpacts 1" aria-label="复制指令 sv_showimpacts 1">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">sv_showimpacts_time 10</code>
-        <span class="comment">// 弹着点显示10秒</span>
-    </div>
-    <button class="copy-btn" data-cmd="sv_showimpacts_time 10" aria-label="复制指令 sv_showimpacts_time 10">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">r_drawOtherModels 2</code>
-        <span class="comment">// 显示玩家轮廓线（透视效果）</span>
-    </div>
-    <button class="copy-btn" data-cmd="r_drawOtherModels 2" aria-label="复制指令 r_drawOtherModels 2">复制</button>
-</div>
+    </main>
 
-<!-- 经济设置 -->
-<div class="section-label">💰 经济与购买</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">mp_startmoney 16000</code>
-        <span class="comment">// 起始资金16000</span>
+    <div class="page-footer">
+        CS2 控制台指令速查 &nbsp;·&nbsp; 官匹 / 人机房常用 &nbsp;·&nbsp; cs-brx.pages.dev
     </div>
-    <button class="copy-btn" data-cmd="mp_startmoney 16000" aria-label="复制指令 mp_startmoney 16000">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">mp_maxmoney 65535</code>
-        <span class="comment">// 最高资金上限65535</span>
-    </div>
-    <button class="copy-btn" data-cmd="mp_maxmoney 65535" aria-label="复制指令 mp_maxmoney 65535">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">mp_buytime 9999</code>
-        <span class="comment">// 购买时间9999秒（整局可买）</span>
-    </div>
-    <button class="copy-btn" data-cmd="mp_buytime 9999" aria-label="复制指令 mp_buytime 9999">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">mp_buy_anywhere 1</code>
-        <span class="comment">// 随地购买（无需在购买区）</span>
-    </div>
-    <button class="copy-btn" data-cmd="mp_buy_anywhere 1" aria-label="复制指令 mp_buy_anywhere 1">复制</button>
-</div>
 
-<!-- 武器 -->
-<div class="section-label">🔫 武器获取</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">give weapon_ak47</code>
-        <span class="comment">// 获取AK-47</span>
-    </div>
-    <button class="copy-btn" data-cmd="give weapon_ak47" aria-label="复制指令 give weapon_ak47">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">give weapon_awp</code>
-        <span class="comment">// 获取AWP</span>
-    </div>
-    <button class="copy-btn" data-cmd="give weapon_awp" aria-label="复制指令 give weapon_awp">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">give weapon_m4a1_silencer</code>
-        <span class="comment">// 获取M4A1-S</span>
-    </div>
-    <button class="copy-btn" data-cmd="give weapon_m4a1_silencer"
-aria-label="复制指令 give weapon_m4a1_silencer">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">give weapon_deagle</code>
-        <span class="comment">// 获取沙漠之鹰</span>
-    </div>
-    <button class="copy-btn" data-cmd="give weapon_deagle" aria-label="复制指令 give weapon_deagle">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">give weapon_hegrenade</code>
-        <span class="comment">// 获取手雷</span>
-    </div>
-    <button class="copy-btn" data-cmd="give weapon_hegrenade" aria-label="复制指令 give weapon_hegrenade">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">give weapon_flashbang</code>
-        <span class="comment">// 获取闪光弹</span>
-    </div>
-    <button class="copy-btn" data-cmd="give weapon_flashbang" aria-label="复制指令 give weapon_flashbang">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">give weapon_smokegrenade</code>
-        <span class="comment">// 获取烟雾弹</span>
-    </div>
-    <button class="copy-btn" data-cmd="give weapon_smokegrenade"
-aria-label="复制指令 give weapon_smokegrenade">复制</button>
-</div>
+    <script>
+        (function() {
+            const copyButtons = document.querySelectorAll('.copy-btn');
+            const toast = document.getElementById('toast');
+            let toastTimer = null;
 
-<!-- 服务器/网络 -->
-<div class="section-label">🌐 服务器与连接</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">status</code>
-        <span class="comment">// 查看服务器状态及玩家信息</span>
-    </div>
-    <button class="copy-btn" data-cmd="status" aria-label="复制指令 status">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">disconnect</code>
-        <span class="comment">// 断开当前服务器连接</span>
-    </div>
-    <button class="copy-btn" data-cmd="disconnect" aria-label="复制指令 disconnect">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">retry</code>
-        <span class="comment">// 重新连接上一次的服务器</span>
-    </div>
-    <button class="copy-btn" data-cmd="retry" aria-label="复制指令 retry">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">ping</code>
-        <span class="comment">// 显示当前延迟</span>
-    </div>
-    <button class="copy-btn" data-cmd="ping" aria-label="复制指令 ping">复制</button>
-</div>
-
-<!-- 显示/界面 -->
-<div class="section-label">🖥️ 显示与界面</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">cl_draw_only_deathnotices 1</code>
-        <span class="comment">// 仅显示击杀信息（隐藏HUD）</span>
-    </div>
-    <button class="copy-btn" data-cmd="cl_draw_only_deathnotices 1"
-aria-label="复制指令 cl_draw_only_deathnotices 1">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">net_graph 1</code>
-        <span class="comment">// 显示网络状态图表</span>
-    </div>
-    <button class="copy-btn" data-cmd="net_graph 1" aria-label="复制指令 net_graph 1">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">fps_max 0</code>
-        <span class="comment">// 解除FPS上限</span>
-    </div>
-    <button class="copy-btn" data-cmd="fps_max 0" aria-label="复制指令 fps_max 0">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">fps_max 144</code>
-        <span class="comment">// 限制FPS为144</span>
-    </div>
-    <button class="copy-btn" data-cmd="fps_max 144" aria-label="复制指令 fps_max 144">复制</button>
-</div>
-
-<!-- 其他实用 -->
-<div class="section-label">⚡ 其他实用指令</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">kill</code>
-        <span class="comment">// 自杀（重新出生）</span>
-    </div>
-    <button class="copy-btn" data-cmd="kill" aria-label="复制指令 kill">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">say 大家好</code>
-        <span class="comment">// 发送公屏消息</span>
-    </div>
-    <button class="copy-btn" data-cmd="say 大家好" aria-label="复制指令 say 大家好">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">clear</code>
-        <span class="comment">// 清空控制台屏幕</span>
-    </div>
-    <button class="copy-btn" data-cmd="clear" aria-label="复制指令 clear">复制</button>
-</div>
-<div class="cmd-row">
-    <div class="cmd-text-wrapper">
-        <code class="cmd-code">find map</code>
-        <span class="comment">// 搜索包含"map"的指令</span>
-    </div>
-    <button class="copy-btn" data-cmd="find map" aria-label="复制指令 find map">复制</button>
-</div>
-</div>
-
-<!-- 底部说明 -->
-<div class="console-footer">
-    <span class="dot-indicator"></span>
-    注释仅供阅读，复制内容不含注释&nbsp;&nbsp;|&nbsp;&nbsp;点击「复制」按钮仅复制纯指令文本
-    <span class="dot-indicator"></span>
-</div>
-</main>
-
-<!-- 页面底部 -->
-<div class="page-footer">
-    CS2 控制台指令速查 &nbsp;·&nbsp; 官匹 / 人机房常用 &nbsp;·&nbsp; cs-brx.pages.dev
-</div>
-
-<script>
-    (function() {
-        // 获取所有复制按钮
-        const copyButtons = document.querySelectorAll('.copy-btn');
-        const toast = document.getElementById('toast');
-        let toastTimer = null;
-
-        /**
-         * 显示顶部 Toast 提示
-         * @param {string} message - 提示文字
-         */
-        function showToast(message) {
-            // 清除之前的定时器
-            if (toastTimer) {
-                clearTimeout(toastTimer);
-                toast.classList.remove('show');
+            function showToast(message) {
+                if (toastTimer) {
+                    clearTimeout(toastTimer);
+                    toast.classList.remove('show');
+                }
+                void toast.offsetWidth;
+                toast.textContent = message;
+                toast.classList.add('show');
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                    toastTimer = null;
+                }, 1600);
             }
-            // 强制回流后重新添加
-            void toast.offsetWidth;
-            toast.textContent = message;
-            toast.classList.add('show');
-            toastTimer = setTimeout(() => {
-                toast.classList.remove('show');
-                toastTimer = null;
-            }, 1600);
-        }
 
-        /**
-         * 通用复制函数（兼容 file:// 协议）
-         * @param {string} text - 要复制的文本
-         * @returns {Promise<boolean>} 是否复制成功
-         */
-        async function copyText(text) {
-            // 优先使用现代 Clipboard API
-            if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            /**
+             * 高兼容性复制函数，电脑和手机均可用
+             * 优先 Clipboard API，fallback 使用 textarea + execCommand
+             */
+            async function copyText(text) {
+                // 优先尝试现代 API
+                if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        return true;
+                    } catch (e) {
+                        // 忽略，走 fallback
+                    }
+                }
+                // Fallback：适用于所有平台（包括 iOS Safari）
                 try {
-                    await navigator.clipboard.writeText(text);
-                    return true;
+                    const textarea = document.createElement('textarea');
+                    textarea.value = text;
+                    textarea.style.position = 'fixed';
+                    textarea.style.opacity = '0';
+                    textarea.style.pointerEvents = 'none';
+                    document.body.appendChild(textarea);
+                    // 移动端需要先聚焦再选中
+                    textarea.focus();
+                    textarea.select();
+                    const success = document.execCommand('copy');
+                    document.body.removeChild(textarea);
+                    return success;
                 } catch (e) {
-                    // Clipboard API 失败，尝试 fallback
+                    return false;
                 }
             }
-            // Fallback：使用 textarea + execCommand（兼容 file:// 和旧浏览器）
-            try {
-                const textarea = document.createElement('textarea');
-                textarea.value = text;
-                textarea.style.position = 'fixed';
-                textarea.style.top = '-9999px';
-                textarea.style.left = '-9999px';
-                textarea.style.opacity = '0';
-                textarea.style.pointerEvents = 'none';
-                textarea.setAttribute('readonly', '');
-                textarea.setAttribute('aria-hidden', 'true');
-                document.body.appendChild(textarea);
-                // iOS 需要设置 contentEditable
-                textarea.contentEditable = 'true';
-                textarea.readOnly = true;
-                // 兼容 iOS
-                const range = document.createRange();
-                range.selectNodeContents(textarea);
-                const selection = window.getSelection();
-                selection.removeAllRanges();
-                selection.addRange(range);
-                textarea.setSelectionRange(0, 999999);
-                const success = document.execCommand('copy');
-                selection.removeAllRanges();
-                document.body.removeChild(textarea);
-                return success;
-            } catch (e) {
-                return false;
-            }
-        }
 
-        /**
-         * 处理复制按钮点击
-         */
-        async function handleCopyClick(button) {
-            const cmd = button.getAttribute('data-cmd');
-            if (!cmd) return;
+            async function handleCopyClick(button) {
+                const cmd = button.getAttribute('data-cmd');
+                if (!cmd || button.classList.contains('copied')) return;
 
-            // 如果按钮正在"已复制"状态，忽略点击
-            if (button.classList.contains('copied')) return;
+                const success = await copyText(cmd);
 
-            const success = await copyText(cmd);
-
-            if (success) {
-                // 保存原始文字
-                const originalText = button.textContent;
-                // 切换到已复制状态
-                button.textContent = '已复制';
-                button.classList.add('copied');
-                // 显示 toast
-                showToast('✓ 已复制：' + cmd);
-
-                // 1.5秒后恢复
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.classList.remove('copied');
-                }, 1500);
-            } else {
-                // 复制失败时的反馈
-                const originalText = button.textContent;
-                button.textContent = '失败';
-                button.style.borderColor = '#ff5f56';
-                button.style.color = '#ff5f56';
-                showToast('✗ 复制失败，请手动框选复制');
-                setTimeout(() => {
-                    button.textContent = originalText;
-                    button.style.borderColor = '';
-                    button.style.color = '';
-                }, 1500);
-            }
-        }
-
-        // 为所有复制按钮绑定点击事件
-        copyButtons.forEach(button => {
-            button.addEventListener('click', function(e) {
-                e.preventDefault();
-                handleCopyClick(this);
-            });
-            // 触摸事件（移动端优化）
-            button.addEventListener('touchend', function(e) {
-                // 防止双击缩放
-                e.preventDefault();
-                handleCopyClick(this);
-            });
-        });
-
-        // 键盘快捷键：Ctrl+Shift+C 复制最后一条悬停的指令（可选增强）
-        let lastHoveredCmd = null;
-        document.querySelectorAll('.cmd-row').forEach(row => {
-            row.addEventListener('mouseenter', function() {
-                const btn = this.querySelector('.copy-btn');
-                if (btn) {
-                    lastHoveredCmd = btn.getAttribute('data-cmd');
+                if (success) {
+                    const originalText = button.textContent;
+                    button.textContent = '已复制';
+                    button.classList.add('copied');
+                    showToast('✓ 已复制：' + cmd);
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.classList.remove('copied');
+                    }, 1500);
+                } else {
+                    const originalText = button.textContent;
+                    button.textContent = '失败';
+                    button.style.borderColor = '#ff5f56';
+                    button.style.color = '#ff5f56';
+                    showToast('✗ 复制失败，请手动框选复制');
+                    setTimeout(() => {
+                        button.textContent = originalText;
+                        button.style.borderColor = '';
+                        button.style.color = '';
+                    }, 1500);
                 }
-            });
-        });
+            }
 
-        console.log('%c CS2 控制台指令速查 %c已就绪 %c| %c共 ' + copyButtons.length + ' 条指令',
-            'color:#4eff4e;font-weight:bold;',
-            'color:#9a9ba5;',
-            '',
-            'color:#c8c9d1;');
-        console.log('%c💡 点击「复制」按钮仅复制纯指令，不含注释。',
-            'color:#6b6d76;font-style:italic;');
-        console.log('%c🔗 cs-brx.pages.dev',
-            'color:#3a3d48;');
-    })();
-</script>
+            // 绑定事件（click 已足够，移动端也会触发）
+            copyButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    handleCopyClick(this);
+                });
+            });
+
+            console.log('%c CS2 控制台指令速查 %c已就绪 %c| %c共 ' + copyButtons.length + ' 条指令',
+                'color:#4eff4e;font-weight:bold;',
+                'color:#9a9ba5;',
+                '',
+                'color:#c8c9d1;');
+            console.log('%c💡 点击「复制」按钮仅复制纯指令，不含注释。',
+                'color:#6b6d76;font-style:italic;');
+            console.log('%c🔗 cs-brx.pages.dev',
+                'color:#3a3d48;');
+        })();
+    </script>
 </body>
 </html>
