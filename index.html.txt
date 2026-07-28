@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>测试页面</title>
+    <style>
+        body {
+            background-color: #f0f4f8;
+            text-align: center;
+            padding-top: 100px;
+            font-family: sans-serif;
+        }
+        h1 {
+            color: #224b8d;
+        }
+    </style>
+</head>
+<body>
+    <h1>GitHub + Cloudflare Pages 测试网页</h1>
+    <p>文件上传成功就能正常访问</p>
+</body>
+</html>
