@@ -56,6 +56,117 @@
             line-height: 1.5;
         }
 
+        /* ---------- SteamID 连接模块 ---------- */
+        .connect-module {
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+        }
+        .module-header {
+            padding: 12px 18px;
+            background: #1c1d21;
+            border-bottom: 1px solid var(--border);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: #9a9ba5;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .module-title {
+            color: var(--cmd-color);
+            font-weight: 600;
+            letter-spacing: 0.03em;
+        }
+        .module-body {
+            padding: 16px 18px;
+        }
+        .module-body textarea {
+            width: 100%;
+            padding: 10px 12px;
+            background: #0a0a0b;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            color: var(--text);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            resize: vertical;
+            margin-bottom: 12px;
+            outline: none;
+            transition: border-color 0.2s;
+            line-height: 1.5;
+        }
+        .module-body textarea:focus {
+            border-color: var(--cmd-color);
+        }
+        .module-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            padding: 8px 18px;
+            border-radius: var(--radius);
+            border: 1px solid var(--btn-border);
+            background: transparent;
+            color: #9a9ba5;
+            font-family: var(--font-ui);
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            letter-spacing: 0.03em;
+        }
+        .action-btn.primary {
+            border-color: var(--cmd-color-dim);
+            color: var(--cmd-color);
+        }
+        .action-btn.primary:hover {
+            background: var(--btn-hover-bg);
+            border-color: var(--btn-hover-border);
+            box-shadow: 0 0 12px var(--accent-glow);
+        }
+        .action-btn.secondary:hover {
+            border-color: #666;
+            color: #ccc;
+            background: #1a1b1f;
+        }
+        .result-area {
+            background: #0a0a0b;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 12px 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+        }
+        .result-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            white-space: nowrap;
+        }
+        .result-code {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--cmd-color);
+            background: rgba(78, 255, 78, 0.06);
+            padding: 4px 10px;
+            border-radius: var(--radius-sm);
+            word-break: break-all;
+            flex: 1;
+            min-width: 200px;
+        }
+        /* 结果区域的复制按钮直接复用 .copy-btn 样式，无需额外定义 */
+
+        /* ---------- 控制台窗口 ---------- */
         .console-window {
             width: 100%;
             max-width: 900px;
@@ -330,6 +441,29 @@
             body {
                 padding: 8px 6px 24px;
             }
+            .connect-module {
+                border-radius: 8px;
+            }
+            .module-header {
+                padding: 10px 12px;
+            }
+            .module-body {
+                padding: 12px;
+            }
+            .module-body textarea {
+                font-size: 0.8rem;
+            }
+            .action-btn {
+                font-size: 0.8rem;
+                padding: 7px 14px;
+            }
+            .result-area {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .result-code {
+                width: 100%;
+            }
             .console-window {
                 border-radius: 8px;
                 max-width: 100%;
@@ -416,6 +550,25 @@
 <body>
 
     <div class="toast" id="toast" aria-live="polite"></div>
+
+    <!-- SteamID 连接模块（页面最首位） -->
+    <div class="connect-module">
+        <div class="module-header">
+            <span class="module-title">🔗 SteamID 转 Connect 指令</span>
+        </div>
+        <div class="module-body">
+            <textarea id="steamidInput" placeholder="在此粘贴包含 SteamID 的文本，例如：steamid : [A:1:3538182148:50710] (90289793877172228)" rows="3"></textarea>
+            <div class="module-actions">
+                <button id="extractBtn" class="action-btn primary">提取并生成</button>
+                <button id="clearBtn" class="action-btn secondary">清空</button>
+            </div>
+            <div class="result-area" id="resultArea" style="display: none;">
+                <span class="result-label">生成的指令：</span>
+                <code class="result-code" id="resultCode"></code>
+                <button id="copyConnectBtn" class="copy-btn" data-cmd="">复制指令</button>
+            </div>
+        </div>
+    </div>
 
     <main class="console-window">
         <div class="console-header">
@@ -627,89 +780,6 @@
                     <span class="comment">// 显示玩家轮廓线（透视效果）</span>
                 </div>
                 <button class="copy-btn" data-cmd="r_drawOtherModels 2" aria-label="复制指令 r_drawOtherModels 2">复制</button>
-            </div>
-
-            <!-- 经济设置 -->
-            <div class="section-label">💰 经济与购买</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_startmoney 16000</code>
-                    <span class="comment">// 起始资金16000</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_startmoney 16000" aria-label="复制指令 mp_startmoney 16000">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_maxmoney 65535</code>
-                    <span class="comment">// 最高资金上限65535</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_maxmoney 65535" aria-label="复制指令 mp_maxmoney 65535">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_buytime 9999</code>
-                    <span class="comment">// 购买时间9999秒（整局可买）</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_buytime 9999" aria-label="复制指令 mp_buytime 9999">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_buy_anywhere 1</code>
-                    <span class="comment">// 随地购买（无需在购买区）</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_buy_anywhere 1" aria-label="复制指令 mp_buy_anywhere 1">复制</button>
-            </div>
-
-            <!-- 武器 -->
-            <div class="section-label">🔫 武器获取</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">give weapon_ak47</code>
-                    <span class="comment">// 获取AK-47</span>
-                </div>
-                <button class="copy-btn" data-cmd="give weapon_ak47" aria-label="复制指令 give weapon_ak47">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">give weapon_awp</code>
-                    <span class="comment">// 获取AWP</span>
-                </div>
-                <button class="copy-btn" data-cmd="give weapon_awp" aria-label="复制指令 give weapon_awp">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">give weapon_m4a1_silencer</code>
-                    <span class="comment">// 获取M4A1-S</span>
-                </div>
-                <button class="copy-btn" data-cmd="give weapon_m4a1_silencer" aria-label="复制指令 give weapon_m4a1_silencer">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">give weapon_deagle</code>
-                    <span class="comment">// 获取沙漠之鹰</span>
-                </div>
-                <button class="copy-btn" data-cmd="give weapon_deagle" aria-label="复制指令 give weapon_deagle">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">give weapon_hegrenade</code>
-                    <span class="comment">// 获取手雷</span>
-                </div>
-                <button class="copy-btn" data-cmd="give weapon_hegrenade" aria-label="复制指令 give weapon_hegrenade">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">give weapon_flashbang</code>
-                    <span class="comment">// 获取闪光弹</span>
-                </div>
-                <button class="copy-btn" data-cmd="give weapon_flashbang" aria-label="复制指令 give weapon_flashbang">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">give weapon_smokegrenade</code>
-                    <span class="comment">// 获取烟雾弹</span>
-                </div>
-                <button class="copy-btn" data-cmd="give weapon_smokegrenade" aria-label="复制指令 give weapon_smokegrenade">复制</button>
             </div>
 
             <!-- 改刀指令 -->
@@ -1049,6 +1119,71 @@
                 'color:#6b6d76;font-style:italic;');
             console.log('%c🔗 cs-brx.pages.dev',
                 'color:#3a3d48;');
+        })();
+    </script>
+
+    <!-- SteamID 转换模块专属脚本 -->
+    <script>
+        (function() {
+            const inputEl = document.getElementById('steamidInput');
+            const extractBtn = document.getElementById('extractBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const resultArea = document.getElementById('resultArea');
+            const resultCode = document.getElementById('resultCode');
+            const copyBtn = document.getElementById('copyConnectBtn');
+            const toast = document.getElementById('toast');
+            let toastTimer = null;
+
+            function showToastMsg(msg) {
+                if (toastTimer) {
+                    clearTimeout(toastTimer);
+                    toast.classList.remove('show');
+                }
+                void toast.offsetWidth;
+                toast.textContent = msg;
+                toast.classList.add('show');
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                    toastTimer = null;
+                }, 1600);
+            }
+
+            function extractSteamID(text) {
+                // 匹配 [A:数字:数字:数字] (数字) 格式，允许括号前有空格
+                const match = text.match(/\[A:\d+:\d+:\d+\]\s*\(\d+\)/);
+                return match ? match[0] : null;
+            }
+
+            extractBtn.addEventListener('click', () => {
+                const raw = inputEl.value.trim();
+                if (!raw) {
+                    showToastMsg('请输入包含 SteamID 的文本');
+                    return;
+                }
+                const idPart = extractSteamID(raw);
+                if (!idPart) {
+                    showToastMsg('未识别到有效的 SteamID 格式');
+                    return;
+                }
+                const connectCmd = 'connect ' + idPart;
+                resultCode.textContent = connectCmd;
+                copyBtn.setAttribute('data-cmd', connectCmd);
+                resultArea.style.display = 'flex';
+            });
+
+            clearBtn.addEventListener('click', () => {
+                inputEl.value = '';
+                resultArea.style.display = 'none';
+                copyBtn.setAttribute('data-cmd', '');
+            });
+
+            // 支持回车快捷提取
+            inputEl.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    extractBtn.click();
+                }
+            });
         })();
     </script>
 </body>
