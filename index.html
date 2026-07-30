@@ -60,7 +60,7 @@
             line-height: 1.5;
         }
 
-        /* ---------- 顶部两模块容器 ---------- */
+        /* ---------- 顶部模块容器 ---------- */
         .top-modules {
             width: 100%;
             max-width: 900px;
@@ -199,7 +199,7 @@
             user-select: text;
         }
 
-        /* ---------- 剪切板跳转按钮模块 ---------- */
+        /* ---------- 跳转按钮通用样式 ---------- */
         .clipboard-module {
             flex: 0 0 auto;
             min-width: 160px;
@@ -237,6 +237,43 @@
             box-shadow: 0 0 20px rgba(78, 255, 78, 0.3);
         }
         .clipboard-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* ---------- 底部资源链接模块 ---------- */
+        .resources-module {
+            width: 100%;
+            max-width: 900px;
+            margin-top: 20px;
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-family: var(--font-ui);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .resource-link:hover {
+            border-color: var(--cmd-color);
+            color: var(--cmd-color);
+            background: #1f3320;
+        }
+        .resource-link:active {
             transform: scale(0.97);
         }
 
@@ -536,6 +573,15 @@
                 font-size: 0.95rem;
                 flex: none;
             }
+            .resources-module {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+            .resource-link {
+                width: 100%;
+                justify-content: center;
+            }
             .module-header {
                 padding: 10px 12px;
                 font-size: 0.78rem;
@@ -673,7 +719,7 @@
 
     <div class="toast" id="toast" aria-live="polite"></div>
 
-    <!-- 顶部模块：SteamID 转换 + 剪切板跳转 -->
+    <!-- 顶部模块：SteamID 转换 + 剪切板（保持不变） -->
     <div class="top-modules">
         <!-- SteamID 连接模块 -->
         <div class="connect-module">
@@ -716,6 +762,44 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
         </div>
 
         <div class="console-body" id="cmdList">
+
+            <!-- 常用指令（位于最前） -->
+            <div class="section-label">⚡ 常用指令</div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">status</code>
+                    <span class="comment">// 查看服务器状态及玩家信息</span>
+                </div>
+                <button class="copy-btn" data-cmd="status" aria-label="复制指令 status">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">bot_kick</code>
+                    <span class="comment">// 踢出所有机器人</span>
+                </div>
+                <button class="copy-btn" data-cmd="bot_kick" aria-label="复制指令 bot_kick">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_restartgame 1</code>
+                    <span class="comment">// 1秒后重启当前对局</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_restartgame 1" aria-label="复制指令 mp_restartgame 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_cheats 1</code>
+                    <span class="comment">// 开启作弊指令（仅本地/人机）</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_cheats 1" aria-label="复制指令 sv_cheats 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">clear</code>
+                    <span class="comment">// 清空控制台屏幕</span>
+                </div>
+                <button class="copy-btn" data-cmd="clear" aria-label="复制指令 clear">复制</button>
+            </div>
 
             <!-- 机器人 -->
             <div class="section-label">🤖 机器人管理</div>
@@ -773,31 +857,10 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
             </div>
             <div class="cmd-row">
                 <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_warmup_end</code>
-                    <span class="comment">// 立即结束热身时间</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_warmup_end" aria-label="复制指令 mp_warmup_end">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_warmup_start</code>
-                    <span class="comment">// 重新开始热身时间</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_warmup_start" aria-label="复制指令 mp_warmup_start">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
                     <code class="cmd-code">mp_freezetime 0</code>
                     <span class="comment">// 取消开局冻结时间</span>
                 </div>
                 <button class="copy-btn" data-cmd="mp_freezetime 0" aria-label="复制指令 mp_freezetime 0">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_roundtime 60</code>
-                    <span class="comment">// 设置每局时长60分钟</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_roundtime 60" aria-label="复制指令 mp_roundtime 60">复制</button>
             </div>
             <div class="cmd-row">
                 <div class="cmd-text-wrapper">
@@ -874,20 +937,6 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
             </div>
             <div class="cmd-row">
                 <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_grenade_trajectory 1</code>
-                    <span class="comment">// 显示手雷飞行轨迹</span>
-                </div>
-                <button class="copy-btn" data-cmd="sv_grenade_trajectory 1" aria-label="复制指令 sv_grenade_trajectory 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_grenade_trajectory_time 20</code>
-                    <span class="comment">// 轨迹显示20秒</span>
-                </div>
-                <button class="copy-btn" data-cmd="sv_grenade_trajectory_time 20" aria-label="复制指令 sv_grenade_trajectory_time 20">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
                     <code class="cmd-code">sv_rethrow_last_grenade</code>
                     <span class="comment">// 重放最后一颗手雷轨迹</span>
                 </div>
@@ -902,17 +951,10 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
             </div>
             <div class="cmd-row">
                 <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_showimpacts_time 10</code>
-                    <span class="comment">// 弹着点显示10秒</span>
+                    <code class="cmd-code">sv_showimpacts 0</code>
+                    <span class="comment">// 关闭子弹弹着点显示</span>
                 </div>
-                <button class="copy-btn" data-cmd="sv_showimpacts_time 10" aria-label="复制指令 sv_showimpacts_time 10">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">r_drawOtherModels 2</code>
-                    <span class="comment">// 显示玩家轮廓线（透视效果）</span>
-                </div>
-                <button class="copy-btn" data-cmd="r_drawOtherModels 2" aria-label="复制指令 r_drawOtherModels 2">复制</button>
+                <button class="copy-btn" data-cmd="sv_showimpacts 0" aria-label="复制指令 sv_showimpacts 0">复制</button>
             </div>
 
             <!-- 改刀指令 -->
@@ -1074,20 +1116,6 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
                 </div>
                 <button class="copy-btn" data-cmd="disconnect" aria-label="复制指令 disconnect">复制</button>
             </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">retry</code>
-                    <span class="comment">// 重新连接上一次的服务器</span>
-                </div>
-                <button class="copy-btn" data-cmd="retry" aria-label="复制指令 retry">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ping</code>
-                    <span class="comment">// 显示当前延迟</span>
-                </div>
-                <button class="copy-btn" data-cmd="ping" aria-label="复制指令 ping">复制</button>
-            </div>
 
             <!-- 显示/界面 -->
             <div class="section-label">🖥️ 显示与界面</div>
@@ -1100,24 +1128,10 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
             </div>
             <div class="cmd-row">
                 <div class="cmd-text-wrapper">
-                    <code class="cmd-code">net_graph 1</code>
-                    <span class="comment">// 显示网络状态图表</span>
+                    <code class="cmd-code">cl_draw_only_deathnotices 0</code>
+                    <span class="comment">// 恢复完整HUD显示</span>
                 </div>
-                <button class="copy-btn" data-cmd="net_graph 1" aria-label="复制指令 net_graph 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">fps_max 0</code>
-                    <span class="comment">// 解除FPS上限</span>
-                </div>
-                <button class="copy-btn" data-cmd="fps_max 0" aria-label="复制指令 fps_max 0">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">fps_max 144</code>
-                    <span class="comment">// 限制FPS为144</span>
-                </div>
-                <button class="copy-btn" data-cmd="fps_max 144" aria-label="复制指令 fps_max 144">复制</button>
+                <button class="copy-btn" data-cmd="cl_draw_only_deathnotices 0" aria-label="复制指令 cl_draw_only_deathnotices 0">复制</button>
             </div>
 
             <!-- 其他实用 -->
@@ -1131,24 +1145,10 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
             </div>
             <div class="cmd-row">
                 <div class="cmd-text-wrapper">
-                    <code class="cmd-code">say 大家好</code>
-                    <span class="comment">// 发送公屏消息</span>
-                </div>
-                <button class="copy-btn" data-cmd="say 大家好" aria-label="复制指令 say 大家好">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
                     <code class="cmd-code">clear</code>
                     <span class="comment">// 清空控制台屏幕</span>
                 </div>
                 <button class="copy-btn" data-cmd="clear" aria-label="复制指令 clear">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">find map</code>
-                    <span class="comment">// 搜索包含"map"的指令</span>
-                </div>
-                <button class="copy-btn" data-cmd="find map" aria-label="复制指令 find map">复制</button>
             </div>
         </div>
 
@@ -1158,6 +1158,14 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
             <span class="dot-indicator"></span>
         </div>
     </main>
+
+    <!-- 底部资源链接（后期可扩充） -->
+    <div class="resources-module">
+        <a href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables" target="_blank" rel="noopener noreferrer" class="resource-link">
+            📚 V 社官方开发文档维基站
+        </a>
+        <!-- 预留位置：未来可添加开发者、B站账户、网站反馈等链接 -->
+    </div>
 
     <div class="page-footer">
         CS2 控制台指令速查 &nbsp;·&nbsp; 官匹 / 人机房常用 &nbsp;·&nbsp; cs-brx.pages.dev
