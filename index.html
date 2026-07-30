@@ -60,16 +60,28 @@
             line-height: 1.5;
         }
 
-        /* ---------- SteamID 连接模块 ---------- */
-        .connect-module {
+        /* ---------- 顶部两模块容器 ---------- */
+        .top-modules {
             width: 100%;
             max-width: 900px;
+            display: flex;
+            gap: 16px;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            align-items: stretch;
+        }
+
+        /* ---------- SteamID 连接模块 ---------- */
+        .connect-module {
+            flex: 1 1 320px;
+            min-width: 280px;
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
         }
         .module-header {
             padding: 12px 18px;
@@ -89,6 +101,9 @@
         }
         .module-body {
             padding: 16px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         .module-body textarea {
             width: 100%;
@@ -156,6 +171,7 @@
             flex-wrap: wrap;
             align-items: center;
             gap: 10px;
+            margin-top: auto;
         }
         .result-label {
             font-size: 0.8rem;
@@ -181,6 +197,48 @@
             -moz-user-select: text;
             -ms-user-select: text;
             user-select: text;
+        }
+
+        /* ---------- 剪切板跳转按钮模块 ---------- */
+        .clipboard-module {
+            flex: 0 0 auto;
+            min-width: 160px;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+        }
+        .clipboard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            /* 修改：左内边距减少4px，使文字整体左移约1个字符；边框改为2px实色绿色，更加明显 */
+            padding: 14px 28px 14px 24px;
+            background: var(--surface);
+            border: 2px solid #4eff4e;
+            border-radius: 10px;
+            color: #c8c9d1;
+            font-family: var(--font-ui);
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+            white-space: nowrap;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+            flex: 1;
+        }
+        .clipboard-btn:hover {
+            border-color: #ffffff;
+            color: #ffffff;
+            background: #1f3320;
+            box-shadow: 0 0 20px rgba(78, 255, 78, 0.3);
+        }
+        .clipboard-btn:active {
+            transform: scale(0.97);
         }
 
         /* ---------- 控制台窗口 ---------- */
@@ -458,8 +516,27 @@
             body {
                 padding: 8px 6px 24px;
             }
+            .top-modules {
+                flex-direction: column;
+                gap: 12px;
+            }
             .connect-module {
+                flex: 1 1 auto;
+                min-width: 0;
                 border-radius: 8px;
+            }
+            .clipboard-module {
+                min-width: 0;
+                width: 100%;
+                height: auto;
+            }
+            .clipboard-btn {
+                width: 100%;
+                /* 移动端同步左移效果，并保持明显边框 */
+                padding: 14px 20px 14px 16px;
+                border: 2px solid #4eff4e;
+                font-size: 0.95rem;
+                flex: none;
             }
             .module-header {
                 padding: 10px 12px;
@@ -598,22 +675,32 @@
 
     <div class="toast" id="toast" aria-live="polite"></div>
 
-    <!-- SteamID 连接模块（页面最首位） -->
-    <div class="connect-module">
-        <div class="module-header">
-            <span class="module-title">🔗 SteamID 转 Connect 指令</span>
+    <!-- 顶部模块：SteamID 转换 + 剪切板跳转 -->
+    <div class="top-modules">
+        <!-- SteamID 连接模块 -->
+        <div class="connect-module">
+            <div class="module-header">
+                <span class="module-title">🔗 SteamID 转 Connect 指令</span>
+            </div>
+            <div class="module-body">
+                <textarea id="steamidInput" placeholder="在此粘贴包含 SteamID 的文本，例如：steamid : [A:1:3538182148:50710] (90289793877172228)" rows="3"></textarea>
+                <div class="module-actions">
+                    <button id="extractBtn" class="action-btn primary">提取并生成</button>
+                    <button id="clearBtn" class="action-btn secondary">清空</button>
+                </div>
+                <div class="result-area" id="resultArea" style="display: none;">
+                    <span class="result-label">生成的指令：</span>
+                    <code class="result-code" id="resultCode"></code>
+                    <button id="copyConnectBtn" class="copy-btn" data-cmd="">复制指令</button>
+                </div>
+            </div>
         </div>
-        <div class="module-body">
-            <textarea id="steamidInput" placeholder="在此粘贴包含 SteamID 的文本，例如：steamid : [A:1:3538182148:50710] (90289793877172228)" rows="3"></textarea>
-            <div class="module-actions">
-                <button id="extractBtn" class="action-btn primary">提取并生成</button>
-                <button id="clearBtn" class="action-btn secondary">清空</button>
-            </div>
-            <div class="result-area" id="resultArea" style="display: none;">
-                <span class="result-label">生成的指令：</span>
-                <code class="result-code" id="resultCode"></code>
-                <button id="copyConnectBtn" class="copy-btn" data-cmd="">复制指令</button>
-            </div>
+
+        <!-- 剪切板跳转按钮模块 -->
+        <div class="clipboard-module">
+            <a href="https://ykjtb.com/" target="_blank" rel="noopener noreferrer" class="clipboard-btn">
+                📋 剪切板
+            </a>
         </div>
     </div>
 
@@ -1080,53 +1167,43 @@
     <script>
         (function() {
             // ================= 防护代码 =================
-            // 禁用右键菜单
             document.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
                 return false;
             });
 
-            // 禁用特定快捷键：Ctrl+S, Ctrl+U, F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
             document.addEventListener('keydown', function(e) {
-                // Ctrl+S (保存)
                 if (e.ctrlKey && e.key === 's') {
                     e.preventDefault();
                     return false;
                 }
-                // Ctrl+U (查看源代码)
                 if (e.ctrlKey && e.key === 'u') {
                     e.preventDefault();
                     return false;
                 }
-                // F12 (开发者工具)
                 if (e.key === 'F12') {
                     e.preventDefault();
                     return false;
                 }
-                // Ctrl+Shift+I (开发者工具)
                 if (e.ctrlKey && e.shiftKey && e.key === 'I') {
                     e.preventDefault();
                     return false;
                 }
-                // Ctrl+Shift+J (控制台)
                 if (e.ctrlKey && e.shiftKey && e.key === 'J') {
                     e.preventDefault();
                     return false;
                 }
-                // Ctrl+Shift+C (元素选择器)
                 if (e.ctrlKey && e.shiftKey && e.key === 'C') {
                     e.preventDefault();
                     return false;
                 }
             });
 
-            // 禁用拖拽保存（防止拖拽图片/链接保存网页）
             document.addEventListener('dragstart', function(e) {
                 e.preventDefault();
                 return false;
             });
 
-            // 控制台警告（心理威慑）
             console.log('%c⚠️ 警告：请勿尝试查看或复制源代码！', 'color: red; font-size: 20px; font-weight: bold;');
             console.log('%c本页面内容受保护，禁止未授权使用。', 'color: orange; font-size: 14px;');
 
@@ -1266,7 +1343,6 @@
                 copyBtn.setAttribute('data-cmd', '');
             });
 
-            // 支持回车快捷提取
             inputEl.addEventListener('keydown', (e) => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
