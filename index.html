@@ -212,7 +212,6 @@
             align-items: center;
             justify-content: center;
             gap: 6px;
-            /* 修改：左内边距减少4px，使文字整体左移约1个字符；边框改为2px实色绿色，更加明显 */
             padding: 14px 28px 14px 24px;
             background: var(--surface);
             border: 2px solid #4eff4e;
@@ -532,7 +531,6 @@
             }
             .clipboard-btn {
                 width: 100%;
-                /* 移动端同步左移效果，并保持明显边框 */
                 padding: 14px 20px 14px 16px;
                 border: 2px solid #4eff4e;
                 font-size: 0.95rem;
@@ -683,7 +681,8 @@
                 <span class="module-title">🔗 SteamID 转 Connect 指令</span>
             </div>
             <div class="module-body">
-                <textarea id="steamidInput" placeholder="在此粘贴包含 SteamID 的文本，例如：steamid : [A:1:3538182148:50710] (90289793877172228)" rows="3"></textarea>
+                <textarea id="steamidInput" placeholder="在此粘贴包含 SteamID 的文本，例如：
+steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
                 <div class="module-actions">
                     <button id="extractBtn" class="action-btn primary">提取并生成</button>
                     <button id="clearBtn" class="action-btn secondary">清空</button>
