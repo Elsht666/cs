@@ -39,6 +39,10 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
             scroll-behavior: smooth;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         body {
@@ -100,6 +104,10 @@
             outline: none;
             transition: border-color 0.2s;
             line-height: 1.5;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
         .module-body textarea:focus {
             border-color: var(--cmd-color);
@@ -122,6 +130,8 @@
             cursor: pointer;
             transition: all 0.2s ease;
             letter-spacing: 0.03em;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
         }
         .action-btn.primary {
             border-color: var(--cmd-color-dim);
@@ -152,6 +162,10 @@
             color: var(--text-secondary);
             font-family: var(--font-ui);
             white-space: nowrap;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         .result-code {
             font-family: var(--font-mono);
@@ -163,8 +177,11 @@
             word-break: break-all;
             flex: 1;
             min-width: 200px;
+            -webkit-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
         }
-        /* 结果区域的复制按钮直接复用 .copy-btn 样式，无需额外定义 */
 
         /* ---------- 控制台窗口 ---------- */
         .console-window {
@@ -446,23 +463,42 @@
             }
             .module-header {
                 padding: 10px 12px;
+                font-size: 0.78rem;
             }
             .module-body {
                 padding: 12px;
             }
             .module-body textarea {
-                font-size: 0.8rem;
+                font-size: 0.82rem;
+                padding: 10px;
+                min-height: 80px;
             }
             .action-btn {
-                font-size: 0.8rem;
-                padding: 7px 14px;
+                font-size: 0.82rem;
+                padding: 10px 18px;
+                min-height: 44px;
+                flex: 1;
+                text-align: center;
             }
             .result-area {
                 flex-direction: column;
-                align-items: flex-start;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .result-label {
+                font-size: 0.75rem;
             }
             .result-code {
                 width: 100%;
+                font-size: 0.82rem;
+                padding: 8px 10px;
+                word-break: break-all;
+            }
+            .result-area .copy-btn {
+                align-self: flex-end;
+                min-height: 40px;
+                padding: 8px 16px;
+                font-size: 0.78rem;
             }
             .console-window {
                 border-radius: 8px;
@@ -523,6 +559,17 @@
             }
         }
         @media (max-width: 380px) {
+            .module-body textarea {
+                font-size: 0.78rem;
+                min-height: 70px;
+            }
+            .action-btn {
+                font-size: 0.78rem;
+                padding: 10px 12px;
+            }
+            .result-code {
+                font-size: 0.76rem;
+            }
             .cmd-row {
                 padding: 7px 8px;
                 gap: 4px;
@@ -1032,6 +1079,58 @@
 
     <script>
         (function() {
+            // ================= 防护代码 =================
+            // 禁用右键菜单
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                return false;
+            });
+
+            // 禁用特定快捷键：Ctrl+S, Ctrl+U, F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+Shift+C
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+S (保存)
+                if (e.ctrlKey && e.key === 's') {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+U (查看源代码)
+                if (e.ctrlKey && e.key === 'u') {
+                    e.preventDefault();
+                    return false;
+                }
+                // F12 (开发者工具)
+                if (e.key === 'F12') {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+Shift+I (开发者工具)
+                if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+Shift+J (控制台)
+                if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+                    e.preventDefault();
+                    return false;
+                }
+                // Ctrl+Shift+C (元素选择器)
+                if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+                    e.preventDefault();
+                    return false;
+                }
+            });
+
+            // 禁用拖拽保存（防止拖拽图片/链接保存网页）
+            document.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+
+            // 控制台警告（心理威慑）
+            console.log('%c⚠️ 警告：请勿尝试查看或复制源代码！', 'color: red; font-size: 20px; font-weight: bold;');
+            console.log('%c本页面内容受保护，禁止未授权使用。', 'color: orange; font-size: 14px;');
+
+            // ================= 复制功能 =================
             const copyButtons = document.querySelectorAll('.copy-btn');
             const toast = document.getElementById('toast');
             let toastTimer = null;
@@ -1110,15 +1209,6 @@
                 });
             });
 
-            console.log('%c CS2 控制台指令速查 %c已就绪 %c| %c共 ' + copyButtons.length + ' 条指令',
-                'color:#4eff4e;font-weight:bold;',
-                'color:#9a9ba5;',
-                '',
-                'color:#c8c9d1;');
-            console.log('%c💡 点击「复制」按钮仅复制纯指令，不含注释。',
-                'color:#6b6d76;font-style:italic;');
-            console.log('%c🔗 cs-brx.pages.dev',
-                'color:#3a3d48;');
         })();
     </script>
 
@@ -1149,7 +1239,6 @@
             }
 
             function extractSteamID(text) {
-                // 匹配 [A:数字:数字:数字] (数字) 格式，允许括号前有空格
                 const match = text.match(/\[A:\d+:\d+:\d+\]\s*\(\d+\)/);
                 return match ? match[0] : null;
             }
