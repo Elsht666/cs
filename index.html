@@ -763,7 +763,7 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
 
         <div class="console-body" id="cmdList">
 
-            <!-- 常用指令（位于最前） -->
+            <!-- 常用指令 -->
             <div class="section-label">⚡ 常用指令</div>
             <div class="cmd-row">
                 <div class="cmd-text-wrapper">
@@ -892,10 +892,219 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
             </div>
             <div class="cmd-row">
                 <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_overtime_maxrounds 3</code>
+                    <span class="comment">// 加时最大回合数 (可自定义)</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_overtime_maxrounds 3" aria-label="复制指令 mp_overtime_maxrounds 3">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_tkpunish 1</code>
+                    <span class="comment">// 友伤惩罚开启</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_tkpunish 1" aria-label="复制指令 mp_tkpunish 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_friendlyfire 1</code>
+                    <span class="comment">// 开启友伤</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_friendlyfire 1" aria-label="复制指令 mp_friendlyfire 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_c4timer 40</code>
+                    <span class="comment">// C4爆炸倒计时40秒 (可调)</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_c4timer 40" aria-label="复制指令 mp_c4timer 40">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_respawn_on_death_ct 1</code>
+                    <span class="comment">// CT死亡后立刻复活</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_respawn_on_death_ct 1" aria-label="复制指令 mp_respawn_on_death_ct 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_respawn_on_death_t 1</code>
+                    <span class="comment">// T死亡后立刻复活</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_respawn_on_death_t 1" aria-label="复制指令 mp_respawn_on_death_t 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_allowspectators 1</code>
+                    <span class="comment">// 允许观战</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_allowspectators 1" aria-label="复制指令 mp_allowspectators 1">复制</button>
+            </div>
+
+            <!-- 经济与物品 -->
+            <div class="section-label">💰 经济与物品</div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_buytime 9999</code>
+                    <span class="comment">// 购买时间无限制</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_buytime 9999" aria-label="复制指令 mp_buytime 9999">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_buy_anywhere 1</code>
+                    <span class="comment">// 任意位置购买装备</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_buy_anywhere 1" aria-label="复制指令 mp_buy_anywhere 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_maxmoney 65535</code>
+                    <span class="comment">// 金钱上限65535</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_maxmoney 65535" aria-label="复制指令 mp_maxmoney 65535">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_startmoney 65535</code>
+                    <span class="comment">// 开局金钱65535</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_startmoney 65535" aria-label="复制指令 mp_startmoney 65535">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_afterroundmoney 65535</code>
+                    <span class="comment">// 回合结束自动补满钱</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_afterroundmoney 65535" aria-label="复制指令 mp_afterroundmoney 65535">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_drop_knife_enable 1</code>
+                    <span class="comment">// 允许丢弃小刀</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_drop_knife_enable 1" aria-label="复制指令 mp_drop_knife_enable 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_death_drop_gun 1</code>
+                    <span class="comment">// 死亡掉落枪械</span>
+                </div>
+                <button class="copy-btn" data-cmd="mp_death_drop_gun 1" aria-label="复制指令 mp_death_drop_gun 1">复制</button>
+            </div>
+
+            <!-- 地图切换 -->
+            <div class="section-label">🗺️ 地图切换</div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel de_ancient</code>
+                    <span class="comment">// 远古遗迹（白天）</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel de_ancient" aria-label="复制指令 changelevel de_ancient">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel de_ancient_night</code>
+                    <span class="comment">// 远古遗迹（夜间）</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel de_ancient_night" aria-label="复制指令 changelevel de_ancient_night">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel de_anubis</code>
+                    <span class="comment">// 阿努比斯</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel de_anubis" aria-label="复制指令 changelevel de_anubis">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
                     <code class="cmd-code">changelevel de_dust2</code>
-                    <span class="comment">// 切换地图（可替换地图名）</span>
+                    <span class="comment">// 炙热沙城2</span>
                 </div>
                 <button class="copy-btn" data-cmd="changelevel de_dust2" aria-label="复制指令 changelevel de_dust2">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel de_inferno</code>
+                    <span class="comment">// 炼狱小镇</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel de_inferno" aria-label="复制指令 changelevel de_inferno">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel de_mirage</code>
+                    <span class="comment">// 荒漠迷城</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel de_mirage" aria-label="复制指令 changelevel de_mirage">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel de_nuke</code>
+                    <span class="comment">// 核子危机</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel de_nuke" aria-label="复制指令 changelevel de_nuke">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel de_overpass</code>
+                    <span class="comment">// 死亡游乐园</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel de_overpass" aria-label="复制指令 changelevel de_overpass">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel de_train</code>
+                    <span class="comment">// 列车停放站</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel de_train" aria-label="复制指令 changelevel de_train">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel de_vertigo</code>
+                    <span class="comment">// 殒命大厦</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel de_vertigo" aria-label="复制指令 changelevel de_vertigo">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel cs_office</code>
+                    <span class="comment">// 办公室</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel cs_office" aria-label="复制指令 changelevel cs_office">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel cs_italy</code>
+                    <span class="comment">// 意大利小镇</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel cs_italy" aria-label="复制指令 changelevel cs_italy">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel ar_baggage</code>
+                    <span class="comment">// 行李仓库</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel ar_baggage" aria-label="复制指令 changelevel ar_baggage">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel ar_pool_day</code>
+                    <span class="comment">// 泳池激战</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel ar_pool_day" aria-label="复制指令 changelevel ar_pool_day">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel ar_shoots</code>
+                    <span class="comment">// 遗迹射击场</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel ar_shoots" aria-label="复制指令 changelevel ar_shoots">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">changelevel ar_shoots_night</code>
+                    <span class="comment">// 遗迹射击场夜间</span>
+                </div>
+                <button class="copy-btn" data-cmd="changelevel ar_shoots_night" aria-label="复制指令 changelevel ar_shoots_night">复制</button>
             </div>
 
             <!-- 练习/作弊 -->
@@ -1134,7 +1343,52 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
                 <button class="copy-btn" data-cmd="cl_draw_only_deathnotices 0" aria-label="复制指令 cl_draw_only_deathnotices 0">复制</button>
             </div>
 
-            <!-- 其他实用 -->
+            <!-- 语音通讯 -->
+            <div class="section-label">📢 语音通讯</div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_alltalk 1</code>
+                    <span class="comment">// CT/T互相听见语音</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_alltalk 1" aria-label="复制指令 sv_alltalk 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_deadtalk 1</code>
+                    <span class="comment">// 死人能和活人说话</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_deadtalk 1" aria-label="复制指令 sv_deadtalk 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_full_alltalk 1</code>
+                    <span class="comment">// 所有人互通语音</span>
+                </div>
+                <button class="copy-btn" data-cmd="sv_full_alltalk 1" aria-label="复制指令 sv_full_alltalk 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">voice_enable 1</code>
+                    <span class="comment">// 开启语音</span>
+                </div>
+                <button class="copy-btn" data-cmd="voice_enable 1" aria-label="复制指令 voice_enable 1">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">voice_enable 0</code>
+                    <span class="comment">// 关闭语音</span>
+                </div>
+                <button class="copy-btn" data-cmd="voice_enable 0" aria-label="复制指令 voice_enable 0">复制</button>
+            </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">cl_mute_enemy_team 1</code>
+                    <span class="comment">// 静音敌方</span>
+                </div>
+                <button class="copy-btn" data-cmd="cl_mute_enemy_team 1" aria-label="复制指令 cl_mute_enemy_team 1">复制</button>
+            </div>
+
+            <!-- 其他实用指令 -->
             <div class="section-label">⚡ 其他实用指令</div>
             <div class="cmd-row">
                 <div class="cmd-text-wrapper">
@@ -1150,6 +1404,13 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
                 </div>
                 <button class="copy-btn" data-cmd="clear" aria-label="复制指令 clear">复制</button>
             </div>
+            <div class="cmd-row">
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">kick</code>
+                    <span class="comment">// 踢出指定玩家 (后跟名称)</span>
+                </div>
+                <button class="copy-btn" data-cmd="kick" aria-label="复制指令 kick">复制</button>
+            </div>
         </div>
 
         <div class="console-footer">
@@ -1159,12 +1420,12 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
         </div>
     </main>
 
-    <!-- 底部资源链接（后期可扩充） -->
+    <!-- 底部资源链接 -->
     <div class="resources-module">
         <a href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables" target="_blank" rel="noopener noreferrer" class="resource-link">
             📚 V 社官方开发文档维基站
         </a>
-        <!-- 预留位置：未来可添加开发者、B站账户、网站反馈等链接 -->
+        <!-- 预留：开发者/B站/反馈等 -->
     </div>
 
     <div class="page-footer">
