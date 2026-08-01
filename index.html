@@ -2,60 +2,150 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta 
+        name="viewport" 
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
     <title>CS2 控制台指令速查</title>
+
     <style>
+        /* =========================
+           CSS 变量（设计令牌）
+           ========================= */
         :root {
             --bg: #0a0a0b;
-            --surface: #141517;
+            --surface: rgba(20, 21, 23, .92);
             --surface-hover: #1a1b1f;
             --border: #2a2b30;
-            --cmd-color: #4eff4e;
-            --cmd-color-dim: #3ab83a;
-            --comment-color: #6b6d76;
+            --cmd: #4eff4e;
+            --cmd-dim: #3ab83a;
+            --comment: #6b6d76;
             --text: #c8c9d1;
-            --text-secondary: #8b8d96;
-            --btn-border: #3a3d45;
-            --btn-hover-bg: #1f3320;
-            --btn-hover-border: #4eff4e;
-            --btn-copied-bg: #1a3a1d;
-            --btn-copied-border: #3ab83a;
-            --btn-copied-text: #4eff4e;
-            --accent-glow: rgba(78, 255, 78, 0.12);
-            --radius: 6px;
-            --radius-sm: 4px;
-            --font-mono: 'SF Mono', 'Cascadia Code', 'Consolas', 'Monaco', 'Courier New', 'Source Code Pro', monospace;
-            --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+            --text2: #8b8d96;
+            --btn-b: #3a3d45;
+            --btn-h-bg: #1f3320;
+            --btn-h-b: #4eff4e;
+            --btn-c-bg: #1a3a1d;
+            --btn-c-b: #3ab83a;
+            --btn-c-t: #4eff4e;
+            --glow: rgba(78, 255, 78, .12);
+            --r: 6px;
+            --rs: 4px;
+            --mono: 'SF Mono', 'Cascadia Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+            --ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            --neon-g: #4eff4e;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* =========================
+           基础重置
+           ========================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
         html {
             font-size: 16px;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
             scroll-behavior: smooth;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             user-select: none;
         }
 
         body {
-            background-color: var(--bg);
-            background-image:
-                radial-gradient(ellipse at 50% 0%, rgba(78, 255, 78, 0.03) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(78, 200, 78, 0.02) 0%, transparent 50%);
+            background: var(--bg);
             color: var(--text);
-            font-family: var(--font-ui);
+            font-family: var(--ui);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 20px 16px 40px;
             line-height: 1.5;
+            position: relative;
+            overflow-x: hidden;
         }
 
+        /* =========================
+           背景特效层
+           ========================= */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+
+            background-image:
+                linear-gradient(rgba(78, 255, 78, .03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(78, 255, 78, .03) 1px, transparent 1px);
+
+            background-size: 60px 60px;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(60px, 60px);
+            }
+        }
+
+        .bg-radial {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(
+                ellipse at 50% 0%,
+                rgba(78, 255, 78, .06) 0%,
+                transparent 50%
+            );
+        }
+
+        .scanline {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, .03) 2px,
+                rgba(0, 0, 0, .03) 4px
+            );
+        }
+
+        body > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* =========================
+           顶部模块区
+           ========================= */
         .top-modules {
             width: 100%;
             max-width: 900px;
@@ -64,606 +154,2439 @@
             margin-bottom: 20px;
             flex-wrap: wrap;
             align-items: stretch;
+            animation: fadeInUp .6s ease-out;
         }
 
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUpDelay {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           SteamID 转换模块
+           ========================= */
         .connect-module {
             flex: 1 1 320px;
             min-width: 280px;
             background: var(--surface);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--border);
-            border-radius: 10px;
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, .5),
+                0 0 30px rgba(78, 255, 78, .03);
             display: flex;
             flex-direction: column;
+            position: relative;
+            transition: all .3s;
         }
+
+        .connect-module::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                var(--neon-g),
+                transparent
+            );
+            opacity: .5;
+        }
+
+        .connect-module:hover {
+            border-color: rgba(78, 255, 78, .3);
+            box-shadow:
+                0 4px 24px rgba(0, 0, 0, .5),
+                0 0 40px rgba(78, 255, 78, .06);
+        }
+
         .module-header {
             padding: 12px 18px;
-            background: #1c1d21;
+            background: rgba(28, 29, 33, .95);
             border-bottom: 1px solid var(--border);
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
+            font-family: var(--mono);
+            font-size: .85rem;
             color: #9a9ba5;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        .module-title { color: var(--cmd-color); font-weight: 600; letter-spacing: 0.03em; }
-        .module-body { padding: 16px 18px; flex: 1; display: flex; flex-direction: column; }
+
+        .module-title {
+            color: var(--cmd);
+            font-weight: 600;
+            letter-spacing: .03em;
+            text-shadow: 0 0 10px rgba(78, 255, 78, .4);
+        }
+
+        .module-body {
+            padding: 16px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
         .module-body textarea {
-            width: 100%; padding: 10px 12px; background: #0a0a0b; border: 1px solid var(--border);
-            border-radius: var(--radius); color: var(--text); font-family: var(--font-mono);
-            font-size: 0.85rem; resize: vertical; margin-bottom: 12px; outline: none;
-            transition: border-color 0.2s; line-height: 1.5;
-            -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text;
+            width: 100%;
+            padding: 10px 12px;
+            background: rgba(10, 10, 11, .95);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            color: var(--text);
+            font-family: var(--mono);
+            font-size: .85rem;
+            resize: vertical;
+            margin-bottom: 12px;
+            outline: none;
+            transition: all .3s;
+            line-height: 1.5;
+            user-select: text;
         }
-        .module-body textarea:focus { border-color: var(--cmd-color); }
-        .module-actions { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+
+        .module-body textarea:focus {
+            border-color: var(--cmd);
+            box-shadow:
+                0 0 15px rgba(78, 255, 78, .1),
+                inset 0 0 15px rgba(78, 255, 78, .02);
+        }
+
+        .module-actions {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
         .action-btn {
-            padding: 8px 18px; border-radius: var(--radius); border: 1px solid var(--btn-border);
-            background: transparent; color: #9a9ba5; font-family: var(--font-ui);
-            font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;
-            letter-spacing: 0.03em; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+            padding: 8px 18px;
+            border-radius: var(--r);
+            border: 1px solid var(--btn-b);
+            background: transparent;
+            color: #9a9ba5;
+            font-family: var(--ui);
+            font-size: .85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .3s;
+            letter-spacing: .03em;
+            touch-action: manipulation;
+            position: relative;
+            overflow: hidden;
         }
-        .action-btn.primary { border-color: var(--cmd-color-dim); color: var(--cmd-color); }
-        .action-btn.primary:hover { background: var(--btn-hover-bg); border-color: var(--btn-hover-border); box-shadow: 0 0 12px var(--accent-glow); }
-        .action-btn.secondary:hover { border-color: #666; color: #ccc; background: #1a1b1f; }
+
+        .action-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(78, 255, 78, .2);
+            transform: translate(-50%, -50%);
+            transition: width .4s, height .4s;
+        }
+
+        .action-btn:active::after {
+            width: 200px;
+            height: 200px;
+        }
+
+        .action-btn.primary {
+            border-color: var(--cmd-dim);
+            color: var(--cmd);
+        }
+
+        .action-btn.primary:hover {
+            background: var(--btn-h-bg);
+            border-color: var(--btn-h-b);
+            box-shadow: 0 0 20px var(--glow);
+            text-shadow: 0 0 8px rgba(78, 255, 78, .5);
+        }
+
+        .action-btn.secondary:hover {
+            border-color: #666;
+            color: #ccc;
+            background: #1a1b1f;
+        }
+
         .result-area {
-            background: #0a0a0b; border: 1px solid var(--border); border-radius: var(--radius);
-            padding: 12px 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: auto;
+            background: rgba(10, 10, 11, .95);
+            border: 1px solid var(--border);
+            border-radius: var(--r);
+            padding: 12px 14px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
         }
-        .result-label { font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-ui); white-space: nowrap; }
+
+        .result-label {
+            font-size: .8rem;
+            color: var(--text2);
+            white-space: nowrap;
+        }
+
         .result-code {
-            font-family: var(--font-mono); font-size: 0.9rem; color: var(--cmd-color);
-            background: rgba(78, 255, 78, 0.06); padding: 4px 10px; border-radius: var(--radius-sm);
-            word-break: break-all; flex: 1; min-width: 200px;
-            -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text;
+            font-family: var(--mono);
+            font-size: .9rem;
+            color: var(--cmd);
+            background: rgba(78, 255, 78, .06);
+            padding: 4px 10px;
+            border-radius: var(--rs);
+            word-break: break-all;
+            flex: 1;
+            min-width: 200px;
+            user-select: text;
+            text-shadow: 0 0 8px rgba(78, 255, 78, .3);
         }
 
-        .clipboard-module { flex: 0 0 auto; min-width: 160px; display: flex; align-items: stretch; justify-content: center; }
+        /* =========================
+           剪切板按钮
+           ========================= */
+        .clipboard-module {
+            flex: 0 0 auto;
+            min-width: 160px;
+            display: flex;
+            align-items: stretch;
+            justify-content: center;
+        }
+
         .clipboard-btn {
-            display: flex; align-items: center; justify-content: center; gap: 6px;
-            padding: 14px 28px 14px 24px; background: var(--surface); border: 2px solid #4eff4e;
-            border-radius: 10px; color: #c8c9d1; font-family: var(--font-ui); font-size: 1rem;
-            font-weight: 600; letter-spacing: 0.05em; text-decoration: none; cursor: pointer;
-            transition: all 0.2s ease; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-            white-space: nowrap; touch-action: manipulation; -webkit-tap-highlight-color: transparent; flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 14px 28px;
+            background: var(--surface);
+            backdrop-filter: blur(20px);
+            border: 2px solid #4eff4e;
+            border-radius: 12px;
+            color: #c8c9d1;
+            font-family: var(--ui);
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: .05em;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all .3s;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, .5);
+            white-space: nowrap;
+            touch-action: manipulation;
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            animation: borderPulse 3s ease-in-out infinite;
         }
-        .clipboard-btn:hover { border-color: #ffffff; color: #ffffff; background: #1f3320; box-shadow: 0 0 20px rgba(78, 255, 78, 0.3); }
-        .clipboard-btn:active { transform: scale(0.97); }
 
+        @keyframes borderPulse {
+            0%, 100% {
+                box-shadow:
+                    0 4px 24px rgba(0, 0, 0, .5),
+                    0 0 15px rgba(78, 255, 78, .1);
+            }
+            50% {
+                box-shadow:
+                    0 4px 24px rgba(0, 0, 0, .5),
+                    0 0 30px rgba(78, 255, 78, .25);
+            }
+        }
+
+        .clipboard-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                from 0deg,
+                transparent,
+                rgba(78, 255, 78, .1),
+                transparent,
+                transparent
+            );
+            animation: rotateBorder 4s linear infinite;
+        }
+
+        @keyframes rotateBorder {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .clipboard-btn:hover {
+            border-color: #fff;
+            color: #fff;
+            background: rgba(31, 51, 32, .95);
+            box-shadow: 0 0 30px rgba(78, 255, 78, .4);
+            text-shadow: 0 0 10px rgba(255, 255, 255, .5);
+        }
+
+        .clipboard-btn:active {
+            transform: scale(.97);
+        }
+
+        /* =========================
+           资源链接区
+           ========================= */
         .resources-module {
-            width: 100%; max-width: 900px; margin-top: 20px; padding: 16px 0;
-            border-top: 1px solid var(--border); display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+            width: 100%;
+            max-width: 900px;
+            margin-top: 20px;
+            padding: 16px 0;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            animation: fadeInUpDelay .8s ease-out;
         }
-        .resource-link {
-            display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px;
-            background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-            color: var(--text-secondary); font-family: var(--font-ui); font-size: 0.9rem;
-            font-weight: 500; text-decoration: none; transition: all 0.2s ease; white-space: nowrap;
-        }
-        .resource-link:hover { border-color: var(--cmd-color); color: var(--cmd-color); background: #1f3320; }
-        .resource-link:active { transform: scale(0.97); }
 
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            background: var(--surface);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text2);
+            font-size: .9rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all .3s;
+            white-space: nowrap;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resource-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(78, 255, 78, .05),
+                transparent
+            );
+            transition: left .5s;
+        }
+
+        .resource-link:hover::before {
+            left: 100%;
+        }
+
+        .resource-link:hover {
+            border-color: var(--cmd);
+            color: var(--cmd);
+            background: rgba(31, 51, 32, .9);
+            box-shadow: 0 0 20px rgba(78, 255, 78, .1);
+            text-shadow: 0 0 8px rgba(78, 255, 78, .3);
+        }
+
+        /* =========================
+           控制台窗口主体
+           ========================= */
         .console-window {
-            width: 100%; max-width: 900px; background: var(--surface); border: 1px solid var(--border);
-            border-radius: 10px; overflow: hidden;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03) inset, 0 1px 0 rgba(255, 255, 255, 0.02) inset;
+            width: 100%;
+            max-width: 900px;
+            background: rgba(14, 15, 17, .96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, .6),
+                0 0 40px rgba(78, 255, 78, .02);
+            position: relative;
+            animation: fadeInUp .7s ease-out .1s both;
         }
 
         .console-header {
-            display: flex; align-items: center; gap: 10px; padding: 14px 18px;
-            background: #1c1d21; border-bottom: 1px solid var(--border); user-select: none;
-        }
-        .console-dots { display: flex; gap: 7px; flex-shrink: 0; }
-        .console-dot { width: 11px; height: 11px; border-radius: 50%; transition: opacity 0.2s; }
-        .console-dot.red { background: #ff5f56; }
-        .console-dot.yellow { background: #ffbd2e; }
-        .console-dot.green { background: #27c93f; }
-        .console-title {
-            flex: 1; text-align: center; font-family: var(--font-mono); font-size: 0.85rem;
-            color: #9a9ba5; letter-spacing: 0.04em; white-space: nowrap; overflow: hidden;
-            text-overflow: ellipsis; padding-right: 38px;
-        }
-        .console-title .prompt { color: var(--cmd-color); font-weight: 600; }
-
-        .console-body { padding: 6px 0; max-height: none; overflow-y: visible; }
-
-        .section-label {
-            display: flex; align-items: center; gap: 8px; padding: 14px 18px 6px;
-            font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
-            color: #5a5d68; text-transform: uppercase; letter-spacing: 0.08em; user-select: none;
-        }
-        .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); opacity: 0.6; }
-        .section-label:first-of-type { padding-top: 8px; }
-
-        /* 修改：分类分隔栏顶部边框变为橙色 */
-        .category-divider {
-            display: flex; align-items: center; gap: 10px;
-            padding: 16px 18px 8px; margin-top: 10px;
-            border-top: 2px solid #76ff03; /* 橙色边框 */
-            font-family: var(--font-mono); font-size: 0.8rem;
-            color: var(--text-secondary); letter-spacing: 0.04em;
-            user-select: none;
-        }
-        .category-divider::after {
-            content: ''; flex: 1; height: 1px; background: var(--border); opacity: 0.4;
-        }
-
-        .tab-nav {
-            display: flex; gap: 8px; padding: 8px 18px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 18px;
+            background: rgba(28, 29, 33, .98);
             border-bottom: 1px solid var(--border);
-            flex-wrap: wrap;
+            user-select: none;
+            position: relative;
         }
-        .tab-btn {
-            padding: 6px 14px; border: 1px solid var(--btn-border);
-            background: transparent; color: var(--text-secondary); font-family: var(--font-ui);
-            font-size: 0.82rem; font-weight: 500; border-radius: var(--radius);
-            cursor: pointer; transition: all 0.2s ease; white-space: nowrap;
-            touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+
+        .console-header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(78, 255, 78, .3),
+                transparent
+            );
+        }
+
+        .console-dots {
+            display: flex;
+            gap: 7px;
             flex-shrink: 0;
         }
-        .tab-btn:hover { border-color: #666; color: #ccc; }
+
+        .console-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .console-dot::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .console-dot.red {
+            background: #ff5f56;
+        }
+
+        .console-dot.red::after {
+            box-shadow: 0 0 6px #ff5f56;
+        }
+
+        .console-dot.yellow {
+            background: #ffbd2e;
+        }
+
+        .console-dot.yellow::after {
+            box-shadow: 0 0 6px #ffbd2e;
+        }
+
+        .console-dot.green {
+            background: #27c93f;
+        }
+
+        .console-dot.green::after {
+            box-shadow: 0 0 6px #27c93f;
+        }
+
+        .console-title {
+            flex: 1;
+            text-align: center;
+            font-family: var(--mono);
+            font-size: .85rem;
+            color: #9a9ba5;
+            letter-spacing: .04em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 38px;
+        }
+
+        .console-title .prompt {
+            color: var(--cmd);
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(78, 255, 78, .5);
+            animation: promptBlink 1.5s ease-in-out infinite;
+        }
+
+        @keyframes promptBlink {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .4;
+            }
+        }
+
+        .console-body {
+            padding: 6px 0;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 18px 6px;
+            font-family: var(--mono);
+            font-size: .75rem;
+            font-weight: 600;
+            color: #5a5d68;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            user-select: none;
+        }
+
+        .section-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), transparent);
+            opacity: .6;
+        }
+
+        .section-label:first-of-type {
+            padding-top: 8px;
+        }
+
+        /* =========================
+           分类分隔线
+           ========================= */
+        .category-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 18px 8px;
+            margin-top: 10px;
+            border-top: 1px solid rgba(78, 255, 78, .2);
+            font-family: var(--mono);
+            font-size: .8rem;
+            color: var(--text2);
+            letter-spacing: .04em;
+            user-select: none;
+            position: relative;
+        }
+
+        .category-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            opacity: .4;
+        }
+
+        /* =========================
+           Tab 导航
+           ========================= */
+        .tab-nav {
+            display: flex;
+            gap: 8px;
+            padding: 8px 18px 12px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .tab-nav::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 18px;
+            right: 18px;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(78, 255, 78, .15),
+                transparent
+            );
+        }
+
+        .tab-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--btn-b);
+            background: transparent;
+            color: var(--text2);
+            font-size: .82rem;
+            font-weight: 500;
+            border-radius: var(--r);
+            cursor: pointer;
+            transition: all .3s;
+            white-space: nowrap;
+            touch-action: manipulation;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background: var(--neon-g);
+            transform: translateX(-50%);
+            transition: width .3s;
+            box-shadow: 0 0 8px var(--neon-g);
+        }
+
+        .tab-btn:hover {
+            border-color: #666;
+            color: #ccc;
+        }
+
+        .tab-btn:hover::before {
+            width: 60%;
+        }
+
         .tab-btn.active {
-            border-color: var(--cmd-color); color: var(--cmd-color);
-            background: rgba(78, 255, 78, 0.08); box-shadow: 0 0 8px rgba(78, 255, 78, 0.15);
+            border-color: var(--cmd);
+            color: var(--cmd);
+            background: rgba(78, 255, 78, .08);
+            box-shadow: 0 0 12px rgba(78, 255, 78, .15);
+            text-shadow: 0 0 8px rgba(78, 255, 78, .4);
         }
 
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
+        .tab-btn.active::before {
+            width: 80%;
+        }
 
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: tabFadeIn .3s ease-out;
+        }
+
+        @keyframes tabFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================
+           指令行样式
+           ========================= */
         .cmd-row {
-            display: flex; align-items: center; gap: 8px; padding: 9px 18px;
-            transition: background 0.15s ease; border-left: 2px solid transparent; position: relative;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 9px 18px;
+            transition: all .2s;
+            border-left: 2px solid transparent;
+            position: relative;
         }
-        .cmd-row:hover { background: var(--surface-hover); border-left-color: rgba(78, 255, 78, 0.3); }
 
-        .cmd-text-wrapper { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+        .cmd-row::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                90deg,
+                rgba(78, 255, 78, .03),
+                transparent 30%
+            );
+            opacity: 0;
+            transition: opacity .2s;
+        }
+
+        .cmd-row:hover {
+            background: var(--surface-hover);
+            border-left-color: rgba(78, 255, 78, .5);
+        }
+
+        .cmd-row:hover::before {
+            opacity: 1;
+        }
+
+        .cmd-text-wrapper {
+            flex: 1;
+            min-width: 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 4px 8px;
+        }
 
         code.cmd-code {
-            font-family: var(--font-mono); font-size: 0.9rem; font-weight: 500; color: var(--cmd-color);
-            background: rgba(78, 255, 78, 0.06); padding: 3px 8px; border-radius: var(--radius-sm);
-            white-space: nowrap; cursor: text; user-select: text; -webkit-user-select: text;
-            transition: background 0.15s; letter-spacing: 0.02em; word-break: keep-all; flex-shrink: 0;
+            font-family: var(--mono);
+            font-size: .9rem;
+            font-weight: 500;
+            color: var(--cmd);
+            background: rgba(78, 255, 78, .06);
+            padding: 3px 8px;
+            border-radius: var(--rs);
+            white-space: nowrap;
+            cursor: text;
+            user-select: text;
+            transition: all .2s;
+            letter-spacing: .02em;
+            word-break: keep-all;
+            flex-shrink: 0;
+            text-shadow: 0 0 6px rgba(78, 255, 78, .2);
         }
-        .cmd-row:hover code.cmd-code { background: rgba(78, 255, 78, 0.1); }
-        code.cmd-code::selection { background: rgba(78, 255, 78, 0.35); color: #fff; }
+
+        .cmd-row:hover code.cmd-code {
+            background: rgba(78, 255, 78, .12);
+            text-shadow: 0 0 10px rgba(78, 255, 78, .4);
+            box-shadow: 0 0 8px rgba(78, 255, 78, .1);
+        }
+
+        code.cmd-code::selection {
+            background: rgba(78, 255, 78, .35);
+            color: #fff;
+        }
 
         span.comment {
-            font-family: var(--font-mono); font-size: 0.82rem; color: var(--comment-color);
-            user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
-            white-space: nowrap; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;
-            min-width: 0; letter-spacing: 0.01em;
+            font-family: var(--mono);
+            font-size: .82rem;
+            color: var(--comment);
+            user-select: none;
+            white-space: nowrap;
+            flex-shrink: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-width: 0;
         }
 
+        /* =========================
+           复制按钮
+           ========================= */
         .copy-btn {
-            flex-shrink: 0; font-family: var(--font-ui); font-size: 0.78rem; font-weight: 500;
-            padding: 6px 14px; min-width: 50px; min-height: 36px; border-radius: var(--radius);
-            border: 1px solid var(--btn-border); background: transparent; color: #9a9ba5;
-            cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.03em;
-            white-space: nowrap; outline: none; -webkit-tap-highlight-color: transparent;
-            user-select: none; position: relative; overflow: hidden; touch-action: manipulation;
+            flex-shrink: 0;
+            font-size: .78rem;
+            font-weight: 500;
+            padding: 6px 14px;
+            min-width: 50px;
+            min-height: 36px;
+            border-radius: var(--r);
+            border: 1px solid var(--btn-b);
+            background: transparent;
+            color: #9a9ba5;
+            cursor: pointer;
+            transition: all .25s;
+            letter-spacing: .03em;
+            white-space: nowrap;
+            outline: none;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+            touch-action: manipulation;
         }
-        .copy-btn:hover { border-color: var(--btn-hover-border); color: var(--cmd-color); background: var(--btn-hover-bg); box-shadow: 0 0 12px var(--accent-glow); }
-        .copy-btn:active { transform: scale(0.96); transition: transform 0.08s ease; }
-        .copy-btn:focus-visible { outline: 2px solid rgba(78, 255, 78, 0.5); outline-offset: 2px; }
+
+        .copy-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: radial-gradient(
+                circle,
+                rgba(78, 255, 78, .3),
+                transparent
+            );
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width .4s, height .4s;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--btn-h-b);
+            color: var(--cmd);
+            background: var(--btn-h-bg);
+            box-shadow: 0 0 15px var(--glow);
+            text-shadow: 0 0 6px rgba(78, 255, 78, .4);
+        }
+
+        .copy-btn:hover::before {
+            width: 100px;
+            height: 100px;
+        }
+
+        .copy-btn:active {
+            transform: scale(.94);
+        }
 
         .copy-btn.copied {
-            border-color: var(--btn-copied-border); color: var(--btn-copied-text);
-            background: var(--btn-copied-bg); box-shadow: 0 0 8px rgba(78, 255, 78, 0.2);
-            pointer-events: none; animation: pulse-green 0.35s ease-out;
+            border-color: var(--btn-c-b);
+            color: var(--btn-c-t);
+            background: var(--btn-c-bg);
+            box-shadow: 0 0 12px rgba(78, 255, 78, .3);
+            pointer-events: none;
+            animation: pulse-green .4s ease-out;
         }
+
         @keyframes pulse-green {
-            0% { box-shadow: 0 0 0 0 rgba(78, 255, 78, 0.5); }
-            100% { box-shadow: 0 0 0 12px rgba(78, 255, 78, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(78, 255, 78, .6);
+            }
+            100% {
+                box-shadow: 0 0 0 16px rgba(78, 255, 78, 0);
+            }
         }
 
+        /* =========================
+           控制台底部
+           ========================= */
         .console-footer {
-            padding: 14px 18px; border-top: 1px solid var(--border); text-align: center;
-            font-size: 0.72rem; color: #4a4d58; user-select: none; letter-spacing: 0.03em; background: #111215;
+            padding: 14px 18px;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            font-size: .72rem;
+            color: #4a4d58;
+            user-select: none;
+            letter-spacing: .03em;
+            background: rgba(17, 18, 21, .98);
+            position: relative;
         }
+
+        .console-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(78, 255, 78, .2),
+                transparent
+            );
+        }
+
         .console-footer .dot-indicator {
-            display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-            background: #3a3d45; margin: 0 6px; vertical-align: middle; animation: blink 2s infinite;
+            display: inline-block;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--neon-g);
+            margin: 0 6px;
+            vertical-align: middle;
+            animation: dotPulse 2s infinite;
+            box-shadow: 0 0 6px var(--neon-g);
         }
-        @keyframes blink { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-        .page-footer { margin-top: 24px; text-align: center; font-size: 0.7rem; color: #3a3d48; user-select: none; letter-spacing: 0.04em; }
+        @keyframes dotPulse {
+            0%, 100% {
+                opacity: .3;
+                box-shadow: 0 0 3px var(--neon-g);
+            }
+            50% {
+                opacity: 1;
+                box-shadow: 0 0 10px var(--neon-g);
+            }
+        }
 
+        /* =========================
+           页面底部
+           ========================= */
+        .page-footer {
+            margin-top: 24px;
+            text-align: center;
+            font-size: .7rem;
+            color: #3a3d48;
+            user-select: none;
+            letter-spacing: .04em;
+            animation: fadeInUpDelay 1s ease-out;
+        }
+
+        /* =========================
+           Toast 提示
+           ========================= */
         .toast {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px);
-            background: #1a3a1d; border: 1px solid #3ab83a; color: #4eff4e;
-            padding: 10px 22px; border-radius: 20px; font-family: var(--font-ui);
-            font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em;
-            z-index: 1000; pointer-events: none;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-120px);
+            background: rgba(26, 58, 29, .95);
+            backdrop-filter: blur(10px);
+            border: 1px solid #3ab83a;
+            color: #4eff4e;
+            padding: 10px 22px;
+            border-radius: 20px;
+            font-size: .85rem;
+            font-weight: 500;
+            letter-spacing: .03em;
+            z-index: 1000;
+            pointer-events: none;
+            transition: transform .4s cubic-bezier(.175, .885, .32, 1.275);
+            box-shadow:
+                0 4px 20px rgba(0, 0, 0, .5),
+                0 0 30px rgba(78, 255, 78, .15);
+            text-shadow: 0 0 8px rgba(78, 255, 78, .4);
         }
-        .toast.show { transform: translateX(-50%) translateY(0); }
 
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* =========================
+           光标光晕
+           ========================= */
+        .cursor-glow {
+            position: fixed;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(
+                circle,
+                rgba(78, 255, 78, .04),
+                transparent 70%
+            );
+            pointer-events: none;
+            z-index: 1;
+            transform: translate(-50%, -50%);
+            transition: opacity .3s;
+        }
+
+        /* =========================
+           响应式适配
+           ========================= */
         @media (max-width: 640px) {
-            body { padding: 8px 6px 24px; }
-            .top-modules { flex-direction: column; gap: 12px; }
-            .connect-module { flex: 1 1 auto; min-width: 0; border-radius: 8px; }
-            .clipboard-module { min-width: 0; width: 100%; height: auto; }
-            .clipboard-btn { width: 100%; padding: 14px 20px 14px 16px; border: 2px solid #4eff4e; font-size: 0.95rem; flex: none; }
-            .resources-module { flex-direction: column; align-items: center; gap: 10px; }
-            .resource-link { width: 100%; justify-content: center; }
-            .module-header { padding: 10px 12px; font-size: 0.78rem; }
-            .module-body { padding: 12px; }
-            .module-body textarea { font-size: 0.82rem; padding: 10px; min-height: 80px; }
-            .action-btn { font-size: 0.82rem; padding: 10px 18px; min-height: 44px; flex: 1; text-align: center; }
-            .result-area { flex-direction: column; align-items: stretch; gap: 8px; }
-            .result-label { font-size: 0.75rem; }
-            .result-code { width: 100%; font-size: 0.82rem; padding: 8px 10px; word-break: break-all; }
-            .result-area .copy-btn { align-self: flex-end; min-height: 40px; padding: 8px 16px; font-size: 0.78rem; }
-            .console-window { border-radius: 8px; max-width: 100%; }
-            .console-header { padding: 10px 12px; gap: 6px; }
-            .console-dot { width: 9px; height: 9px; }
-            .console-dots { gap: 5px; }
-            .console-title { font-size: 0.72rem; padding-right: 28px; }
-            .category-divider { padding: 12px 12px 6px; font-size: 0.75rem; }
-            .tab-nav { padding: 6px 12px 10px; gap: 6px; }
-            .tab-btn { font-size: 0.78rem; padding: 6px 12px; }
-            .cmd-row { padding: 8px 12px; gap: 6px; flex-wrap: wrap; }
-            .cmd-text-wrapper { gap: 3px 6px; flex-basis: 100%; margin-bottom: 2px; }
-            code.cmd-code { font-size: 0.78rem; padding: 3px 6px; white-space: normal; word-break: break-all; }
-            span.comment { font-size: 0.7rem; white-space: normal; word-break: break-word; }
-            .copy-btn { font-size: 0.73rem; padding: 7px 14px; min-height: 38px; min-width: 54px; border-radius: var(--radius); margin-left: auto; }
-            .section-label { padding: 12px 12px 4px; font-size: 0.7rem; letter-spacing: 0.06em; }
-            .console-footer { padding: 12px; font-size: 0.68rem; }
+            body {
+                padding: 8px 6px 24px;
+            }
+
+            .top-modules {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .connect-module {
+                flex: 1 1 auto;
+                min-width: 0;
+            }
+
+            .clipboard-module {
+                min-width: 0;
+                width: 100%;
+            }
+
+            .clipboard-btn {
+                width: 100%;
+                padding: 14px 20px;
+                font-size: .95rem;
+                flex: none;
+            }
+
+            .resources-module {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .resource-link {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .module-header {
+                padding: 10px 12px;
+                font-size: .78rem;
+            }
+
+            .module-body {
+                padding: 12px;
+            }
+
+            .module-body textarea {
+                font-size: .82rem;
+                padding: 10px;
+                min-height: 80px;
+            }
+
+            .action-btn {
+                font-size: .82rem;
+                padding: 10px 18px;
+                min-height: 44px;
+                flex: 1;
+                text-align: center;
+            }
+
+            .result-area {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .result-label {
+                font-size: .75rem;
+            }
+
+            .result-code {
+                width: 100%;
+                font-size: .82rem;
+                padding: 8px 10px;
+            }
+
+            .result-area .copy-btn {
+                align-self: flex-end;
+                min-height: 40px;
+                padding: 8px 16px;
+            }
+
+            .console-window {
+                border-radius: 8px;
+            }
+
+            .console-header {
+                padding: 10px 12px;
+                gap: 6px;
+            }
+
+            .console-dot {
+                width: 9px;
+                height: 9px;
+            }
+
+            .console-dots {
+                gap: 5px;
+            }
+
+            .console-title {
+                font-size: .72rem;
+                padding-right: 28px;
+            }
+
+            .category-divider {
+                padding: 12px 12px 6px;
+                font-size: .75rem;
+            }
+
+            .tab-nav {
+                padding: 6px 12px 10px;
+                gap: 6px;
+            }
+
+            .tab-btn {
+                font-size: .78rem;
+                padding: 6px 12px;
+            }
+
+            .cmd-row {
+                padding: 8px 12px;
+                gap: 6px;
+                flex-wrap: wrap;
+            }
+
+            .cmd-text-wrapper {
+                gap: 3px 6px;
+                flex-basis: 100%;
+                margin-bottom: 2px;
+            }
+
+            code.cmd-code {
+                font-size: .78rem;
+                padding: 3px 6px;
+                white-space: normal;
+                word-break: break-all;
+            }
+
+            span.comment {
+                font-size: .7rem;
+                white-space: normal;
+                word-break: break-word;
+            }
+
+            .copy-btn {
+                font-size: .73rem;
+                padding: 7px 14px;
+                min-height: 38px;
+                min-width: 54px;
+                margin-left: auto;
+            }
+
+            .section-label {
+                padding: 12px 12px 4px;
+                font-size: .7rem;
+            }
+
+            .console-footer {
+                padding: 12px;
+                font-size: .68rem;
+            }
+
+            .cursor-glow {
+                display: none;
+            }
         }
     </style>
 </head>
+
 <body>
+    <!-- 粒子画布 -->
+    <canvas id="particleCanvas"></canvas>
+
+    <!-- 背景网格 -->
+    <div class="bg-grid"></div>
+
+    <!-- 径向光晕 -->
+    <div class="bg-radial"></div>
+
+    <!-- 扫描线 -->
+    <div class="scanline"></div>
+
+    <!-- 鼠标光晕 -->
+    <div class="cursor-glow" id="cursorGlow"></div>
+
+    <!-- Toast 提示 -->
     <div class="toast" id="toast" aria-live="polite"></div>
 
-    <!-- 顶部模块：SteamID 转换 + 剪切板（保持不变） -->
+    <!-- =========================
+         顶部功能区
+         ========================= -->
     <div class="top-modules">
+        <!-- SteamID 转 Connect -->
         <div class="connect-module">
             <div class="module-header">
                 <span class="module-title">🔗 SteamID 转 Connect 指令</span>
             </div>
+
             <div class="module-body">
-                <textarea id="steamidInput" placeholder="在此粘贴包含 SteamID 的文本，例如：
-steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
+                <textarea
+                    id="steamidInput"
+                    placeholder="在此粘贴包含 SteamID 的文本，例如：&#10;steamid : [A:1:3538182148:50710](90289793877172228)"
+                    rows="3"
+                ></textarea>
+
                 <div class="module-actions">
-                    <button id="extractBtn" class="action-btn primary">提取并生成</button>
-                    <button id="clearBtn" class="action-btn secondary">清空</button>
+                    <button id="extractBtn" class="action-btn primary">
+                        提取并生成
+                    </button>
+                    <button id="clearBtn" class="action-btn secondary">
+                        清空
+                    </button>
                 </div>
-                <div class="result-area" id="resultArea" style="display: none;">
+
+                <div class="result-area" id="resultArea" style="display:none;">
                     <span class="result-label">生成的指令：</span>
                     <code class="result-code" id="resultCode"></code>
-                    <button id="copyConnectBtn" class="copy-btn" data-cmd="">复制指令</button>
+                    <button
+                        id="copyConnectBtn"
+                        class="copy-btn"
+                        data-cmd=""
+                    >
+                        复制指令
+                    </button>
                 </div>
             </div>
         </div>
 
+        <!-- 剪切板入口 -->
         <div class="clipboard-module">
-            <a href="https://ykjtb.com/" target="_blank" rel="noopener noreferrer" class="clipboard-btn">
+            <a
+                href="https://ykjtb.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="clipboard-btn"
+            >
                 📋 剪切板
             </a>
         </div>
     </div>
 
+    <!-- =========================
+         控制台主区域
+         ========================= -->
     <main class="console-window">
+        <!-- 控制台头部 -->
         <div class="console-header">
             <div class="console-dots">
                 <span class="console-dot red"></span>
                 <span class="console-dot yellow"></span>
                 <span class="console-dot green"></span>
             </div>
+
             <span class="console-title">
-                <span class="prompt">&gt;_</span>&nbsp;CS2&nbsp;控制台指令速查&nbsp;·&nbsp;官匹/人机房
+                <span class="prompt">&gt;_</span>
+                &nbsp;CS2&nbsp;控制台指令速查&nbsp;·&nbsp;官匹/人机房
             </span>
         </div>
 
+        <!-- 控制台内容 -->
         <div class="console-body" id="cmdList">
-            <!-- 常用指令 (保持不变) -->
             <div class="section-label">⚡ 常用指令</div>
+
             <div class="cmd-row">
-                <div class="cmd-text-wrapper"><code class="cmd-code">status</code><span class="comment">// 查看服务器状态及玩家信息</span></div>
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">status</code>
+                    <span class="comment">// 查看服务器状态及玩家信息</span>
+                </div>
                 <button class="copy-btn" data-cmd="status">复制</button>
             </div>
+
             <div class="cmd-row">
-                <div class="cmd-text-wrapper"><code class="cmd-code">bot_kick</code><span class="comment">// 踢出所有机器人</span></div>
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">bot_kick</code>
+                    <span class="comment">// 踢出所有机器人</span>
+                </div>
                 <button class="copy-btn" data-cmd="bot_kick">复制</button>
             </div>
+
             <div class="cmd-row">
-                <div class="cmd-text-wrapper"><code class="cmd-code">mp_restartgame 1</code><span class="comment">// 1秒后重启当前对局</span></div>
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">mp_restartgame 1</code>
+                    <span class="comment">// 1秒后重启当前对局</span>
+                </div>
                 <button class="copy-btn" data-cmd="mp_restartgame 1">复制</button>
             </div>
+
             <div class="cmd-row">
-                <div class="cmd-text-wrapper"><code class="cmd-code">sv_cheats 1</code><span class="comment">// 开启作弊指令（仅本地/人机）</span></div>
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">sv_cheats 1</code>
+                    <span class="comment">// 开启作弊指令（仅本地/人机）</span>
+                </div>
                 <button class="copy-btn" data-cmd="sv_cheats 1">复制</button>
             </div>
+
             <div class="cmd-row">
-                <div class="cmd-text-wrapper"><code class="cmd-code">clear</code><span class="comment">// 清空控制台屏幕</span></div>
+                <div class="cmd-text-wrapper">
+                    <code class="cmd-code">clear</code>
+                    <span class="comment">// 清空控制台屏幕</span>
+                </div>
                 <button class="copy-btn" data-cmd="clear">复制</button>
             </div>
 
-            <!-- 独立分隔栏（橙色边框） -->
-            <div class="category-divider">
-                📂 指令分类
-            </div>
+            <!-- 分类分隔 -->
+            <div class="category-divider">📂 指令分类</div>
 
-            <!-- Tab 导航区域（换行布局） -->
+            <!-- Tab 导航 -->
             <div class="tab-nav" id="tabNav">
-                <button class="tab-btn active" data-tab="practice">练习与作弊</button>
-                <button class="tab-btn" data-tab="knife">改刀指令</button>
-                <button class="tab-btn" data-tab="maps">地图切换</button>
-                <button class="tab-btn" data-tab="bots">机器人管理</button>
-                <button class="tab-btn" data-tab="match">对局控制</button>
-                <button class="tab-btn" data-tab="economy">经济与物品</button>
-                <button class="tab-btn" data-tab="server">服务器与连接</button>
-                <button class="tab-btn" data-tab="display">显示与界面</button>
-                <button class="tab-btn" data-tab="voice">语音通讯</button>
-                <button class="tab-btn" data-tab="others">其他实用指令</button>
+                <button class="tab-btn active" data-tab="practice">
+                    练习与作弊
+                </button>
+                <button class="tab-btn" data-tab="knife">
+                    改刀指令
+                </button>
+                <button class="tab-btn" data-tab="maps">
+                    地图切换
+                </button>
+                <button class="tab-btn" data-tab="bots">
+                    机器人管理
+                </button>
+                <button class="tab-btn" data-tab="match">
+                    对局控制
+                </button>
+                <button class="tab-btn" data-tab="economy">
+                    经济与物品
+                </button>
+                <button class="tab-btn" data-tab="server">
+                    服务器与连接
+                </button>
+                <button class="tab-btn" data-tab="display">
+                    显示与界面
+                </button>
+                <button class="tab-btn" data-tab="voice">
+                    语音通讯
+                </button>
+                <button class="tab-btn" data-tab="others">
+                    其他实用指令
+                </button>
             </div>
 
-            <!-- Tab 内容容器 -->
+            <!-- Tab 内容区 -->
             <div id="tabContent">
                 <!-- 练习与作弊 -->
                 <div class="tab-content active" id="practice">
-                    <div class="section-label">🔧 练习与作弊（需 sv_cheats 1）</div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_cheats 1</code><span class="comment">// 开启作弊指令</span></div><button class="copy-btn" data-cmd="sv_cheats 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">god</code><span class="comment">// 无敌模式</span></div><button class="copy-btn" data-cmd="god">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">noclip</code><span class="comment">// 穿墙飞行模式</span></div><button class="copy-btn" data-cmd="noclip">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_infinite_ammo 1</code><span class="comment">// 无限弹药（无需换弹）</span></div><button class="copy-btn" data-cmd="sv_infinite_ammo 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_infinite_ammo 2</code><span class="comment">// 无限弹药（需换弹）</span></div><button class="copy-btn" data-cmd="sv_infinite_ammo 2">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_rethrow_last_grenade</code><span class="comment">// 重放最后一颗手雷轨迹</span></div><button class="copy-btn" data-cmd="sv_rethrow_last_grenade">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_showimpacts 1</code><span class="comment">// 显示子弹弹着点</span></div><button class="copy-btn" data-cmd="sv_showimpacts 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_showimpacts 0</code><span class="comment">// 关闭子弹弹着点显示</span></div><button class="copy-btn" data-cmd="sv_showimpacts 0">复制</button></div>
+                    <div class="section-label">
+                        🔧 练习与作弊（需 sv_cheats 1）
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">sv_cheats 1</code>
+                            <span class="comment">// 开启作弊指令</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="sv_cheats 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">god</code>
+                            <span class="comment">// 无敌模式</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="god">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">noclip</code>
+                            <span class="comment">// 穿墙飞行模式</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="noclip">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">sv_infinite_ammo 1</code>
+                            <span class="comment">// 无限弹药（无需换弹）</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="sv_infinite_ammo 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">sv_infinite_ammo 2</code>
+                            <span class="comment">// 无限弹药（需换弹）</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="sv_infinite_ammo 2">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">sv_rethrow_last_grenade</code>
+                            <span class="comment">// 重放最后一颗手雷轨迹</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="sv_rethrow_last_grenade">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">sv_showimpacts 1</code>
+                            <span class="comment">// 显示子弹弹着点</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="sv_showimpacts 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">sv_showimpacts 0</code>
+                            <span class="comment">// 关闭子弹弹着点显示</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="sv_showimpacts 0">复制</button>
+                    </div>
                 </div>
 
                 <!-- 改刀指令 -->
                 <div class="tab-content" id="knife">
-                    <div class="section-label">🔪 改刀指令（需 sv_cheats 1）</div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 500</code><span class="comment">// 刺刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 500">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 503</code><span class="comment">// 海豹短刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 503">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 505</code><span class="comment">// 折叠刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 505">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 506</code><span class="comment">// 穿肠刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 506">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 507</code><span class="comment">// 爪子刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 507">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 508</code><span class="comment">// M9刺刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 508">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 509</code><span class="comment">// 猎杀者匕首</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 509">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 512</code><span class="comment">// 弯刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 512">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 514</code><span class="comment">// 鲍伊猎刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 514">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 515</code><span class="comment">// 蝴蝶刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 515">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 516</code><span class="comment">// 暗影双匕</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 516">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 517</code><span class="comment">// 系绳匕首</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 517">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 518</code><span class="comment">// 求生匕首</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 518">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 519</code><span class="comment">// 熊刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 519">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 520</code><span class="comment">// 折刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 520">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 521</code><span class="comment">// 流浪者匕首</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 521">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 522</code><span class="comment">// 短剑</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 522">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 523</code><span class="comment">// 锯齿爪刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 523">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 525</code><span class="comment">// 骷髅匕首</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 525">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 526</code><span class="comment">// 廓尔喀刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 526">复制</button></div>
+                    <div class="section-label">
+                        🔪 改刀指令（需 sv_cheats 1）
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 500
+                            </code>
+                            <span class="comment">// 刺刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 500">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 503
+                            </code>
+                            <span class="comment">// 海豹短刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 503">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 505
+                            </code>
+                            <span class="comment">// 折叠刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 505">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 506
+                            </code>
+                            <span class="comment">// 穿肠刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 506">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 507
+                            </code>
+                            <span class="comment">// 爪子刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 507">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 508
+                            </code>
+                            <span class="comment">// M9刺刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 508">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 509
+                            </code>
+                            <span class="comment">// 猎杀者匕首</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 509">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 512
+                            </code>
+                            <span class="comment">// 弯刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 512">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 514
+                            </code>
+                            <span class="comment">// 鲍伊猎刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 514">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 515
+                            </code>
+                            <span class="comment">// 蝴蝶刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 515">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 516
+                            </code>
+                            <span class="comment">// 暗影双匕</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 516">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 517
+                            </code>
+                            <span class="comment">// 系绳匕首</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 517">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 518
+                            </code>
+                            <span class="comment">// 求生匕首</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 518">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 519
+                            </code>
+                            <span class="comment">// 熊刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 519">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 520
+                            </code>
+                            <span class="comment">// 折刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 520">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 521
+                            </code>
+                            <span class="comment">// 流浪者匕首</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 521">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 522
+                            </code>
+                            <span class="comment">// 短剑</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 522">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 523
+                            </code>
+                            <span class="comment">// 锯齿爪刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 523">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 525
+                            </code>
+                            <span class="comment">// 骷髅匕首</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 525">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                ent_fire weapon_knife changesubclass 526
+                            </code>
+                            <span class="comment">// 廓尔喀刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 526">
+                            复制
+                        </button>
+                    </div>
                 </div>
 
                 <!-- 地图切换 -->
                 <div class="tab-content" id="maps">
                     <div class="section-label">🗺️ 地图切换</div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_ancient</code><span class="comment">// 远古遗迹（白天）</span></div><button class="copy-btn" data-cmd="changelevel de_ancient">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_ancient_night</code><span class="comment">// 远古遗迹（夜间）</span></div><button class="copy-btn" data-cmd="changelevel de_ancient_night">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_anubis</code><span class="comment">// 阿努比斯</span></div><button class="copy-btn" data-cmd="changelevel de_anubis">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_dust2</code><span class="comment">// 炙热沙城2</span></div><button class="copy-btn" data-cmd="changelevel de_dust2">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_inferno</code><span class="comment">// 炼狱小镇</span></div><button class="copy-btn" data-cmd="changelevel de_inferno">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_mirage</code><span class="comment">// 荒漠迷城</span></div><button class="copy-btn" data-cmd="changelevel de_mirage">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_nuke</code><span class="comment">// 核子危机</span></div><button class="copy-btn" data-cmd="changelevel de_nuke">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_overpass</code><span class="comment">// 死亡游乐园</span></div><button class="copy-btn" data-cmd="changelevel de_overpass">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_train</code><span class="comment">// 列车停放站</span></div><button class="copy-btn" data-cmd="changelevel de_train">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_vertigo</code><span class="comment">// 殒命大厦</span></div><button class="copy-btn" data-cmd="changelevel de_vertigo">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel cs_office</code><span class="comment">// 办公室</span></div><button class="copy-btn" data-cmd="changelevel cs_office">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel cs_italy</code><span class="comment">// 意大利小镇</span></div><button class="copy-btn" data-cmd="changelevel cs_italy">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel ar_baggage</code><span class="comment">// 行李仓库</span></div><button class="copy-btn" data-cmd="changelevel ar_baggage">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel ar_pool_day</code><span class="comment">// 泳池激战</span></div><button class="copy-btn" data-cmd="changelevel ar_pool_day">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel ar_shoots</code><span class="comment">// 遗迹射击场</span></div><button class="copy-btn" data-cmd="changelevel ar_shoots">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel ar_shoots_night</code><span class="comment">// 遗迹射击场夜间</span></div><button class="copy-btn" data-cmd="changelevel ar_shoots_night">复制</button></div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_ancient</code>
+                            <span class="comment">// 远古遗迹（白天）</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_ancient">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_ancient_night</code>
+                            <span class="comment">// 远古遗迹（夜间）</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_ancient_night">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_anubis</code>
+                            <span class="comment">// 阿努比斯</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_anubis">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_dust2</code>
+                            <span class="comment">// 炙热沙城2</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_dust2">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_inferno</code>
+                            <span class="comment">// 炼狱小镇</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_inferno">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_mirage</code>
+                            <span class="comment">// 荒漠迷城</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_mirage">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_nuke</code>
+                            <span class="comment">// 核子危机</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_nuke">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_overpass</code>
+                            <span class="comment">// 死亡游乐园</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_overpass">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_train</code>
+                            <span class="comment">// 列车停放站</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_train">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_vertigo</code>
+                            <span class="comment">// 殒命大厦</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_vertigo">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel cs_office</code>
+                            <span class="comment">// 办公室</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel cs_office">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel cs_italy</code>
+                            <span class="comment">// 意大利小镇</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel cs_italy">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel ar_baggage</code>
+                            <span class="comment">// 行李仓库</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel ar_baggage">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel ar_pool_day</code>
+                            <span class="comment">// 泳池激战</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel ar_pool_day">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel ar_shoots</code>
+                            <span class="comment">// 遗迹射击场</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel ar_shoots">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel ar_shoots_night</code>
+                            <span class="comment">// 遗迹射击场夜间</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel ar_shoots_night">复制</button>
+                    </div>
                 </div>
 
-<!-- 机器人管理 -->
-<div class="tab-content" id="bots">
-    <div class="section-label">🤖 机器人管理</div>
-    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_kick</code><span class="comment">// 踢出所有机器人</span></div><button class="copy-btn" data-cmd="bot_kick">复制</button></div>
-    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_add</code><span class="comment">// 添加一个机器人</span></div><button class="copy-btn" data-cmd="bot_add">复制</button></div>
-    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_add_ct</code><span class="comment">// 添加一个CT方机器人</span></div><button class="copy-btn" data-cmd="bot_add_ct">复制</button></div>
-    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_add_t</code><span class="comment">// 添加一个T方机器人</span></div><button class="copy-btn" data-cmd="bot_add_t">复制</button></div>
-    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_stop 1</code><span class="comment">// 机器人停止移动</span></div><button class="copy-btn" data-cmd="bot_stop 1">复制</button></div>
-    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_place</code><span class="comment">// 在准星处放置一个机器人</span></div><button class="copy-btn" data-cmd="bot_place">复制</button></div>
-    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_kick; custom_bot_difficulty 5; mp_restartgame 1; bot_add</code><span class="comment">// 困难模式</span></div><button class="copy-btn" data-cmd="bot_kick; custom_bot_difficulty 5; mp_restartgame 1; bot_add">复制</button></div>
-    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_kick; custom_bot_difficulty 1; mp_restartgame 1; bot_add</code><span class="comment">// 简单模式</span></div><button class="copy-btn" data-cmd="bot_kick; custom_bot_difficulty 1; mp_restartgame 1; bot_add">复制</button></div>
-</div>
+                <!-- 机器人管理 -->
+                <div class="tab-content" id="bots">
+                    <div class="section-label">🤖 机器人管理</div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">bot_kick</code>
+                            <span class="comment">// 踢出所有机器人</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="bot_kick">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">bot_add</code>
+                            <span class="comment">// 添加一个机器人</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="bot_add">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">bot_add_ct</code>
+                            <span class="comment">// 添加一个CT方机器人</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="bot_add_ct">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">bot_add_t</code>
+                            <span class="comment">// 添加一个T方机器人</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="bot_add_t">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">bot_stop 1</code>
+                            <span class="comment">// 机器人停止移动</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="bot_stop 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">bot_place</code>
+                            <span class="comment">// 在准星处放置一个机器人</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="bot_place">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                bot_kick; custom_bot_difficulty 5; mp_restartgame 1; bot_add
+                            </code>
+                            <span class="comment">// 困难模式</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="bot_kick; custom_bot_difficulty 5; mp_restartgame 1; bot_add">
+                            复制
+                        </button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">
+                                bot_kick; custom_bot_difficulty 1; mp_restartgame 1; bot_add
+                            </code>
+                            <span class="comment">// 简单模式</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="bot_kick; custom_bot_difficulty 1; mp_restartgame 1; bot_add">
+                            复制
+                        </button>
+                    </div>
+                </div>
 
                 <!-- 对局控制 -->
                 <div class="tab-content" id="match">
                     <div class="section-label">🎮 对局控制</div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_restartgame 1</code><span class="comment">// 1秒后重启当前对局</span></div><button class="copy-btn" data-cmd="mp_restartgame 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_freezetime 0</code><span class="comment">// 取消开局冻结时间</span></div><button class="copy-btn" data-cmd="mp_freezetime 0">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_roundtime_defuse 60</code><span class="comment">// 拆弹图每局时长60分钟</span></div><button class="copy-btn" data-cmd="mp_roundtime_defuse 60">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_limitteams 0</code><span class="comment">// 取消队伍人数限制</span></div><button class="copy-btn" data-cmd="mp_limitteams 0">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_autoteambalance 0</code><span class="comment">// 关闭自动平衡队伍</span></div><button class="copy-btn" data-cmd="mp_autoteambalance 0">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_overtime_enable 1</code><span class="comment">// 允许加时赛</span></div><button class="copy-btn" data-cmd="mp_overtime_enable 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_overtime_maxrounds 3</code><span class="comment">// 加时最大回合数 (可自定义)</span></div><button class="copy-btn" data-cmd="mp_overtime_maxrounds 3">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_tkpunish 1</code><span class="comment">// 友伤惩罚开启</span></div><button class="copy-btn" data-cmd="mp_tkpunish 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_friendlyfire 1</code><span class="comment">// 开启友伤</span></div><button class="copy-btn" data-cmd="mp_friendlyfire 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_c4timer 40</code><span class="comment">// C4爆炸倒计时40秒 (可调)</span></div><button class="copy-btn" data-cmd="mp_c4timer 40">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_respawn_on_death_ct 1</code><span class="comment">// CT死亡后立刻复活</span></div><button class="copy-btn" data-cmd="mp_respawn_on_death_ct 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_respawn_on_death_t 1</code><span class="comment">// T死亡后立刻复活</span></div><button class="copy-btn" data-cmd="mp_respawn_on_death_t 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_allowspectators 1</code><span class="comment">// 允许观战</span></div><button class="copy-btn" data-cmd="mp_allowspectators 1">复制</button></div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_restartgame 1</code>
+                            <span class="comment">// 1秒后重启当前对局</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_restartgame 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_freezetime 0</code>
+                            <span class="comment">// 取消开局冻结时间</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_freezetime 0">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_roundtime_defuse 60</code>
+                            <span class="comment">// 拆弹图每局时长60分钟</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_roundtime_defuse 60">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_limitteams 0</code>
+                            <span class="comment">// 取消队伍人数限制</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_limitteams 0">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_autoteambalance 0</code>
+                            <span class="comment">// 关闭自动平衡队伍</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_autoteambalance 0">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_overtime_enable 1</code>
+                            <span class="comment">// 允许加时赛</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_overtime_enable 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_overtime_maxrounds 3</code>
+                            <span class="comment">// 加时最大回合数 (可自定义)</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_overtime_maxrounds 3">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_tkpunish 1</code>
+                            <span class="comment">// 友伤惩罚开启</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_tkpunish 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_friendlyfire 1</code>
+                            <span class="comment">// 开启友伤</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_friendlyfire 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_c4timer 40</code>
+                            <span class="comment">// C4爆炸倒计时40秒 (可调)</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_c4timer 40">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_respawn_on_death_ct 1</code>
+                            <span class="comment">// CT死亡后立刻复活</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_respawn_on_death_ct 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_respawn_on_death_t 1</code>
+                            <span class="comment">// T死亡后立刻复活</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_respawn_on_death_t 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_allowspectators 1</code>
+                            <span class="comment">// 允许观战</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_allowspectators 1">复制</button>
+                    </div>
                 </div>
 
                 <!-- 经济与物品 -->
                 <div class="tab-content" id="economy">
                     <div class="section-label">💰 经济与物品</div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_buytime 9999</code><span class="comment">// 购买时间无限制</span></div><button class="copy-btn" data-cmd="mp_buytime 9999">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_buy_anywhere 1</code><span class="comment">// 任意位置购买装备</span></div><button class="copy-btn" data-cmd="mp_buy_anywhere 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_maxmoney 65535</code><span class="comment">// 金钱上限65535</span></div><button class="copy-btn" data-cmd="mp_maxmoney 65535">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_startmoney 65535</code><span class="comment">// 开局金钱65535</span></div><button class="copy-btn" data-cmd="mp_startmoney 65535">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_afterroundmoney 65535</code><span class="comment">// 回合结束自动补满钱</span></div><button class="copy-btn" data-cmd="mp_afterroundmoney 65535">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_drop_knife_enable 1</code><span class="comment">// 允许丢弃小刀</span></div><button class="copy-btn" data-cmd="mp_drop_knife_enable 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_death_drop_gun 1</code><span class="comment">// 死亡掉落枪械</span></div><button class="copy-btn" data-cmd="mp_death_drop_gun 1">复制</button></div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_buytime 9999</code>
+                            <span class="comment">// 购买时间无限制</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_buytime 9999">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_buy_anywhere 1</code>
+                            <span class="comment">// 任意位置购买装备</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_buy_anywhere 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_maxmoney 65535</code>
+                            <span class="comment">// 金钱上限65535</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_maxmoney 65535">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_startmoney 65535</code>
+                            <span class="comment">// 开局金钱65535</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_startmoney 65535">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_afterroundmoney 65535</code>
+                            <span class="comment">// 回合结束自动补满钱</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_afterroundmoney 65535">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_drop_knife_enable 1</code>
+                            <span class="comment">// 允许丢弃小刀</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_drop_knife_enable 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">mp_death_drop_gun 1</code>
+                            <span class="comment">// 死亡掉落枪械</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="mp_death_drop_gun 1">复制</button>
+                    </div>
                 </div>
 
                 <!-- 服务器与连接 -->
                 <div class="tab-content" id="server">
                     <div class="section-label">🌐 服务器与连接</div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">status</code><span class="comment">// 查看服务器状态及玩家信息</span></div><button class="copy-btn" data-cmd="status">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">disconnect</code><span class="comment">// 断开当前服务器连接</span></div><button class="copy-btn" data-cmd="disconnect">复制</button></div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">status</code>
+                            <span class="comment">// 查看服务器状态及玩家信息</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="status">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">disconnect</code>
+                            <span class="comment">// 断开当前服务器连接</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="disconnect">复制</button>
+                    </div>
                 </div>
 
                 <!-- 显示与界面 -->
                 <div class="tab-content" id="display">
                     <div class="section-label">🖥️ 显示与界面</div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">cl_draw_only_deathnotices 1</code><span class="comment">// 仅显示击杀信息（隐藏HUD）</span></div><button class="copy-btn" data-cmd="cl_draw_only_deathnotices 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">cl_draw_only_deathnotices 0</code><span class="comment">// 恢复完整HUD显示</span></div><button class="copy-btn" data-cmd="cl_draw_only_deathnotices 0">复制</button></div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">cl_draw_only_deathnotices 1</code>
+                            <span class="comment">// 仅显示击杀信息（隐藏HUD）</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="cl_draw_only_deathnotices 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">cl_draw_only_deathnotices 0</code>
+                            <span class="comment">// 恢复完整HUD显示</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="cl_draw_only_deathnotices 0">复制</button>
+                    </div>
                 </div>
 
                 <!-- 语音通讯 -->
                 <div class="tab-content" id="voice">
                     <div class="section-label">📢 语音通讯</div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_alltalk 1</code><span class="comment">// CT/T互相听见语音</span></div><button class="copy-btn" data-cmd="sv_alltalk 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_deadtalk 1</code><span class="comment">// 死人能和活人说话</span></div><button class="copy-btn" data-cmd="sv_deadtalk 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_full_alltalk 1</code><span class="comment">// 所有人互通语音</span></div><button class="copy-btn" data-cmd="sv_full_alltalk 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">voice_enable 1</code><span class="comment">// 开启语音</span></div><button class="copy-btn" data-cmd="voice_enable 1">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">voice_enable 0</code><span class="comment">// 关闭语音</span></div><button class="copy-btn" data-cmd="voice_enable 0">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">cl_mute_enemy_team 1</code><span class="comment">// 静音敌方</span></div><button class="copy-btn" data-cmd="cl_mute_enemy_team 1">复制</button></div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">sv_alltalk 1</code>
+                            <span class="comment">// CT/T互相听见语音</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="sv_alltalk 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">sv_deadtalk 1</code>
+                            <span class="comment">// 死人能和活人说话</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="sv_deadtalk 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">sv_full_alltalk 1</code>
+                            <span class="comment">// 所有人互通语音</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="sv_full_alltalk 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">voice_enable 1</code>
+                            <span class="comment">// 开启语音</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="voice_enable 1">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">voice_enable 0</code>
+                            <span class="comment">// 关闭语音</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="voice_enable 0">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">cl_mute_enemy_team 1</code>
+                            <span class="comment">// 静音敌方</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="cl_mute_enemy_team 1">复制</button>
+                    </div>
                 </div>
 
                 <!-- 其他实用指令 -->
                 <div class="tab-content" id="others">
                     <div class="section-label">⚡ 其他实用指令</div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">kill</code><span class="comment">// 自杀（重新出生）</span></div><button class="copy-btn" data-cmd="kill">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">clear</code><span class="comment">// 清空控制台屏幕</span></div><button class="copy-btn" data-cmd="clear">复制</button></div>
-                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">kick</code><span class="comment">// 踢出指定玩家 (后跟名称)</span></div><button class="copy-btn" data-cmd="kick">复制</button></div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">kill</code>
+                            <span class="comment">// 自杀（重新出生）</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="kill">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">clear</code>
+                            <span class="comment">// 清空控制台屏幕</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="clear">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">kick</code>
+                            <span class="comment">// 踢出指定玩家 (后跟名称)</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="kick">复制</button>
+                    </div>
                 </div>
             </div>
         </div>
 
+        <!-- 控制台底部说明 -->
         <div class="console-footer">
             <span class="dot-indicator"></span>
-            注释仅供阅读，复制内容不含注释&nbsp;&nbsp;|&nbsp;&nbsp;点击「复制」按钮仅复制纯指令文本
+            注释仅供阅读，复制内容不含注释
+            &nbsp;&nbsp;|&nbsp;&nbsp;
+            点击「复制」按钮仅复制纯指令文本
             <span class="dot-indicator"></span>
         </div>
     </main>
 
-    <!-- 底部资源链接 -->
+    <!-- =========================
+         资源链接区
+         ========================= -->
     <div class="resources-module">
-        <a href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables" target="_blank" rel="noopener noreferrer" class="resource-link">
+        <a
+            href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="resource-link"
+        >
             📚 V 社官方开发文档维基站
         </a>
     </div>
 
+    <!-- 页面底部 -->
     <div class="page-footer">
-        CS2 控制台指令速查 &nbsp;·&nbsp; 官匹 / 人机房常用 &nbsp;·&nbsp; cs-brx.pages.dev
+        CS2 控制台指令速查 · 官匹 / 人机房常用 · cs-brx.pages.dev
     </div>
 
+    <!-- =========================
+         JavaScript 逻辑
+         ========================= -->
     <script>
-        (function() {
+        (function () {
+            /* =========================
+               粒子系统
+               ========================= */
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+
+            let particles = [];
+            let mouseX = 0;
+            let mouseY = 0;
+
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 1.5 + .5;
+                    this.speedX = (Math.random() - .5) * .3;
+                    this.speedY = (Math.random() - .5) * .3;
+                    this.opacity = Math.random() * .5 + .1;
+                    this.pulse = Math.random() * Math.PI * 2;
+                    this.pulseSpeed = Math.random() * .02 + .005;
+                }
+
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.pulse += this.pulseSpeed;
+
+                    const dx = this.x - mouseX;
+                    const dy = this.y - mouseY;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 120) {
+                        const force = (120 - dist) / 120 * .3;
+                        this.x += (dx / dist) * force;
+                        this.y += (dy / dist) * force;
+                    }
+
+                    if (
+                        this.x < 0 ||
+                        this.x > canvas.width ||
+                        this.y < 0 ||
+                        this.y > canvas.height
+                    ) {
+                        this.reset();
+                    }
+                }
+
+                draw() {
+                    const op = this.opacity * (.5 + .5 * Math.sin(this.pulse));
+
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(78, 255, 78, ${op})`;
+                    ctx.fill();
+
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size * 3, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(78, 255, 78, ${op * .15})`;
+                    ctx.fill();
+                }
+            }
+
+            const pCount = Math.min(
+                80,
+                Math.floor((canvas.width * canvas.height) / 15000)
+            );
+
+            for (let i = 0; i < pCount; i++) {
+                particles.push(new Particle());
+            }
+
+            function drawConnections() {
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+
+                        if (dist < 100) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(78, 255, 78, ${(1 - dist / 100) * .12})`;
+                            ctx.lineWidth = .5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+
+                drawConnections();
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            /* =========================
+               鼠标光晕跟随
+               ========================= */
+            const cursorGlow = document.getElementById('cursorGlow');
+
+            document.addEventListener('mousemove', e => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                cursorGlow.style.left = e.clientX + 'px';
+                cursorGlow.style.top = e.clientY + 'px';
+            });
+
+            /* =========================
+               禁用右键 / 常见开发者快捷键
+               （仅防误触，不影响学习源码）
+               ========================= */
             document.addEventListener('contextmenu', e => e.preventDefault());
+
             document.addEventListener('keydown', e => {
-                if ((e.ctrlKey && (e.key === 's' || e.key === 'u')) || e.key === 'F12' ||
-                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
+                if (
+                    (e.ctrlKey && (e.key === 's' || e.key === 'u')) ||
+                    e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && (
+                        e.key === 'I' ||
+                        e.key === 'J' ||
+                        e.key === 'C'
+                    ))
+                ) {
                     e.preventDefault();
                 }
             });
-            document.addEventListener('dragstart', e => e.preventDefault());
-            console.log('%c⚠️ 警告：请勿尝试查看或复制源代码！', 'color: red; font-size: 20px; font-weight: bold;');
 
+            document.addEventListener('dragstart', e => e.preventDefault());
+
+            /* =========================
+               Toast 提示
+               ========================= */
             const toast = document.getElementById('toast');
             let toastTimer = null;
+
             function showToast(msg) {
-                if (toastTimer) { clearTimeout(toastTimer); toast.classList.remove('show'); }
-                void toast.offsetWidth;
+                if (toastTimer) {
+                    clearTimeout(toastTimer);
+                    toast.classList.remove('show');
+                }
+
+                void toast.offsetWidth; // 触发重排，重置动画
                 toast.textContent = msg;
                 toast.classList.add('show');
-                toastTimer = setTimeout(() => { toast.classList.remove('show'); toastTimer = null; }, 1600);
+
+                toastTimer = setTimeout(() => {
+                    toast.classList.remove('show');
+                    toastTimer = null;
+                }, 1600);
             }
+
+            /* =========================
+               复制逻辑（优先 Clipboard API）
+               ========================= */
             async function copyText(text) {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
-                    try { await navigator.clipboard.writeText(text); return true; } catch (e) {}
+                    try {
+                        await navigator.clipboard.writeText(text);
+                        return true;
+                    } catch (e) {
+                        // 降级处理
+                    }
                 }
+
                 try {
                     const ta = document.createElement('textarea');
-                    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
-                    document.body.appendChild(ta); ta.focus(); ta.select();
+                    ta.value = text;
+                    ta.style.position = 'fixed';
+                    ta.style.opacity = '0';
+                    document.body.appendChild(ta);
+                    ta.focus();
+                    ta.select();
+
                     const ok = document.execCommand('copy');
-                    document.body.removeChild(ta); return ok;
-                } catch (e) { return false; }
+                    document.body.removeChild(ta);
+                    return ok;
+                } catch (e) {
+                    return false;
+                }
             }
 
             function attachCopyHandlers() {
                 document.querySelectorAll('.copy-btn').forEach(btn => {
-                    if (btn.dataset.bound) return;
+                    if (btn.dataset.bound) {
+                        return;
+                    }
+
                     btn.dataset.bound = '1';
-                    btn.addEventListener('click', async function(e) {
+
+                    btn.addEventListener('click', async function (e) {
                         e.preventDefault();
+
                         const cmd = this.getAttribute('data-cmd');
-                        if (!cmd || this.classList.contains('copied')) return;
+                        if (!cmd || this.classList.contains('copied')) {
+                            return;
+                        }
+
                         const success = await copyText(cmd);
                         const orig = this.textContent;
+
                         if (success) {
                             this.textContent = '已复制';
                             this.classList.add('copied');
                             showToast('✓ 已复制：' + cmd);
-                            setTimeout(() => { this.textContent = orig; this.classList.remove('copied'); }, 1500);
+
+                            setTimeout(() => {
+                                this.textContent = orig;
+                                this.classList.remove('copied');
+                            }, 1500);
                         } else {
                             this.textContent = '失败';
-                            this.style.borderColor = '#ff5f56'; this.style.color = '#ff5f56';
+                            this.style.borderColor = '#ff5f56';
+                            this.style.color = '#ff5f56';
                             showToast('✗ 复制失败，请手动框选复制');
-                            setTimeout(() => { this.textContent = orig; this.style.borderColor = ''; this.style.color = ''; }, 1500);
+
+                            setTimeout(() => {
+                                this.textContent = orig;
+                                this.style.borderColor = '';
+                                this.style.color = '';
+                            }, 1500);
                         }
                     });
                 });
             }
 
+            /* =========================
+               Tab 切换逻辑
+               ========================= */
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
+
             tabBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const targetId = btn.getAttribute('data-tab');
+
                     tabBtns.forEach(b => b.classList.remove('active'));
                     tabContents.forEach(c => c.classList.remove('active'));
+
                     btn.classList.add('active');
+
                     const targetContent = document.getElementById(targetId);
-                    if (targetContent) targetContent.classList.add('active');
+                    if (targetContent) {
+                        targetContent.classList.add('active');
+                    }
                 });
             });
 
             attachCopyHandlers();
 
+            /* =========================
+               SteamID → Connect 指令
+               ========================= */
             const inputEl = document.getElementById('steamidInput');
             const extractBtn = document.getElementById('extractBtn');
             const clearBtn = document.getElementById('clearBtn');
             const resultArea = document.getElementById('resultArea');
             const resultCode = document.getElementById('resultCode');
             const copyConnectBtn = document.getElementById('copyConnectBtn');
-            function showToastMsg(msg) {
-                if (toastTimer) { clearTimeout(toastTimer); toast.classList.remove('show'); }
-                void toast.offsetWidth;
-                toast.textContent = msg;
-                toast.classList.add('show');
-                toastTimer = setTimeout(() => { toast.classList.remove('show'); toastTimer = null; }, 1600);
-            }
+
             function extractSteamID(text) {
                 const match = text.match(/\[A:\d+:\d+:\d+\]\s*\(\d+\)/);
                 return match ? match[0] : null;
             }
+
             extractBtn.addEventListener('click', () => {
                 const raw = inputEl.value.trim();
-                if (!raw) { showToastMsg('请输入包含 SteamID 的文本'); return; }
+
+                if (!raw) {
+                    showToast('请输入包含 SteamID 的文本');
+                    return;
+                }
+
                 const idPart = extractSteamID(raw);
-                if (!idPart) { showToastMsg('未识别到有效的 SteamID 格式'); return; }
+
+                if (!idPart) {
+                    showToast('未识别到有效的 SteamID 格式');
+                    return;
+                }
+
                 const connectCmd = 'connect ' + idPart;
                 resultCode.textContent = connectCmd;
                 copyConnectBtn.setAttribute('data-cmd', connectCmd);
                 resultArea.style.display = 'flex';
             });
+
             clearBtn.addEventListener('click', () => {
                 inputEl.value = '';
                 resultArea.style.display = 'none';
                 copyConnectBtn.setAttribute('data-cmd', '');
             });
+
             inputEl.addEventListener('keydown', e => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
