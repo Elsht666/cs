@@ -56,7 +56,6 @@
             line-height: 1.5;
         }
 
-        /* 顶部模块容器 (保持不变) */
         .top-modules {
             width: 100%;
             max-width: 900px;
@@ -146,7 +145,6 @@
         .resource-link:hover { border-color: var(--cmd-color); color: var(--cmd-color); background: #1f3320; }
         .resource-link:active { transform: scale(0.97); }
 
-        /* ---------- 控制台窗口 ---------- */
         .console-window {
             width: 100%; max-width: 900px; background: var(--surface); border: 1px solid var(--border);
             border-radius: 10px; overflow: hidden;
@@ -179,11 +177,11 @@
         .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); opacity: 0.6; }
         .section-label:first-of-type { padding-top: 8px; }
 
-        /* 新增：分类分隔栏 */
+        /* 修改：分类分隔栏顶部边框变为橙色 */
         .category-divider {
             display: flex; align-items: center; gap: 10px;
             padding: 16px 18px 8px; margin-top: 10px;
-            border-top: 2px solid var(--border);
+            border-top: 2px solid #76ff03; /* 橙色边框 */
             font-family: var(--font-mono); font-size: 0.8rem;
             color: var(--text-secondary); letter-spacing: 0.04em;
             user-select: none;
@@ -192,11 +190,10 @@
             content: ''; flex: 1; height: 1px; background: var(--border); opacity: 0.4;
         }
 
-        /* Tab 导航样式 - 换行 */
         .tab-nav {
             display: flex; gap: 8px; padding: 8px 18px 12px;
             border-bottom: 1px solid var(--border);
-            flex-wrap: wrap; /* 允许换行，告别横向拖拽 */
+            flex-wrap: wrap;
         }
         .tab-btn {
             padding: 6px 14px; border: 1px solid var(--btn-border);
@@ -385,7 +382,7 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
                 <button class="copy-btn" data-cmd="clear">复制</button>
             </div>
 
-            <!-- 新增：独立分隔栏 -->
+            <!-- 独立分隔栏（橙色边框） -->
             <div class="category-divider">
                 📂 指令分类
             </div>
@@ -618,7 +615,6 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
                 });
             }
 
-            // Tab切换
             const tabBtns = document.querySelectorAll('.tab-btn');
             const tabContents = document.querySelectorAll('.tab-content');
             tabBtns.forEach(btn => {
@@ -634,7 +630,6 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
 
             attachCopyHandlers();
 
-            // SteamID 模块
             const inputEl = document.getElementById('steamidInput');
             const extractBtn = document.getElementById('extractBtn');
             const clearBtn = document.getElementById('clearBtn');
