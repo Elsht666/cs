@@ -669,21 +669,41 @@
         /* =========================
            分类分隔线
            ========================= */
-        .category-divider {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 16px 18px 8px;
-            margin-top: 10px;
-            border-top: 1px solid rgba(78, 255, 78, .2);
-            font-family: var(--mono);
-            font-size: .8rem;
-            color: var(--text2);
-            letter-spacing: .04em;
-            user-select: none;
-            position: relative;
-        }
+.category-divider {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 18px 8px;
+    margin-top: 10px;
+    font-family: var(--mono);
+    font-size: .8rem;
+    color: var(--text2);
+    letter-spacing: .04em;
+    user-select: none;
+    position: relative;
+}
 
+/* ✅ 多彩渐变上边框 */
+.category-divider::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 18px;
+    right: 18px;
+    height: 2px;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        #ff5f56,   /* 红 */
+        #ffbd2e,   /* 黄 */
+        #4eff4e,   /* 绿（CS 主题色） */
+        #2eccfa,   /* 青 */
+        #6272f3,   /* 蓝紫 */
+        transparent
+    );
+    border-radius: 2px;
+    opacity: .85;
+}
         .category-divider::after {
             content: '';
             flex: 1;
