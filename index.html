@@ -28,11 +28,7 @@
             --font-ui: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         html {
             font-size: 16px;
@@ -60,7 +56,7 @@
             line-height: 1.5;
         }
 
-        /* ---------- 顶部模块容器 ---------- */
+        /* 顶部模块容器 (保持不变) */
         .top-modules {
             width: 100%;
             max-width: 900px;
@@ -71,7 +67,6 @@
             align-items: stretch;
         }
 
-        /* ---------- SteamID 连接模块 ---------- */
         .connect-module {
             flex: 1 1 320px;
             min-width: 280px;
@@ -94,634 +89,240 @@
             align-items: center;
             gap: 8px;
         }
-        .module-title {
-            color: var(--cmd-color);
-            font-weight: 600;
-            letter-spacing: 0.03em;
-        }
-        .module-body {
-            padding: 16px 18px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
+        .module-title { color: var(--cmd-color); font-weight: 600; letter-spacing: 0.03em; }
+        .module-body { padding: 16px 18px; flex: 1; display: flex; flex-direction: column; }
         .module-body textarea {
-            width: 100%;
-            padding: 10px 12px;
-            background: #0a0a0b;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            color: var(--text);
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            resize: vertical;
-            margin-bottom: 12px;
-            outline: none;
-            transition: border-color 0.2s;
-            line-height: 1.5;
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
+            width: 100%; padding: 10px 12px; background: #0a0a0b; border: 1px solid var(--border);
+            border-radius: var(--radius); color: var(--text); font-family: var(--font-mono);
+            font-size: 0.85rem; resize: vertical; margin-bottom: 12px; outline: none;
+            transition: border-color 0.2s; line-height: 1.5;
+            -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text;
         }
-        .module-body textarea:focus {
-            border-color: var(--cmd-color);
-        }
-        .module-actions {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 14px;
-            flex-wrap: wrap;
-        }
+        .module-body textarea:focus { border-color: var(--cmd-color); }
+        .module-actions { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
         .action-btn {
-            padding: 8px 18px;
-            border-radius: var(--radius);
-            border: 1px solid var(--btn-border);
-            background: transparent;
-            color: #9a9ba5;
-            font-family: var(--font-ui);
-            font-size: 0.85rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            letter-spacing: 0.03em;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
+            padding: 8px 18px; border-radius: var(--radius); border: 1px solid var(--btn-border);
+            background: transparent; color: #9a9ba5; font-family: var(--font-ui);
+            font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.2s ease;
+            letter-spacing: 0.03em; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
         }
-        .action-btn.primary {
-            border-color: var(--cmd-color-dim);
-            color: var(--cmd-color);
-        }
-        .action-btn.primary:hover {
-            background: var(--btn-hover-bg);
-            border-color: var(--btn-hover-border);
-            box-shadow: 0 0 12px var(--accent-glow);
-        }
-        .action-btn.secondary:hover {
-            border-color: #666;
-            color: #ccc;
-            background: #1a1b1f;
-        }
+        .action-btn.primary { border-color: var(--cmd-color-dim); color: var(--cmd-color); }
+        .action-btn.primary:hover { background: var(--btn-hover-bg); border-color: var(--btn-hover-border); box-shadow: 0 0 12px var(--accent-glow); }
+        .action-btn.secondary:hover { border-color: #666; color: #ccc; background: #1a1b1f; }
         .result-area {
-            background: #0a0a0b;
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 12px 14px;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 10px;
-            margin-top: auto;
+            background: #0a0a0b; border: 1px solid var(--border); border-radius: var(--radius);
+            padding: 12px 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: auto;
         }
-        .result-label {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            font-family: var(--font-ui);
-            white-space: nowrap;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
+        .result-label { font-size: 0.8rem; color: var(--text-secondary); font-family: var(--font-ui); white-space: nowrap; }
         .result-code {
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            color: var(--cmd-color);
-            background: rgba(78, 255, 78, 0.06);
-            padding: 4px 10px;
-            border-radius: var(--radius-sm);
-            word-break: break-all;
-            flex: 1;
-            min-width: 200px;
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
+            font-family: var(--font-mono); font-size: 0.9rem; color: var(--cmd-color);
+            background: rgba(78, 255, 78, 0.06); padding: 4px 10px; border-radius: var(--radius-sm);
+            word-break: break-all; flex: 1; min-width: 200px;
+            -webkit-user-select: text; -moz-user-select: text; -ms-user-select: text; user-select: text;
         }
 
-        /* ---------- 跳转按钮通用样式 ---------- */
-        .clipboard-module {
-            flex: 0 0 auto;
-            min-width: 160px;
-            display: flex;
-            align-items: stretch;
-            justify-content: center;
-        }
+        .clipboard-module { flex: 0 0 auto; min-width: 160px; display: flex; align-items: stretch; justify-content: center; }
         .clipboard-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            padding: 14px 28px 14px 24px;
-            background: var(--surface);
-            border: 2px solid #4eff4e;
-            border-radius: 10px;
-            color: #c8c9d1;
-            font-family: var(--font-ui);
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
-            white-space: nowrap;
-            touch-action: manipulation;
-            -webkit-tap-highlight-color: transparent;
-            flex: 1;
+            display: flex; align-items: center; justify-content: center; gap: 6px;
+            padding: 14px 28px 14px 24px; background: var(--surface); border: 2px solid #4eff4e;
+            border-radius: 10px; color: #c8c9d1; font-family: var(--font-ui); font-size: 1rem;
+            font-weight: 600; letter-spacing: 0.05em; text-decoration: none; cursor: pointer;
+            transition: all 0.2s ease; box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+            white-space: nowrap; touch-action: manipulation; -webkit-tap-highlight-color: transparent; flex: 1;
         }
-        .clipboard-btn:hover {
-            border-color: #ffffff;
-            color: #ffffff;
-            background: #1f3320;
-            box-shadow: 0 0 20px rgba(78, 255, 78, 0.3);
-        }
-        .clipboard-btn:active {
-            transform: scale(0.97);
-        }
+        .clipboard-btn:hover { border-color: #ffffff; color: #ffffff; background: #1f3320; box-shadow: 0 0 20px rgba(78, 255, 78, 0.3); }
+        .clipboard-btn:active { transform: scale(0.97); }
 
-        /* ---------- 底部资源链接模块 ---------- */
         .resources-module {
-            width: 100%;
-            max-width: 900px;
-            margin-top: 20px;
-            padding: 16px 0;
-            border-top: 1px solid var(--border);
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-            flex-wrap: wrap;
+            width: 100%; max-width: 900px; margin-top: 20px; padding: 16px 0;
+            border-top: 1px solid var(--border); display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
         }
         .resource-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 10px 20px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text-secondary);
-            font-family: var(--font-ui);
-            font-size: 0.9rem;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            white-space: nowrap;
+            display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px;
+            background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+            color: var(--text-secondary); font-family: var(--font-ui); font-size: 0.9rem;
+            font-weight: 500; text-decoration: none; transition: all 0.2s ease; white-space: nowrap;
         }
-        .resource-link:hover {
-            border-color: var(--cmd-color);
-            color: var(--cmd-color);
-            background: #1f3320;
-        }
-        .resource-link:active {
-            transform: scale(0.97);
-        }
+        .resource-link:hover { border-color: var(--cmd-color); color: var(--cmd-color); background: #1f3320; }
+        .resource-link:active { transform: scale(0.97); }
 
         /* ---------- 控制台窗口 ---------- */
         .console-window {
-            width: 100%;
-            max-width: 900px;
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow:
-                0 4px 24px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.03) inset,
-                0 1px 0 rgba(255, 255, 255, 0.02) inset;
+            width: 100%; max-width: 900px; background: var(--surface); border: 1px solid var(--border);
+            border-radius: 10px; overflow: hidden;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.03) inset, 0 1px 0 rgba(255, 255, 255, 0.02) inset;
         }
 
         .console-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 14px 18px;
-            background: #1c1d21;
-            border-bottom: 1px solid var(--border);
-            user-select: none;
+            display: flex; align-items: center; gap: 10px; padding: 14px 18px;
+            background: #1c1d21; border-bottom: 1px solid var(--border); user-select: none;
         }
-        .console-dots {
-            display: flex;
-            gap: 7px;
-            flex-shrink: 0;
-        }
-        .console-dot {
-            width: 11px;
-            height: 11px;
-            border-radius: 50%;
-            transition: opacity 0.2s;
-        }
-        .console-dot.red {
-            background: #ff5f56;
-        }
-        .console-dot.yellow {
-            background: #ffbd2e;
-        }
-        .console-dot.green {
-            background: #27c93f;
-        }
+        .console-dots { display: flex; gap: 7px; flex-shrink: 0; }
+        .console-dot { width: 11px; height: 11px; border-radius: 50%; transition: opacity 0.2s; }
+        .console-dot.red { background: #ff5f56; }
+        .console-dot.yellow { background: #ffbd2e; }
+        .console-dot.green { background: #27c93f; }
         .console-title {
-            flex: 1;
-            text-align: center;
-            font-family: var(--font-mono);
-            font-size: 0.85rem;
-            color: #9a9ba5;
-            letter-spacing: 0.04em;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            padding-right: 38px;
+            flex: 1; text-align: center; font-family: var(--font-mono); font-size: 0.85rem;
+            color: #9a9ba5; letter-spacing: 0.04em; white-space: nowrap; overflow: hidden;
+            text-overflow: ellipsis; padding-right: 38px;
         }
-        .console-title .prompt {
-            color: var(--cmd-color);
-            font-weight: 600;
-        }
+        .console-title .prompt { color: var(--cmd-color); font-weight: 600; }
 
-        .console-body {
-            padding: 6px 0;
-            max-height: none;
-            overflow-y: visible;
-        }
+        .console-body { padding: 6px 0; max-height: none; overflow-y: visible; }
 
         .section-label {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 14px 18px 6px;
-            font-family: var(--font-mono);
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: #5a5d68;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
+            display: flex; align-items: center; gap: 8px; padding: 14px 18px 6px;
+            font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+            color: #5a5d68; text-transform: uppercase; letter-spacing: 0.08em; user-select: none;
+        }
+        .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); opacity: 0.6; }
+        .section-label:first-of-type { padding-top: 8px; }
+
+        /* 新增：分类分隔栏 */
+        .category-divider {
+            display: flex; align-items: center; gap: 10px;
+            padding: 16px 18px 8px; margin-top: 10px;
+            border-top: 2px solid var(--border);
+            font-family: var(--font-mono); font-size: 0.8rem;
+            color: var(--text-secondary); letter-spacing: 0.04em;
             user-select: none;
         }
-        .section-label::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border);
-            opacity: 0.6;
-        }
-        .section-label:first-of-type {
-            padding-top: 8px;
+        .category-divider::after {
+            content: ''; flex: 1; height: 1px; background: var(--border); opacity: 0.4;
         }
 
-        .cmd-row {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 9px 18px;
-            transition: background 0.15s ease;
-            border-left: 2px solid transparent;
-            position: relative;
+        /* Tab 导航样式 - 换行 */
+        .tab-nav {
+            display: flex; gap: 8px; padding: 8px 18px 12px;
+            border-bottom: 1px solid var(--border);
+            flex-wrap: wrap; /* 允许换行，告别横向拖拽 */
         }
-        .cmd-row:hover {
-            background: var(--surface-hover);
-            border-left-color: rgba(78, 255, 78, 0.3);
-        }
-
-        .cmd-text-wrapper {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            gap: 4px 8px;
-        }
-
-        code.cmd-code {
-            font-family: var(--font-mono);
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: var(--cmd-color);
-            background: rgba(78, 255, 78, 0.06);
-            padding: 3px 8px;
-            border-radius: var(--radius-sm);
-            white-space: nowrap;
-            cursor: text;
-            user-select: text;
-            -webkit-user-select: text;
-            transition: background 0.15s;
-            letter-spacing: 0.02em;
-            word-break: keep-all;
+        .tab-btn {
+            padding: 6px 14px; border: 1px solid var(--btn-border);
+            background: transparent; color: var(--text-secondary); font-family: var(--font-ui);
+            font-size: 0.82rem; font-weight: 500; border-radius: var(--radius);
+            cursor: pointer; transition: all 0.2s ease; white-space: nowrap;
+            touch-action: manipulation; -webkit-tap-highlight-color: transparent;
             flex-shrink: 0;
         }
-        .cmd-row:hover code.cmd-code {
-            background: rgba(78, 255, 78, 0.1);
-        }
-        code.cmd-code::selection {
-            background: rgba(78, 255, 78, 0.35);
-            color: #fff;
+        .tab-btn:hover { border-color: #666; color: #ccc; }
+        .tab-btn.active {
+            border-color: var(--cmd-color); color: var(--cmd-color);
+            background: rgba(78, 255, 78, 0.08); box-shadow: 0 0 8px rgba(78, 255, 78, 0.15);
         }
 
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .cmd-row {
+            display: flex; align-items: center; gap: 8px; padding: 9px 18px;
+            transition: background 0.15s ease; border-left: 2px solid transparent; position: relative;
+        }
+        .cmd-row:hover { background: var(--surface-hover); border-left-color: rgba(78, 255, 78, 0.3); }
+
+        .cmd-text-wrapper { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
+
+        code.cmd-code {
+            font-family: var(--font-mono); font-size: 0.9rem; font-weight: 500; color: var(--cmd-color);
+            background: rgba(78, 255, 78, 0.06); padding: 3px 8px; border-radius: var(--radius-sm);
+            white-space: nowrap; cursor: text; user-select: text; -webkit-user-select: text;
+            transition: background 0.15s; letter-spacing: 0.02em; word-break: keep-all; flex-shrink: 0;
+        }
+        .cmd-row:hover code.cmd-code { background: rgba(78, 255, 78, 0.1); }
+        code.cmd-code::selection { background: rgba(78, 255, 78, 0.35); color: #fff; }
+
         span.comment {
-            font-family: var(--font-mono);
-            font-size: 0.82rem;
-            color: var(--comment-color);
-            user-select: none;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            white-space: nowrap;
-            flex-shrink: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            min-width: 0;
-            letter-spacing: 0.01em;
+            font-family: var(--font-mono); font-size: 0.82rem; color: var(--comment-color);
+            user-select: none; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none;
+            white-space: nowrap; flex-shrink: 1; overflow: hidden; text-overflow: ellipsis;
+            min-width: 0; letter-spacing: 0.01em;
         }
 
         .copy-btn {
-            flex-shrink: 0;
-            font-family: var(--font-ui);
-            font-size: 0.78rem;
-            font-weight: 500;
-            padding: 6px 14px;
-            min-width: 50px;
-            min-height: 36px;
-            border-radius: var(--radius);
-            border: 1px solid var(--btn-border);
-            background: transparent;
-            color: #9a9ba5;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            letter-spacing: 0.03em;
-            white-space: nowrap;
-            outline: none;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-            position: relative;
-            overflow: hidden;
-            touch-action: manipulation;
+            flex-shrink: 0; font-family: var(--font-ui); font-size: 0.78rem; font-weight: 500;
+            padding: 6px 14px; min-width: 50px; min-height: 36px; border-radius: var(--radius);
+            border: 1px solid var(--btn-border); background: transparent; color: #9a9ba5;
+            cursor: pointer; transition: all 0.2s ease; letter-spacing: 0.03em;
+            white-space: nowrap; outline: none; -webkit-tap-highlight-color: transparent;
+            user-select: none; position: relative; overflow: hidden; touch-action: manipulation;
         }
-        .copy-btn:hover {
-            border-color: var(--btn-hover-border);
-            color: var(--cmd-color);
-            background: var(--btn-hover-bg);
-            box-shadow: 0 0 12px var(--accent-glow);
-        }
-        .copy-btn:active {
-            transform: scale(0.96);
-            transition: transform 0.08s ease;
-        }
-        .copy-btn:focus-visible {
-            outline: 2px solid rgba(78, 255, 78, 0.5);
-            outline-offset: 2px;
-        }
+        .copy-btn:hover { border-color: var(--btn-hover-border); color: var(--cmd-color); background: var(--btn-hover-bg); box-shadow: 0 0 12px var(--accent-glow); }
+        .copy-btn:active { transform: scale(0.96); transition: transform 0.08s ease; }
+        .copy-btn:focus-visible { outline: 2px solid rgba(78, 255, 78, 0.5); outline-offset: 2px; }
 
         .copy-btn.copied {
-            border-color: var(--btn-copied-border);
-            color: var(--btn-copied-text);
-            background: var(--btn-copied-bg);
-            box-shadow: 0 0 8px rgba(78, 255, 78, 0.2);
-            pointer-events: none;
-            animation: pulse-green 0.35s ease-out;
+            border-color: var(--btn-copied-border); color: var(--btn-copied-text);
+            background: var(--btn-copied-bg); box-shadow: 0 0 8px rgba(78, 255, 78, 0.2);
+            pointer-events: none; animation: pulse-green 0.35s ease-out;
         }
         @keyframes pulse-green {
-            0% {
-                box-shadow: 0 0 0 0 rgba(78, 255, 78, 0.5);
-            }
-            100% {
-                box-shadow: 0 0 0 12px rgba(78, 255, 78, 0);
-            }
+            0% { box-shadow: 0 0 0 0 rgba(78, 255, 78, 0.5); }
+            100% { box-shadow: 0 0 0 12px rgba(78, 255, 78, 0); }
         }
 
         .console-footer {
-            padding: 14px 18px;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            font-size: 0.72rem;
-            color: #4a4d58;
-            user-select: none;
-            letter-spacing: 0.03em;
-            background: #111215;
+            padding: 14px 18px; border-top: 1px solid var(--border); text-align: center;
+            font-size: 0.72rem; color: #4a4d58; user-select: none; letter-spacing: 0.03em; background: #111215;
         }
         .console-footer .dot-indicator {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: #3a3d45;
-            margin: 0 6px;
-            vertical-align: middle;
-            animation: blink 2s infinite;
+            display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+            background: #3a3d45; margin: 0 6px; vertical-align: middle; animation: blink 2s infinite;
         }
-        @keyframes blink {
-            0%,
-            100% {
-                opacity: 0.3;
-            }
-            50% {
-                opacity: 1;
-            }
-        }
+        @keyframes blink { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
 
-        .page-footer {
-            margin-top: 24px;
-            text-align: center;
-            font-size: 0.7rem;
-            color: #3a3d48;
-            user-select: none;
-            letter-spacing: 0.04em;
-        }
+        .page-footer { margin-top: 24px; text-align: center; font-size: 0.7rem; color: #3a3d48; user-select: none; letter-spacing: 0.04em; }
 
         .toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-120px);
-            background: #1a3a1d;
-            border: 1px solid #3ab83a;
-            color: #4eff4e;
-            padding: 10px 22px;
-            border-radius: 20px;
-            font-family: var(--font-ui);
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.03em;
-            z-index: 1000;
-            pointer-events: none;
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px);
+            background: #1a3a1d; border: 1px solid #3ab83a; color: #4eff4e;
+            padding: 10px 22px; border-radius: 20px; font-family: var(--font-ui);
+            font-size: 0.85rem; font-weight: 500; letter-spacing: 0.03em;
+            z-index: 1000; pointer-events: none;
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
         }
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
+        .toast.show { transform: translateX(-50%) translateY(0); }
 
         @media (max-width: 640px) {
-            body {
-                padding: 8px 6px 24px;
-            }
-            .top-modules {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .connect-module {
-                flex: 1 1 auto;
-                min-width: 0;
-                border-radius: 8px;
-            }
-            .clipboard-module {
-                min-width: 0;
-                width: 100%;
-                height: auto;
-            }
-            .clipboard-btn {
-                width: 100%;
-                padding: 14px 20px 14px 16px;
-                border: 2px solid #4eff4e;
-                font-size: 0.95rem;
-                flex: none;
-            }
-            .resources-module {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
-            }
-            .resource-link {
-                width: 100%;
-                justify-content: center;
-            }
-            .module-header {
-                padding: 10px 12px;
-                font-size: 0.78rem;
-            }
-            .module-body {
-                padding: 12px;
-            }
-            .module-body textarea {
-                font-size: 0.82rem;
-                padding: 10px;
-                min-height: 80px;
-            }
-            .action-btn {
-                font-size: 0.82rem;
-                padding: 10px 18px;
-                min-height: 44px;
-                flex: 1;
-                text-align: center;
-            }
-            .result-area {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 8px;
-            }
-            .result-label {
-                font-size: 0.75rem;
-            }
-            .result-code {
-                width: 100%;
-                font-size: 0.82rem;
-                padding: 8px 10px;
-                word-break: break-all;
-            }
-            .result-area .copy-btn {
-                align-self: flex-end;
-                min-height: 40px;
-                padding: 8px 16px;
-                font-size: 0.78rem;
-            }
-            .console-window {
-                border-radius: 8px;
-                max-width: 100%;
-            }
-            .console-header {
-                padding: 10px 12px;
-                gap: 6px;
-            }
-            .console-dot {
-                width: 9px;
-                height: 9px;
-            }
-            .console-dots {
-                gap: 5px;
-            }
-            .console-title {
-                font-size: 0.72rem;
-                padding-right: 28px;
-            }
-            .cmd-row {
-                padding: 8px 12px;
-                gap: 6px;
-                flex-wrap: wrap;
-            }
-            .cmd-text-wrapper {
-                gap: 3px 6px;
-                flex-basis: 100%;
-                margin-bottom: 2px;
-            }
-            code.cmd-code {
-                font-size: 0.78rem;
-                padding: 3px 6px;
-                white-space: normal;
-                word-break: break-all;
-            }
-            span.comment {
-                font-size: 0.7rem;
-                white-space: normal;
-                word-break: break-word;
-            }
-            .copy-btn {
-                font-size: 0.73rem;
-                padding: 7px 14px;
-                min-height: 38px;
-                min-width: 54px;
-                border-radius: var(--radius);
-                margin-left: auto;
-            }
-            .section-label {
-                padding: 12px 12px 4px;
-                font-size: 0.7rem;
-                letter-spacing: 0.06em;
-            }
-            .console-footer {
-                padding: 12px;
-                font-size: 0.68rem;
-            }
-        }
-        @media (max-width: 380px) {
-            .module-body textarea {
-                font-size: 0.78rem;
-                min-height: 70px;
-            }
-            .action-btn {
-                font-size: 0.78rem;
-                padding: 10px 12px;
-            }
-            .result-code {
-                font-size: 0.76rem;
-            }
-            .cmd-row {
-                padding: 7px 8px;
-                gap: 4px;
-            }
-            code.cmd-code {
-                font-size: 0.7rem;
-                padding: 2px 5px;
-            }
-            span.comment {
-                font-size: 0.65rem;
-            }
-            .copy-btn {
-                font-size: 0.7rem;
-                padding: 6px 10px;
-                min-height: 34px;
-                min-width: 46px;
-            }
-            .cmd-text-wrapper {
-                flex-basis: calc(100% - 50px);
-                max-width: calc(100% - 50px);
-            }
+            body { padding: 8px 6px 24px; }
+            .top-modules { flex-direction: column; gap: 12px; }
+            .connect-module { flex: 1 1 auto; min-width: 0; border-radius: 8px; }
+            .clipboard-module { min-width: 0; width: 100%; height: auto; }
+            .clipboard-btn { width: 100%; padding: 14px 20px 14px 16px; border: 2px solid #4eff4e; font-size: 0.95rem; flex: none; }
+            .resources-module { flex-direction: column; align-items: center; gap: 10px; }
+            .resource-link { width: 100%; justify-content: center; }
+            .module-header { padding: 10px 12px; font-size: 0.78rem; }
+            .module-body { padding: 12px; }
+            .module-body textarea { font-size: 0.82rem; padding: 10px; min-height: 80px; }
+            .action-btn { font-size: 0.82rem; padding: 10px 18px; min-height: 44px; flex: 1; text-align: center; }
+            .result-area { flex-direction: column; align-items: stretch; gap: 8px; }
+            .result-label { font-size: 0.75rem; }
+            .result-code { width: 100%; font-size: 0.82rem; padding: 8px 10px; word-break: break-all; }
+            .result-area .copy-btn { align-self: flex-end; min-height: 40px; padding: 8px 16px; font-size: 0.78rem; }
+            .console-window { border-radius: 8px; max-width: 100%; }
+            .console-header { padding: 10px 12px; gap: 6px; }
+            .console-dot { width: 9px; height: 9px; }
+            .console-dots { gap: 5px; }
+            .console-title { font-size: 0.72rem; padding-right: 28px; }
+            .category-divider { padding: 12px 12px 6px; font-size: 0.75rem; }
+            .tab-nav { padding: 6px 12px 10px; gap: 6px; }
+            .tab-btn { font-size: 0.78rem; padding: 6px 12px; }
+            .cmd-row { padding: 8px 12px; gap: 6px; flex-wrap: wrap; }
+            .cmd-text-wrapper { gap: 3px 6px; flex-basis: 100%; margin-bottom: 2px; }
+            code.cmd-code { font-size: 0.78rem; padding: 3px 6px; white-space: normal; word-break: break-all; }
+            span.comment { font-size: 0.7rem; white-space: normal; word-break: break-word; }
+            .copy-btn { font-size: 0.73rem; padding: 7px 14px; min-height: 38px; min-width: 54px; border-radius: var(--radius); margin-left: auto; }
+            .section-label { padding: 12px 12px 4px; font-size: 0.7rem; letter-spacing: 0.06em; }
+            .console-footer { padding: 12px; font-size: 0.68rem; }
         }
     </style>
 </head>
 <body>
-
     <div class="toast" id="toast" aria-live="polite"></div>
 
     <!-- 顶部模块：SteamID 转换 + 剪切板（保持不变） -->
     <div class="top-modules">
-        <!-- SteamID 连接模块 -->
         <div class="connect-module">
             <div class="module-header">
                 <span class="module-title">🔗 SteamID 转 Connect 指令</span>
@@ -741,7 +342,6 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
             </div>
         </div>
 
-        <!-- 剪切板跳转按钮模块 -->
         <div class="clipboard-module">
             <a href="https://ykjtb.com/" target="_blank" rel="noopener noreferrer" class="clipboard-btn">
                 📋 剪切板
@@ -762,654 +362,182 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
         </div>
 
         <div class="console-body" id="cmdList">
-
-            <!-- 常用指令 -->
+            <!-- 常用指令 (保持不变) -->
             <div class="section-label">⚡ 常用指令</div>
             <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">status</code>
-                    <span class="comment">// 查看服务器状态及玩家信息</span>
-                </div>
-                <button class="copy-btn" data-cmd="status" aria-label="复制指令 status">复制</button>
+                <div class="cmd-text-wrapper"><code class="cmd-code">status</code><span class="comment">// 查看服务器状态及玩家信息</span></div>
+                <button class="copy-btn" data-cmd="status">复制</button>
             </div>
             <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">bot_kick</code>
-                    <span class="comment">// 踢出所有机器人</span>
-                </div>
-                <button class="copy-btn" data-cmd="bot_kick" aria-label="复制指令 bot_kick">复制</button>
+                <div class="cmd-text-wrapper"><code class="cmd-code">bot_kick</code><span class="comment">// 踢出所有机器人</span></div>
+                <button class="copy-btn" data-cmd="bot_kick">复制</button>
             </div>
             <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_restartgame 1</code>
-                    <span class="comment">// 1秒后重启当前对局</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_restartgame 1" aria-label="复制指令 mp_restartgame 1">复制</button>
+                <div class="cmd-text-wrapper"><code class="cmd-code">mp_restartgame 1</code><span class="comment">// 1秒后重启当前对局</span></div>
+                <button class="copy-btn" data-cmd="mp_restartgame 1">复制</button>
             </div>
             <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_cheats 1</code>
-                    <span class="comment">// 开启作弊指令（仅本地/人机）</span>
-                </div>
-                <button class="copy-btn" data-cmd="sv_cheats 1" aria-label="复制指令 sv_cheats 1">复制</button>
+                <div class="cmd-text-wrapper"><code class="cmd-code">sv_cheats 1</code><span class="comment">// 开启作弊指令（仅本地/人机）</span></div>
+                <button class="copy-btn" data-cmd="sv_cheats 1">复制</button>
             </div>
             <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">clear</code>
-                    <span class="comment">// 清空控制台屏幕</span>
-                </div>
-                <button class="copy-btn" data-cmd="clear" aria-label="复制指令 clear">复制</button>
+                <div class="cmd-text-wrapper"><code class="cmd-code">clear</code><span class="comment">// 清空控制台屏幕</span></div>
+                <button class="copy-btn" data-cmd="clear">复制</button>
             </div>
 
-            <!-- 机器人 -->
-            <div class="section-label">🤖 机器人管理</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">bot_kick</code>
-                    <span class="comment">// 踢出所有机器人</span>
-                </div>
-                <button class="copy-btn" data-cmd="bot_kick" aria-label="复制指令 bot_kick">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">bot_add</code>
-                    <span class="comment">// 添加一个机器人</span>
-                </div>
-                <button class="copy-btn" data-cmd="bot_add" aria-label="复制指令 bot_add">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">bot_add_ct</code>
-                    <span class="comment">// 添加一个CT方机器人</span>
-                </div>
-                <button class="copy-btn" data-cmd="bot_add_ct" aria-label="复制指令 bot_add_ct">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">bot_add_t</code>
-                    <span class="comment">// 添加一个T方机器人</span>
-                </div>
-                <button class="copy-btn" data-cmd="bot_add_t" aria-label="复制指令 bot_add_t">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">bot_stop 1</code>
-                    <span class="comment">// 机器人停止移动</span>
-                </div>
-                <button class="copy-btn" data-cmd="bot_stop 1" aria-label="复制指令 bot_stop 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">bot_place</code>
-                    <span class="comment">// 在准星处放置一个机器人</span>
-                </div>
-                <button class="copy-btn" data-cmd="bot_place" aria-label="复制指令 bot_place">复制</button>
+            <!-- 新增：独立分隔栏 -->
+            <div class="category-divider">
+                📂 指令分类
             </div>
 
-            <!-- 对局控制 -->
-            <div class="section-label">🎮 对局控制</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_restartgame 1</code>
-                    <span class="comment">// 1秒后重启当前对局</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_restartgame 1" aria-label="复制指令 mp_restartgame 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_freezetime 0</code>
-                    <span class="comment">// 取消开局冻结时间</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_freezetime 0" aria-label="复制指令 mp_freezetime 0">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_roundtime_defuse 60</code>
-                    <span class="comment">// 拆弹图每局时长60分钟</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_roundtime_defuse 60" aria-label="复制指令 mp_roundtime_defuse 60">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_limitteams 0</code>
-                    <span class="comment">// 取消队伍人数限制</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_limitteams 0" aria-label="复制指令 mp_limitteams 0">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_autoteambalance 0</code>
-                    <span class="comment">// 关闭自动平衡队伍</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_autoteambalance 0" aria-label="复制指令 mp_autoteambalance 0">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_overtime_enable 1</code>
-                    <span class="comment">// 允许加时赛</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_overtime_enable 1" aria-label="复制指令 mp_overtime_enable 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_overtime_maxrounds 3</code>
-                    <span class="comment">// 加时最大回合数 (可自定义)</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_overtime_maxrounds 3" aria-label="复制指令 mp_overtime_maxrounds 3">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_tkpunish 1</code>
-                    <span class="comment">// 友伤惩罚开启</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_tkpunish 1" aria-label="复制指令 mp_tkpunish 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_friendlyfire 1</code>
-                    <span class="comment">// 开启友伤</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_friendlyfire 1" aria-label="复制指令 mp_friendlyfire 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_c4timer 40</code>
-                    <span class="comment">// C4爆炸倒计时40秒 (可调)</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_c4timer 40" aria-label="复制指令 mp_c4timer 40">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_respawn_on_death_ct 1</code>
-                    <span class="comment">// CT死亡后立刻复活</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_respawn_on_death_ct 1" aria-label="复制指令 mp_respawn_on_death_ct 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_respawn_on_death_t 1</code>
-                    <span class="comment">// T死亡后立刻复活</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_respawn_on_death_t 1" aria-label="复制指令 mp_respawn_on_death_t 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_allowspectators 1</code>
-                    <span class="comment">// 允许观战</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_allowspectators 1" aria-label="复制指令 mp_allowspectators 1">复制</button>
+            <!-- Tab 导航区域（换行布局） -->
+            <div class="tab-nav" id="tabNav">
+                <button class="tab-btn active" data-tab="practice">练习与作弊</button>
+                <button class="tab-btn" data-tab="knife">改刀指令</button>
+                <button class="tab-btn" data-tab="maps">地图切换</button>
+                <button class="tab-btn" data-tab="bots">机器人管理</button>
+                <button class="tab-btn" data-tab="match">对局控制</button>
+                <button class="tab-btn" data-tab="economy">经济与物品</button>
+                <button class="tab-btn" data-tab="server">服务器与连接</button>
+                <button class="tab-btn" data-tab="display">显示与界面</button>
+                <button class="tab-btn" data-tab="voice">语音通讯</button>
+                <button class="tab-btn" data-tab="others">其他实用指令</button>
             </div>
 
-            <!-- 经济与物品 -->
-            <div class="section-label">💰 经济与物品</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_buytime 9999</code>
-                    <span class="comment">// 购买时间无限制</span>
+            <!-- Tab 内容容器 -->
+            <div id="tabContent">
+                <!-- 练习与作弊 -->
+                <div class="tab-content active" id="practice">
+                    <div class="section-label">🔧 练习与作弊（需 sv_cheats 1）</div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_cheats 1</code><span class="comment">// 开启作弊指令</span></div><button class="copy-btn" data-cmd="sv_cheats 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">god</code><span class="comment">// 无敌模式</span></div><button class="copy-btn" data-cmd="god">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">noclip</code><span class="comment">// 穿墙飞行模式</span></div><button class="copy-btn" data-cmd="noclip">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_infinite_ammo 1</code><span class="comment">// 无限弹药（无需换弹）</span></div><button class="copy-btn" data-cmd="sv_infinite_ammo 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_infinite_ammo 2</code><span class="comment">// 无限弹药（需换弹）</span></div><button class="copy-btn" data-cmd="sv_infinite_ammo 2">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_rethrow_last_grenade</code><span class="comment">// 重放最后一颗手雷轨迹</span></div><button class="copy-btn" data-cmd="sv_rethrow_last_grenade">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_showimpacts 1</code><span class="comment">// 显示子弹弹着点</span></div><button class="copy-btn" data-cmd="sv_showimpacts 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_showimpacts 0</code><span class="comment">// 关闭子弹弹着点显示</span></div><button class="copy-btn" data-cmd="sv_showimpacts 0">复制</button></div>
                 </div>
-                <button class="copy-btn" data-cmd="mp_buytime 9999" aria-label="复制指令 mp_buytime 9999">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_buy_anywhere 1</code>
-                    <span class="comment">// 任意位置购买装备</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_buy_anywhere 1" aria-label="复制指令 mp_buy_anywhere 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_maxmoney 65535</code>
-                    <span class="comment">// 金钱上限65535</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_maxmoney 65535" aria-label="复制指令 mp_maxmoney 65535">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_startmoney 65535</code>
-                    <span class="comment">// 开局金钱65535</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_startmoney 65535" aria-label="复制指令 mp_startmoney 65535">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_afterroundmoney 65535</code>
-                    <span class="comment">// 回合结束自动补满钱</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_afterroundmoney 65535" aria-label="复制指令 mp_afterroundmoney 65535">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_drop_knife_enable 1</code>
-                    <span class="comment">// 允许丢弃小刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_drop_knife_enable 1" aria-label="复制指令 mp_drop_knife_enable 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_death_drop_gun 1</code>
-                    <span class="comment">// 死亡掉落枪械</span>
-                </div>
-                <button class="copy-btn" data-cmd="mp_death_drop_gun 1" aria-label="复制指令 mp_death_drop_gun 1">复制</button>
-            </div>
 
-            <!-- 地图切换 -->
-            <div class="section-label">🗺️ 地图切换</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel de_ancient</code>
-                    <span class="comment">// 远古遗迹（白天）</span>
+                <!-- 改刀指令 -->
+                <div class="tab-content" id="knife">
+                    <div class="section-label">🔪 改刀指令（需 sv_cheats 1）</div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 500</code><span class="comment">// 刺刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 500">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 503</code><span class="comment">// 海豹短刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 503">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 505</code><span class="comment">// 折叠刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 505">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 506</code><span class="comment">// 穿肠刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 506">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 507</code><span class="comment">// 爪子刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 507">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 508</code><span class="comment">// M9刺刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 508">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 509</code><span class="comment">// 猎杀者匕首</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 509">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 512</code><span class="comment">// 弯刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 512">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 514</code><span class="comment">// 鲍伊猎刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 514">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 515</code><span class="comment">// 蝴蝶刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 515">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 516</code><span class="comment">// 暗影双匕</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 516">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 517</code><span class="comment">// 系绳匕首</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 517">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 518</code><span class="comment">// 求生匕首</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 518">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 519</code><span class="comment">// 熊刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 519">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 520</code><span class="comment">// 折刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 520">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 521</code><span class="comment">// 流浪者匕首</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 521">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 522</code><span class="comment">// 短剑</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 522">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 523</code><span class="comment">// 锯齿爪刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 523">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 525</code><span class="comment">// 骷髅匕首</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 525">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">ent_fire weapon_knife changesubclass 526</code><span class="comment">// 廓尔喀刀</span></div><button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 526">复制</button></div>
                 </div>
-                <button class="copy-btn" data-cmd="changelevel de_ancient" aria-label="复制指令 changelevel de_ancient">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel de_ancient_night</code>
-                    <span class="comment">// 远古遗迹（夜间）</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel de_ancient_night" aria-label="复制指令 changelevel de_ancient_night">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel de_anubis</code>
-                    <span class="comment">// 阿努比斯</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel de_anubis" aria-label="复制指令 changelevel de_anubis">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel de_dust2</code>
-                    <span class="comment">// 炙热沙城2</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel de_dust2" aria-label="复制指令 changelevel de_dust2">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel de_inferno</code>
-                    <span class="comment">// 炼狱小镇</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel de_inferno" aria-label="复制指令 changelevel de_inferno">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel de_mirage</code>
-                    <span class="comment">// 荒漠迷城</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel de_mirage" aria-label="复制指令 changelevel de_mirage">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel de_nuke</code>
-                    <span class="comment">// 核子危机</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel de_nuke" aria-label="复制指令 changelevel de_nuke">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel de_overpass</code>
-                    <span class="comment">// 死亡游乐园</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel de_overpass" aria-label="复制指令 changelevel de_overpass">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel de_train</code>
-                    <span class="comment">// 列车停放站</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel de_train" aria-label="复制指令 changelevel de_train">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel de_vertigo</code>
-                    <span class="comment">// 殒命大厦</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel de_vertigo" aria-label="复制指令 changelevel de_vertigo">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel cs_office</code>
-                    <span class="comment">// 办公室</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel cs_office" aria-label="复制指令 changelevel cs_office">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel cs_italy</code>
-                    <span class="comment">// 意大利小镇</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel cs_italy" aria-label="复制指令 changelevel cs_italy">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel ar_baggage</code>
-                    <span class="comment">// 行李仓库</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel ar_baggage" aria-label="复制指令 changelevel ar_baggage">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel ar_pool_day</code>
-                    <span class="comment">// 泳池激战</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel ar_pool_day" aria-label="复制指令 changelevel ar_pool_day">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel ar_shoots</code>
-                    <span class="comment">// 遗迹射击场</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel ar_shoots" aria-label="复制指令 changelevel ar_shoots">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">changelevel ar_shoots_night</code>
-                    <span class="comment">// 遗迹射击场夜间</span>
-                </div>
-                <button class="copy-btn" data-cmd="changelevel ar_shoots_night" aria-label="复制指令 changelevel ar_shoots_night">复制</button>
-            </div>
 
-            <!-- 练习/作弊 -->
-            <div class="section-label">🔧 练习与作弊（需 sv_cheats 1）</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_cheats 1</code>
-                    <span class="comment">// 开启作弊指令（仅本地/人机）</span>
+                <!-- 地图切换 -->
+                <div class="tab-content" id="maps">
+                    <div class="section-label">🗺️ 地图切换</div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_ancient</code><span class="comment">// 远古遗迹（白天）</span></div><button class="copy-btn" data-cmd="changelevel de_ancient">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_ancient_night</code><span class="comment">// 远古遗迹（夜间）</span></div><button class="copy-btn" data-cmd="changelevel de_ancient_night">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_anubis</code><span class="comment">// 阿努比斯</span></div><button class="copy-btn" data-cmd="changelevel de_anubis">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_dust2</code><span class="comment">// 炙热沙城2</span></div><button class="copy-btn" data-cmd="changelevel de_dust2">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_inferno</code><span class="comment">// 炼狱小镇</span></div><button class="copy-btn" data-cmd="changelevel de_inferno">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_mirage</code><span class="comment">// 荒漠迷城</span></div><button class="copy-btn" data-cmd="changelevel de_mirage">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_nuke</code><span class="comment">// 核子危机</span></div><button class="copy-btn" data-cmd="changelevel de_nuke">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_overpass</code><span class="comment">// 死亡游乐园</span></div><button class="copy-btn" data-cmd="changelevel de_overpass">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_train</code><span class="comment">// 列车停放站</span></div><button class="copy-btn" data-cmd="changelevel de_train">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel de_vertigo</code><span class="comment">// 殒命大厦</span></div><button class="copy-btn" data-cmd="changelevel de_vertigo">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel cs_office</code><span class="comment">// 办公室</span></div><button class="copy-btn" data-cmd="changelevel cs_office">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel cs_italy</code><span class="comment">// 意大利小镇</span></div><button class="copy-btn" data-cmd="changelevel cs_italy">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel ar_baggage</code><span class="comment">// 行李仓库</span></div><button class="copy-btn" data-cmd="changelevel ar_baggage">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel ar_pool_day</code><span class="comment">// 泳池激战</span></div><button class="copy-btn" data-cmd="changelevel ar_pool_day">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel ar_shoots</code><span class="comment">// 遗迹射击场</span></div><button class="copy-btn" data-cmd="changelevel ar_shoots">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">changelevel ar_shoots_night</code><span class="comment">// 遗迹射击场夜间</span></div><button class="copy-btn" data-cmd="changelevel ar_shoots_night">复制</button></div>
                 </div>
-                <button class="copy-btn" data-cmd="sv_cheats 1" aria-label="复制指令 sv_cheats 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">god</code>
-                    <span class="comment">// 无敌模式</span>
-                </div>
-                <button class="copy-btn" data-cmd="god" aria-label="复制指令 god">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">noclip</code>
-                    <span class="comment">// 穿墙飞行模式</span>
-                </div>
-                <button class="copy-btn" data-cmd="noclip" aria-label="复制指令 noclip">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_infinite_ammo 1</code>
-                    <span class="comment">// 无限弹药（无需换弹）</span>
-                </div>
-                <button class="copy-btn" data-cmd="sv_infinite_ammo 1" aria-label="复制指令 sv_infinite_ammo 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_infinite_ammo 2</code>
-                    <span class="comment">// 无限弹药（需换弹）</span>
-                </div>
-                <button class="copy-btn" data-cmd="sv_infinite_ammo 2" aria-label="复制指令 sv_infinite_ammo 2">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_rethrow_last_grenade</code>
-                    <span class="comment">// 重放最后一颗手雷轨迹</span>
-                </div>
-                <button class="copy-btn" data-cmd="sv_rethrow_last_grenade" aria-label="复制指令 sv_rethrow_last_grenade">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_showimpacts 1</code>
-                    <span class="comment">// 显示子弹弹着点</span>
-                </div>
-                <button class="copy-btn" data-cmd="sv_showimpacts 1" aria-label="复制指令 sv_showimpacts 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_showimpacts 0</code>
-                    <span class="comment">// 关闭子弹弹着点显示</span>
-                </div>
-                <button class="copy-btn" data-cmd="sv_showimpacts 0" aria-label="复制指令 sv_showimpacts 0">复制</button>
-            </div>
 
-            <!-- 改刀指令 -->
-            <div class="section-label">🔪 改刀指令（需 sv_cheats 1）</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 500</code>
-                    <span class="comment">// 刺刀</span>
+                <!-- 机器人管理 -->
+                <div class="tab-content" id="bots">
+                    <div class="section-label">🤖 机器人管理</div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_kick</code><span class="comment">// 踢出所有机器人</span></div><button class="copy-btn" data-cmd="bot_kick">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_add</code><span class="comment">// 添加一个机器人</span></div><button class="copy-btn" data-cmd="bot_add">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_add_ct</code><span class="comment">// 添加一个CT方机器人</span></div><button class="copy-btn" data-cmd="bot_add_ct">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_add_t</code><span class="comment">// 添加一个T方机器人</span></div><button class="copy-btn" data-cmd="bot_add_t">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_stop 1</code><span class="comment">// 机器人停止移动</span></div><button class="copy-btn" data-cmd="bot_stop 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">bot_place</code><span class="comment">// 在准星处放置一个机器人</span></div><button class="copy-btn" data-cmd="bot_place">复制</button></div>
                 </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 500" aria-label="复制指令 ent_fire weapon_knife changesubclass 500">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 503</code>
-                    <span class="comment">// 海豹短刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 503" aria-label="复制指令 ent_fire weapon_knife changesubclass 503">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 505</code>
-                    <span class="comment">// 折叠刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 505" aria-label="复制指令 ent_fire weapon_knife changesubclass 505">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 506</code>
-                    <span class="comment">// 穿肠刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 506" aria-label="复制指令 ent_fire weapon_knife changesubclass 506">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 507</code>
-                    <span class="comment">// 爪子刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 507" aria-label="复制指令 ent_fire weapon_knife changesubclass 507">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 508</code>
-                    <span class="comment">// M9刺刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 508" aria-label="复制指令 ent_fire weapon_knife changesubclass 508">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 509</code>
-                    <span class="comment">// 猎杀者匕首</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 509" aria-label="复制指令 ent_fire weapon_knife changesubclass 509">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 512</code>
-                    <span class="comment">// 弯刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 512" aria-label="复制指令 ent_fire weapon_knife changesubclass 512">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 514</code>
-                    <span class="comment">// 鲍伊猎刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 514" aria-label="复制指令 ent_fire weapon_knife changesubclass 514">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 515</code>
-                    <span class="comment">// 蝴蝶刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 515" aria-label="复制指令 ent_fire weapon_knife changesubclass 515">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 516</code>
-                    <span class="comment">// 暗影双匕</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 516" aria-label="复制指令 ent_fire weapon_knife changesubclass 516">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 517</code>
-                    <span class="comment">// 系绳匕首</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 517" aria-label="复制指令 ent_fire weapon_knife changesubclass 517">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 518</code>
-                    <span class="comment">// 求生匕首</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 518" aria-label="复制指令 ent_fire weapon_knife changesubclass 518">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 519</code>
-                    <span class="comment">// 熊刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 519" aria-label="复制指令 ent_fire weapon_knife changesubclass 519">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 520</code>
-                    <span class="comment">// 折刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 520" aria-label="复制指令 ent_fire weapon_knife changesubclass 520">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 521</code>
-                    <span class="comment">// 流浪者匕首</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 521" aria-label="复制指令 ent_fire weapon_knife changesubclass 521">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 522</code>
-                    <span class="comment">// 短剑</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 522" aria-label="复制指令 ent_fire weapon_knife changesubclass 522">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 523</code>
-                    <span class="comment">// 锯齿爪刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 523" aria-label="复制指令 ent_fire weapon_knife changesubclass 523">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 525</code>
-                    <span class="comment">// 骷髅匕首</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 525" aria-label="复制指令 ent_fire weapon_knife changesubclass 525">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">ent_fire weapon_knife changesubclass 526</code>
-                    <span class="comment">// 廓尔喀刀</span>
-                </div>
-                <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 526" aria-label="复制指令 ent_fire weapon_knife changesubclass 526">复制</button>
-            </div>
 
-            <!-- 服务器/网络 -->
-            <div class="section-label">🌐 服务器与连接</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">status</code>
-                    <span class="comment">// 查看服务器状态及玩家信息</span>
+                <!-- 对局控制 -->
+                <div class="tab-content" id="match">
+                    <div class="section-label">🎮 对局控制</div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_restartgame 1</code><span class="comment">// 1秒后重启当前对局</span></div><button class="copy-btn" data-cmd="mp_restartgame 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_freezetime 0</code><span class="comment">// 取消开局冻结时间</span></div><button class="copy-btn" data-cmd="mp_freezetime 0">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_roundtime_defuse 60</code><span class="comment">// 拆弹图每局时长60分钟</span></div><button class="copy-btn" data-cmd="mp_roundtime_defuse 60">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_limitteams 0</code><span class="comment">// 取消队伍人数限制</span></div><button class="copy-btn" data-cmd="mp_limitteams 0">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_autoteambalance 0</code><span class="comment">// 关闭自动平衡队伍</span></div><button class="copy-btn" data-cmd="mp_autoteambalance 0">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_overtime_enable 1</code><span class="comment">// 允许加时赛</span></div><button class="copy-btn" data-cmd="mp_overtime_enable 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_overtime_maxrounds 3</code><span class="comment">// 加时最大回合数 (可自定义)</span></div><button class="copy-btn" data-cmd="mp_overtime_maxrounds 3">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_tkpunish 1</code><span class="comment">// 友伤惩罚开启</span></div><button class="copy-btn" data-cmd="mp_tkpunish 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_friendlyfire 1</code><span class="comment">// 开启友伤</span></div><button class="copy-btn" data-cmd="mp_friendlyfire 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_c4timer 40</code><span class="comment">// C4爆炸倒计时40秒 (可调)</span></div><button class="copy-btn" data-cmd="mp_c4timer 40">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_respawn_on_death_ct 1</code><span class="comment">// CT死亡后立刻复活</span></div><button class="copy-btn" data-cmd="mp_respawn_on_death_ct 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_respawn_on_death_t 1</code><span class="comment">// T死亡后立刻复活</span></div><button class="copy-btn" data-cmd="mp_respawn_on_death_t 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_allowspectators 1</code><span class="comment">// 允许观战</span></div><button class="copy-btn" data-cmd="mp_allowspectators 1">复制</button></div>
                 </div>
-                <button class="copy-btn" data-cmd="status" aria-label="复制指令 status">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">disconnect</code>
-                    <span class="comment">// 断开当前服务器连接</span>
-                </div>
-                <button class="copy-btn" data-cmd="disconnect" aria-label="复制指令 disconnect">复制</button>
-            </div>
 
-            <!-- 显示/界面 -->
-            <div class="section-label">🖥️ 显示与界面</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">cl_draw_only_deathnotices 1</code>
-                    <span class="comment">// 仅显示击杀信息（隐藏HUD）</span>
+                <!-- 经济与物品 -->
+                <div class="tab-content" id="economy">
+                    <div class="section-label">💰 经济与物品</div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_buytime 9999</code><span class="comment">// 购买时间无限制</span></div><button class="copy-btn" data-cmd="mp_buytime 9999">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_buy_anywhere 1</code><span class="comment">// 任意位置购买装备</span></div><button class="copy-btn" data-cmd="mp_buy_anywhere 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_maxmoney 65535</code><span class="comment">// 金钱上限65535</span></div><button class="copy-btn" data-cmd="mp_maxmoney 65535">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_startmoney 65535</code><span class="comment">// 开局金钱65535</span></div><button class="copy-btn" data-cmd="mp_startmoney 65535">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_afterroundmoney 65535</code><span class="comment">// 回合结束自动补满钱</span></div><button class="copy-btn" data-cmd="mp_afterroundmoney 65535">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_drop_knife_enable 1</code><span class="comment">// 允许丢弃小刀</span></div><button class="copy-btn" data-cmd="mp_drop_knife_enable 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">mp_death_drop_gun 1</code><span class="comment">// 死亡掉落枪械</span></div><button class="copy-btn" data-cmd="mp_death_drop_gun 1">复制</button></div>
                 </div>
-                <button class="copy-btn" data-cmd="cl_draw_only_deathnotices 1" aria-label="复制指令 cl_draw_only_deathnotices 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">cl_draw_only_deathnotices 0</code>
-                    <span class="comment">// 恢复完整HUD显示</span>
-                </div>
-                <button class="copy-btn" data-cmd="cl_draw_only_deathnotices 0" aria-label="复制指令 cl_draw_only_deathnotices 0">复制</button>
-            </div>
 
-            <!-- 语音通讯 -->
-            <div class="section-label">📢 语音通讯</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_alltalk 1</code>
-                    <span class="comment">// CT/T互相听见语音</span>
+                <!-- 服务器与连接 -->
+                <div class="tab-content" id="server">
+                    <div class="section-label">🌐 服务器与连接</div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">status</code><span class="comment">// 查看服务器状态及玩家信息</span></div><button class="copy-btn" data-cmd="status">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">disconnect</code><span class="comment">// 断开当前服务器连接</span></div><button class="copy-btn" data-cmd="disconnect">复制</button></div>
                 </div>
-                <button class="copy-btn" data-cmd="sv_alltalk 1" aria-label="复制指令 sv_alltalk 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_deadtalk 1</code>
-                    <span class="comment">// 死人能和活人说话</span>
-                </div>
-                <button class="copy-btn" data-cmd="sv_deadtalk 1" aria-label="复制指令 sv_deadtalk 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_full_alltalk 1</code>
-                    <span class="comment">// 所有人互通语音</span>
-                </div>
-                <button class="copy-btn" data-cmd="sv_full_alltalk 1" aria-label="复制指令 sv_full_alltalk 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">voice_enable 1</code>
-                    <span class="comment">// 开启语音</span>
-                </div>
-                <button class="copy-btn" data-cmd="voice_enable 1" aria-label="复制指令 voice_enable 1">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">voice_enable 0</code>
-                    <span class="comment">// 关闭语音</span>
-                </div>
-                <button class="copy-btn" data-cmd="voice_enable 0" aria-label="复制指令 voice_enable 0">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">cl_mute_enemy_team 1</code>
-                    <span class="comment">// 静音敌方</span>
-                </div>
-                <button class="copy-btn" data-cmd="cl_mute_enemy_team 1" aria-label="复制指令 cl_mute_enemy_team 1">复制</button>
-            </div>
 
-            <!-- 其他实用指令 -->
-            <div class="section-label">⚡ 其他实用指令</div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">kill</code>
-                    <span class="comment">// 自杀（重新出生）</span>
+                <!-- 显示与界面 -->
+                <div class="tab-content" id="display">
+                    <div class="section-label">🖥️ 显示与界面</div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">cl_draw_only_deathnotices 1</code><span class="comment">// 仅显示击杀信息（隐藏HUD）</span></div><button class="copy-btn" data-cmd="cl_draw_only_deathnotices 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">cl_draw_only_deathnotices 0</code><span class="comment">// 恢复完整HUD显示</span></div><button class="copy-btn" data-cmd="cl_draw_only_deathnotices 0">复制</button></div>
                 </div>
-                <button class="copy-btn" data-cmd="kill" aria-label="复制指令 kill">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">clear</code>
-                    <span class="comment">// 清空控制台屏幕</span>
+
+                <!-- 语音通讯 -->
+                <div class="tab-content" id="voice">
+                    <div class="section-label">📢 语音通讯</div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_alltalk 1</code><span class="comment">// CT/T互相听见语音</span></div><button class="copy-btn" data-cmd="sv_alltalk 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_deadtalk 1</code><span class="comment">// 死人能和活人说话</span></div><button class="copy-btn" data-cmd="sv_deadtalk 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">sv_full_alltalk 1</code><span class="comment">// 所有人互通语音</span></div><button class="copy-btn" data-cmd="sv_full_alltalk 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">voice_enable 1</code><span class="comment">// 开启语音</span></div><button class="copy-btn" data-cmd="voice_enable 1">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">voice_enable 0</code><span class="comment">// 关闭语音</span></div><button class="copy-btn" data-cmd="voice_enable 0">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">cl_mute_enemy_team 1</code><span class="comment">// 静音敌方</span></div><button class="copy-btn" data-cmd="cl_mute_enemy_team 1">复制</button></div>
                 </div>
-                <button class="copy-btn" data-cmd="clear" aria-label="复制指令 clear">复制</button>
-            </div>
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">kick</code>
-                    <span class="comment">// 踢出指定玩家 (后跟名称)</span>
+
+                <!-- 其他实用指令 -->
+                <div class="tab-content" id="others">
+                    <div class="section-label">⚡ 其他实用指令</div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">kill</code><span class="comment">// 自杀（重新出生）</span></div><button class="copy-btn" data-cmd="kill">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">clear</code><span class="comment">// 清空控制台屏幕</span></div><button class="copy-btn" data-cmd="clear">复制</button></div>
+                    <div class="cmd-row"><div class="cmd-text-wrapper"><code class="cmd-code">kick</code><span class="comment">// 踢出指定玩家 (后跟名称)</span></div><button class="copy-btn" data-cmd="kick">复制</button></div>
                 </div>
-                <button class="copy-btn" data-cmd="kick" aria-label="复制指令 kick">复制</button>
             </div>
         </div>
 
@@ -1425,7 +553,6 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
         <a href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables" target="_blank" rel="noopener noreferrer" class="resource-link">
             📚 V 社官方开发文档维基站
         </a>
-        <!-- 预留：开发者/B站/反馈等 -->
     </div>
 
     <div class="page-footer">
@@ -1434,184 +561,113 @@ steamid : [A:1:3538182148:50710](90289793877172228)" rows="3"></textarea>
 
     <script>
         (function() {
-            // ================= 防护代码 =================
-            document.addEventListener('contextmenu', function(e) {
-                e.preventDefault();
-                return false;
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.ctrlKey && e.key === 's') {
+            document.addEventListener('contextmenu', e => e.preventDefault());
+            document.addEventListener('keydown', e => {
+                if ((e.ctrlKey && (e.key === 's' || e.key === 'u')) || e.key === 'F12' ||
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
                     e.preventDefault();
-                    return false;
-                }
-                if (e.ctrlKey && e.key === 'u') {
-                    e.preventDefault();
-                    return false;
-                }
-                if (e.key === 'F12') {
-                    e.preventDefault();
-                    return false;
-                }
-                if (e.ctrlKey && e.shiftKey && e.key === 'I') {
-                    e.preventDefault();
-                    return false;
-                }
-                if (e.ctrlKey && e.shiftKey && e.key === 'J') {
-                    e.preventDefault();
-                    return false;
-                }
-                if (e.ctrlKey && e.shiftKey && e.key === 'C') {
-                    e.preventDefault();
-                    return false;
                 }
             });
-
-            document.addEventListener('dragstart', function(e) {
-                e.preventDefault();
-                return false;
-            });
-
+            document.addEventListener('dragstart', e => e.preventDefault());
             console.log('%c⚠️ 警告：请勿尝试查看或复制源代码！', 'color: red; font-size: 20px; font-weight: bold;');
-            console.log('%c本页面内容受保护，禁止未授权使用。', 'color: orange; font-size: 14px;');
 
-            // ================= 复制功能 =================
-            const copyButtons = document.querySelectorAll('.copy-btn');
             const toast = document.getElementById('toast');
             let toastTimer = null;
-
-            function showToast(message) {
-                if (toastTimer) {
-                    clearTimeout(toastTimer);
-                    toast.classList.remove('show');
-                }
+            function showToast(msg) {
+                if (toastTimer) { clearTimeout(toastTimer); toast.classList.remove('show'); }
                 void toast.offsetWidth;
-                toast.textContent = message;
+                toast.textContent = msg;
                 toast.classList.add('show');
-                toastTimer = setTimeout(() => {
-                    toast.classList.remove('show');
-                    toastTimer = null;
-                }, 1600);
+                toastTimer = setTimeout(() => { toast.classList.remove('show'); toastTimer = null; }, 1600);
             }
-
             async function copyText(text) {
-                if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-                    try {
-                        await navigator.clipboard.writeText(text);
-                        return true;
-                    } catch (e) {}
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    try { await navigator.clipboard.writeText(text); return true; } catch (e) {}
                 }
                 try {
-                    const textarea = document.createElement('textarea');
-                    textarea.value = text;
-                    textarea.style.position = 'fixed';
-                    textarea.style.opacity = '0';
-                    textarea.style.pointerEvents = 'none';
-                    document.body.appendChild(textarea);
-                    textarea.focus();
-                    textarea.select();
-                    const success = document.execCommand('copy');
-                    document.body.removeChild(textarea);
-                    return success;
-                } catch (e) {
-                    return false;
-                }
+                    const ta = document.createElement('textarea');
+                    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+                    document.body.appendChild(ta); ta.focus(); ta.select();
+                    const ok = document.execCommand('copy');
+                    document.body.removeChild(ta); return ok;
+                } catch (e) { return false; }
             }
 
-            async function handleCopyClick(button) {
-                const cmd = button.getAttribute('data-cmd');
-                if (!cmd || button.classList.contains('copied')) return;
-
-                const success = await copyText(cmd);
-
-                if (success) {
-                    const originalText = button.textContent;
-                    button.textContent = '已复制';
-                    button.classList.add('copied');
-                    showToast('✓ 已复制：' + cmd);
-                    setTimeout(() => {
-                        button.textContent = originalText;
-                        button.classList.remove('copied');
-                    }, 1500);
-                } else {
-                    const originalText = button.textContent;
-                    button.textContent = '失败';
-                    button.style.borderColor = '#ff5f56';
-                    button.style.color = '#ff5f56';
-                    showToast('✗ 复制失败，请手动框选复制');
-                    setTimeout(() => {
-                        button.textContent = originalText;
-                        button.style.borderColor = '';
-                        button.style.color = '';
-                    }, 1500);
-                }
+            function attachCopyHandlers() {
+                document.querySelectorAll('.copy-btn').forEach(btn => {
+                    if (btn.dataset.bound) return;
+                    btn.dataset.bound = '1';
+                    btn.addEventListener('click', async function(e) {
+                        e.preventDefault();
+                        const cmd = this.getAttribute('data-cmd');
+                        if (!cmd || this.classList.contains('copied')) return;
+                        const success = await copyText(cmd);
+                        const orig = this.textContent;
+                        if (success) {
+                            this.textContent = '已复制';
+                            this.classList.add('copied');
+                            showToast('✓ 已复制：' + cmd);
+                            setTimeout(() => { this.textContent = orig; this.classList.remove('copied'); }, 1500);
+                        } else {
+                            this.textContent = '失败';
+                            this.style.borderColor = '#ff5f56'; this.style.color = '#ff5f56';
+                            showToast('✗ 复制失败，请手动框选复制');
+                            setTimeout(() => { this.textContent = orig; this.style.borderColor = ''; this.style.color = ''; }, 1500);
+                        }
+                    });
+                });
             }
 
-            copyButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    handleCopyClick(this);
+            // Tab切换
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const targetId = btn.getAttribute('data-tab');
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    tabContents.forEach(c => c.classList.remove('active'));
+                    btn.classList.add('active');
+                    const targetContent = document.getElementById(targetId);
+                    if (targetContent) targetContent.classList.add('active');
                 });
             });
 
-        })();
-    </script>
+            attachCopyHandlers();
 
-    <!-- SteamID 转换模块专属脚本 -->
-    <script>
-        (function() {
+            // SteamID 模块
             const inputEl = document.getElementById('steamidInput');
             const extractBtn = document.getElementById('extractBtn');
             const clearBtn = document.getElementById('clearBtn');
             const resultArea = document.getElementById('resultArea');
             const resultCode = document.getElementById('resultCode');
-            const copyBtn = document.getElementById('copyConnectBtn');
-            const toast = document.getElementById('toast');
-            let toastTimer = null;
-
+            const copyConnectBtn = document.getElementById('copyConnectBtn');
             function showToastMsg(msg) {
-                if (toastTimer) {
-                    clearTimeout(toastTimer);
-                    toast.classList.remove('show');
-                }
+                if (toastTimer) { clearTimeout(toastTimer); toast.classList.remove('show'); }
                 void toast.offsetWidth;
                 toast.textContent = msg;
                 toast.classList.add('show');
-                toastTimer = setTimeout(() => {
-                    toast.classList.remove('show');
-                    toastTimer = null;
-                }, 1600);
+                toastTimer = setTimeout(() => { toast.classList.remove('show'); toastTimer = null; }, 1600);
             }
-
             function extractSteamID(text) {
                 const match = text.match(/\[A:\d+:\d+:\d+\]\s*\(\d+\)/);
                 return match ? match[0] : null;
             }
-
             extractBtn.addEventListener('click', () => {
                 const raw = inputEl.value.trim();
-                if (!raw) {
-                    showToastMsg('请输入包含 SteamID 的文本');
-                    return;
-                }
+                if (!raw) { showToastMsg('请输入包含 SteamID 的文本'); return; }
                 const idPart = extractSteamID(raw);
-                if (!idPart) {
-                    showToastMsg('未识别到有效的 SteamID 格式');
-                    return;
-                }
+                if (!idPart) { showToastMsg('未识别到有效的 SteamID 格式'); return; }
                 const connectCmd = 'connect ' + idPart;
                 resultCode.textContent = connectCmd;
-                copyBtn.setAttribute('data-cmd', connectCmd);
+                copyConnectBtn.setAttribute('data-cmd', connectCmd);
                 resultArea.style.display = 'flex';
             });
-
             clearBtn.addEventListener('click', () => {
                 inputEl.value = '';
                 resultArea.style.display = 'none';
-                copyBtn.setAttribute('data-cmd', '');
+                copyConnectBtn.setAttribute('data-cmd', '');
             });
-
-            inputEl.addEventListener('keydown', (e) => {
+            inputEl.addEventListener('keydown', e => {
                 if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
                     extractBtn.click();
