@@ -2281,13 +2281,13 @@
             </div>
 
             <label style="font-size:.85rem; color:var(--text2);">
-                修改开发者姓名（整蛊用）：
+                修改开发者姓名：
             </label>
 
             <input
                 id="devNameInput"
                 type="text"
-                placeholder="输入新名字，比如：表弟是CS2第一菜"
+                placeholder="输入新名字"
                 style="
                     width:100%;
                     margin-top:6px;
@@ -2640,7 +2640,7 @@
             });
 
             /* =========================
-               【新增】开发者模式（整蛊专用）
+               【修复】开发者模式（整蛊专用）
                ========================= */
             const devBtn = document.getElementById('devBtn');
             const devPanel = document.getElementById('devPanel');
@@ -2654,7 +2654,8 @@
             // 页面加载时自动读取之前保存的名字
             (function initDevName() {
                 const savedName = localStorage.getItem(STORAGE_KEY);
-                if (savedName) {
+                // 修复：只有 trim 后非空才显示
+                if (savedName && savedName.trim()) {
                     devNameDisplay.textContent = '⚙️ 开发者：' + savedName;
                 }
             })();
@@ -2662,6 +2663,10 @@
             // 点击开发者按钮弹密码框
             devBtn.addEventListener('click', function () {
                 const pwd = prompt('🔐 请输入开发者密码：');
+                // 修复：用户点取消时 pwd 为 null，直接返回不弹任何提示
+                if (pwd === null) {
+                    return;
+                }
                 if (pwd === DEV_PASSWORD) {
                     devPanel.style.display = 'block';
                     showToast('✅ 已进入开发者模式');
@@ -2673,8 +2678,12 @@
             // 保存整蛊名字
             saveDevName.addEventListener('click', function () {
                 const newName = devNameInput.value.trim();
+                // 修复：纯空格或空字符串 → 清除存储并隐藏显示
                 if (!newName) {
-                    showToast('⚠️ 名字不能为空');
+                    localStorage.removeItem(STORAGE_KEY);
+                    devNameDisplay.textContent = '';
+                    devNameInput.value = '';
+                    showToast('🧹 已清除开发者姓名');
                     return;
                 }
                 localStorage.setItem(STORAGE_KEY, newName);
