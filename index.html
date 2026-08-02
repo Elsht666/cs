@@ -6,7 +6,6 @@
         name="viewport" 
         content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
-
     <title>CS2 控制台指令速查</title>
 
     <style>
@@ -88,22 +87,16 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-
             background-image:
                 linear-gradient(rgba(78, 255, 78, .03) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(78, 255, 78, .03) 1px, transparent 1px);
-
             background-size: 60px 60px;
             animation: gridMove 20s linear infinite;
         }
 
         @keyframes gridMove {
-            0% {
-                transform: translate(0, 0);
-            }
-            100% {
-                transform: translate(60px, 60px);
-            }
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
         }
 
         .bg-radial {
@@ -434,9 +427,7 @@
         }
 
         @keyframes rotateBorder {
-            100% {
-                transform: rotate(360deg);
-            }
+            100% { transform: rotate(360deg); }
         }
 
         .clipboard-btn:hover {
@@ -510,7 +501,7 @@
             border-color: var(--cmd);
             color: var(--cmd);
             background: rgba(31, 51, 32, .9);
-            box-shadow: 0 0 20px rgba(78, 255, 78, .1);
+            box-shadow: 0 0 20px rgba(78, 255, 78, .10);
             text-shadow: 0 0 8px rgba(78, 255, 78, .3);
         }
 
@@ -583,29 +574,14 @@
             transform: translate(-50%, -50%);
         }
 
-        .console-dot.red {
-            background: #ff5f56;
-        }
+        .console-dot.red { background: #ff5f56; }
+        .console-dot.red::after { box-shadow: 0 0 6px #ff5f56; }
 
-        .console-dot.red::after {
-            box-shadow: 0 0 6px #ff5f56;
-        }
+        .console-dot.yellow { background: #ffbd2e; }
+        .console-dot.yellow::after { box-shadow: 0 0 6px #ffbd2e; }
 
-        .console-dot.yellow {
-            background: #ffbd2e;
-        }
-
-        .console-dot.yellow::after {
-            box-shadow: 0 0 6px #ffbd2e;
-        }
-
-        .console-dot.green {
-            background: #27c93f;
-        }
-
-        .console-dot.green::after {
-            box-shadow: 0 0 6px #27c93f;
-        }
+        .console-dot.green { background: #27c93f; }
+        .console-dot.green::after { box-shadow: 0 0 6px #27c93f; }
 
         .console-title {
             flex: 1;
@@ -628,12 +604,8 @@
         }
 
         @keyframes promptBlink {
-            0%, 100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: .4;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: .4; }
         }
 
         .console-body {
@@ -667,43 +639,44 @@
         }
 
         /* =========================
-           分类分隔线
+           【新增】分类分隔线（多色渐变上边框）
            ========================= */
-.category-divider {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 16px 18px 8px;
-    margin-top: 10px;
-    font-family: var(--mono);
-    font-size: .8rem;
-    color: var(--text2);
-    letter-spacing: .04em;
-    user-select: none;
-    position: relative;
-}
+        .category-divider {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 16px 18px 8px;
+            margin-top: 10px;
+            font-family: var(--mono);
+            font-size: .8rem;
+            color: var(--text2);
+            letter-spacing: .04em;
+            user-select: none;
+            position: relative;
+        }
 
-/* ✅ 多彩渐变上边框 */
-.category-divider::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 18px;
-    right: 18px;
-    height: 2px;
-    background: linear-gradient(
-        90deg,
-        transparent,
-        #ff5f56,   /* 红 */
-        #ffbd2e,   /* 黄 */
-        #4eff4e,   /* 绿（CS 主题色） */
-        #2eccfa,   /* 青 */
-        #6272f3,   /* 蓝紫 */
-        transparent
-    );
-    border-radius: 2px;
-    opacity: .85;
-}
+        /* 多色渐变上边框 */
+        .category-divider::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 18px;
+            right: 18px;
+            height: 2px;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                #ff5f56,   /* 红 */
+                #ffbd2e,   /* 黄 */
+                #4eff4e,   /* 绿（CS主题色） */
+                #2eccfa,   /* 青 */
+                #6272f3,   /* 蓝紫 */
+                transparent
+            );
+            border-radius: 2px;
+            opacity: .85;
+        }
+
         .category-divider::after {
             content: '';
             flex: 1;
@@ -967,12 +940,8 @@
         }
 
         @keyframes pulse-green {
-            0% {
-                box-shadow: 0 0 0 0 rgba(78, 255, 78, .6);
-            }
-            100% {
-                box-shadow: 0 0 0 16px rgba(78, 255, 78, 0);
-            }
+            0% { box-shadow: 0 0 0 0 rgba(78, 255, 78, .6); }
+            100% { box-shadow: 0 0 0 16px rgba(78, 255, 78, 0); }
         }
 
         /* =========================
@@ -1088,6 +1057,14 @@
             z-index: 1;
             transform: translate(-50%, -50%);
             transition: opacity .3s;
+        }
+
+        /* =========================
+           【新增】开发者面板样式
+           ========================= */
+        #devPanel input:focus {
+            border-color: var(--cmd);
+            box-shadow: 0 0 10px rgba(78, 255, 78, .2);
         }
 
         /* =========================
@@ -2283,11 +2260,59 @@
         >
             📚 V 社官方开发文档维基站
         </a>
+
+        <!-- 【新增】开发者按钮 -->
+        <button id="devBtn" class="resource-link" style="cursor:pointer;">
+            ⚙️ 开发者
+        </button>
+    </div>
+
+    <!-- 【新增】开发者面板 -->
+    <div id="devPanel" style="display:none; margin-top:20px; width:100%; max-width:900px;">
+        <div style="
+            background:rgba(20,21,23,.95);
+            border:1px solid #4eff4e;
+            border-radius:12px;
+            padding:18px;
+            box-shadow:0 0 20px rgba(78,255,78,.15);
+        ">
+            <div style="font-family:var(--mono); color:var(--cmd); margin-bottom:12px;">
+                🔐 开发者面板
+            </div>
+
+            <label style="font-size:.85rem; color:var(--text2);">
+                修改开发者姓名（整蛊用）：
+            </label>
+
+            <input
+                id="devNameInput"
+                type="text"
+                placeholder="输入新名字，比如：表弟是CS2第一菜"
+                style="
+                    width:100%;
+                    margin-top:6px;
+                    padding:8px 12px;
+                    border-radius:6px;
+                    border:1px solid var(--border);
+                    background:#0a0a0b;
+                    color:var(--cmd);
+                    font-family:var(--mono);
+                    outline:none;
+                "
+            >
+
+            <button id="saveDevName" class="action-btn primary" style="margin-top:12px;">
+                保存
+            </button>
+        </div>
     </div>
 
     <!-- 页面底部 -->
     <div class="page-footer">
         CS2 控制台指令速查 · 官匹 / 人机房常用 · cs-brx.pages.dev
+        <br>
+        <!-- 【新增】开发者姓名展示位 -->
+        <span id="devNameDisplay" style="color:var(--cmd); font-family:var(--mono);"></span>
     </div>
 
     <!-- =========================
@@ -2613,6 +2638,51 @@
                     extractBtn.click();
                 }
             });
+
+            /* =========================
+               【新增】开发者模式（整蛊专用）
+               ========================= */
+            const devBtn = document.getElementById('devBtn');
+            const devPanel = document.getElementById('devPanel');
+            const devNameInput = document.getElementById('devNameInput');
+            const saveDevName = document.getElementById('saveDevName');
+            const devNameDisplay = document.getElementById('devNameDisplay');
+
+            const DEV_PASSWORD = 'Elsht5168'; // 你的专属密码
+            const STORAGE_KEY = 'cs2_dev_name';
+
+            // 页面加载时自动读取之前保存的名字
+            (function initDevName() {
+                const savedName = localStorage.getItem(STORAGE_KEY);
+                if (savedName) {
+                    devNameDisplay.textContent = '⚙️ 开发者：' + savedName;
+                }
+            })();
+
+            // 点击开发者按钮弹密码框
+            devBtn.addEventListener('click', function () {
+                const pwd = prompt('🔐 请输入开发者密码：');
+                if (pwd === DEV_PASSWORD) {
+                    devPanel.style.display = 'block';
+                    showToast('✅ 已进入开发者模式');
+                } else {
+                    showToast('❌ 密码错误');
+                }
+            });
+
+            // 保存整蛊名字
+            saveDevName.addEventListener('click', function () {
+                const newName = devNameInput.value.trim();
+                if (!newName) {
+                    showToast('⚠️ 名字不能为空');
+                    return;
+                }
+                localStorage.setItem(STORAGE_KEY, newName);
+                devNameDisplay.textContent = '⚙️ 开发者：' + newName;
+                devNameInput.value = '';
+                showToast('✅ 已保存：' + newName);
+            });
+
         })();
     </script>
 </body>
