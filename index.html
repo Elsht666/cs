@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta 
-        name="viewport" 
+    <meta
+        name="viewport"
         content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     >
     <title>CS2 控制台指令速查</title>
@@ -95,8 +95,12 @@
         }
 
         @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(60px, 60px); }
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(60px, 60px);
+            }
         }
 
         .bg-radial {
@@ -107,11 +111,9 @@
             height: 100%;
             z-index: 0;
             pointer-events: none;
-            background: radial-gradient(
-                ellipse at 50% 0%,
-                rgba(78, 255, 78, .06) 0%,
-                transparent 50%
-            );
+            background: radial-gradient(ellipse at 50% 0%,
+                    rgba(78, 255, 78, .06) 0%,
+                    transparent 50%);
         }
 
         .scanline {
@@ -122,16 +124,14 @@
             height: 100%;
             z-index: 1;
             pointer-events: none;
-            background: repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 0, 0, .03) 2px,
-                rgba(0, 0, 0, .03) 4px
-            );
+            background: repeating-linear-gradient(0deg,
+                    transparent,
+                    transparent 2px,
+                    rgba(0, 0, 0, .03) 2px,
+                    rgba(0, 0, 0, .03) 4px);
         }
 
-        body > * {
+        body>* {
             position: relative;
             z-index: 2;
         }
@@ -200,12 +200,10 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                var(--neon-g),
-                transparent
-            );
+            background: linear-gradient(90deg,
+                    transparent,
+                    var(--neon-g),
+                    transparent);
             opacity: .5;
         }
 
@@ -397,7 +395,8 @@
         }
 
         @keyframes borderPulse {
-            0%, 100% {
+            0%,
+            100% {
                 box-shadow:
                     0 4px 24px rgba(0, 0, 0, .5),
                     0 0 15px rgba(78, 255, 78, .1);
@@ -416,18 +415,18 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: conic-gradient(
-                from 0deg,
-                transparent,
-                rgba(78, 255, 78, .1),
-                transparent,
-                transparent
-            );
+            background: conic-gradient(from 0deg,
+                    transparent,
+                    rgba(78, 255, 78, .1),
+                    transparent,
+                    transparent);
             animation: rotateBorder 4s linear infinite;
         }
 
         @keyframes rotateBorder {
-            100% { transform: rotate(360deg); }
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         .clipboard-btn:hover {
@@ -455,6 +454,7 @@
             justify-content: center;
             gap: 16px;
             flex-wrap: wrap;
+            align-items: stretch;
             animation: fadeInUpDelay .8s ease-out;
         }
 
@@ -475,6 +475,11 @@
             white-space: nowrap;
             position: relative;
             overflow: hidden;
+            cursor: pointer;
+            font-family: var(--ui);
+            line-height: 1.5;
+            box-sizing: border-box;
+            flex-shrink: 0;
         }
 
         .resource-link::before {
@@ -484,12 +489,10 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(78, 255, 78, .05),
-                transparent
-            );
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(78, 255, 78, .05),
+                    transparent);
             transition: left .5s;
         }
 
@@ -542,12 +545,10 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(78, 255, 78, .3),
-                transparent
-            );
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(78, 255, 78, .3),
+                    transparent);
         }
 
         .console-dots {
@@ -574,14 +575,24 @@
             transform: translate(-50%, -50%);
         }
 
-        .console-dot.red { background: #ff5f56; }
-        .console-dot.red::after { box-shadow: 0 0 6px #ff5f56; }
-
-        .console-dot.yellow { background: #ffbd2e; }
-        .console-dot.yellow::after { box-shadow: 0 0 6px #ffbd2e; }
-
-        .console-dot.green { background: #27c93f; }
-        .console-dot.green::after { box-shadow: 0 0 6px #27c93f; }
+        .console-dot.red {
+            background: #ff5f56;
+        }
+        .console-dot.red::after {
+            box-shadow: 0 0 6px #ff5f56;
+        }
+        .console-dot.yellow {
+            background: #ffbd2e;
+        }
+        .console-dot.yellow::after {
+            box-shadow: 0 0 6px #ffbd2e;
+        }
+        .console-dot.green {
+            background: #27c93f;
+        }
+        .console-dot.green::after {
+            box-shadow: 0 0 6px #27c93f;
+        }
 
         .console-title {
             flex: 1;
@@ -604,8 +615,13 @@
         }
 
         @keyframes promptBlink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: .4; }
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .4;
+            }
         }
 
         .console-body {
@@ -663,16 +679,19 @@
             left: 18px;
             right: 18px;
             height: 2px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                #ff5f56,   /* 红 */
-                #ffbd2e,   /* 黄 */
-                #4eff4e,   /* 绿（CS主题色） */
-                #2eccfa,   /* 青 */
-                #6272f3,   /* 蓝紫 */
-                transparent
-            );
+            background: linear-gradient(90deg,
+                    transparent,
+                    #ff5f56,
+                    /* 红 */
+                    #ffbd2e,
+                    /* 黄 */
+                    #4eff4e,
+                    /* 绿（CS主题色） */
+                    #2eccfa,
+                    /* 青 */
+                    #6272f3,
+                    /* 蓝紫 */
+                    transparent);
             border-radius: 2px;
             opacity: .85;
         }
@@ -704,12 +723,10 @@
             left: 18px;
             right: 18px;
             height: 1px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(78, 255, 78, .15),
-                transparent
-            );
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(78, 255, 78, .15),
+                    transparent);
         }
 
         .tab-btn {
@@ -746,7 +763,6 @@
             border-color: #666;
             color: #ccc;
         }
-
         .tab-btn:hover::before {
             width: 60%;
         }
@@ -758,7 +774,6 @@
             box-shadow: 0 0 12px rgba(78, 255, 78, .15);
             text-shadow: 0 0 8px rgba(78, 255, 78, .4);
         }
-
         .tab-btn.active::before {
             width: 80%;
         }
@@ -766,7 +781,6 @@
         .tab-content {
             display: none;
         }
-
         .tab-content.active {
             display: block;
             animation: tabFadeIn .3s ease-out;
@@ -803,11 +817,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(
-                90deg,
-                rgba(78, 255, 78, .03),
-                transparent 30%
-            );
+            background: linear-gradient(90deg,
+                    rgba(78, 255, 78, .03),
+                    transparent 30%);
             opacity: 0;
             transition: opacity .2s;
         }
@@ -816,7 +828,6 @@
             background: var(--surface-hover);
             border-left-color: rgba(78, 255, 78, .5);
         }
-
         .cmd-row:hover::before {
             opacity: 1;
         }
@@ -903,11 +914,9 @@
             left: 50%;
             width: 0;
             height: 0;
-            background: radial-gradient(
-                circle,
-                rgba(78, 255, 78, .3),
-                transparent
-            );
+            background: radial-gradient(circle,
+                    rgba(78, 255, 78, .3),
+                    transparent);
             border-radius: 50%;
             transform: translate(-50%, -50%);
             transition: width .4s, height .4s;
@@ -920,12 +929,10 @@
             box-shadow: 0 0 15px var(--glow);
             text-shadow: 0 0 6px rgba(78, 255, 78, .4);
         }
-
         .copy-btn:hover::before {
             width: 100px;
             height: 100px;
         }
-
         .copy-btn:active {
             transform: scale(.94);
         }
@@ -940,8 +947,12 @@
         }
 
         @keyframes pulse-green {
-            0% { box-shadow: 0 0 0 0 rgba(78, 255, 78, .6); }
-            100% { box-shadow: 0 0 0 16px rgba(78, 255, 78, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(78, 255, 78, .6);
+            }
+            100% {
+                box-shadow: 0 0 0 16px rgba(78, 255, 78, 0);
+            }
         }
 
         /* =========================
@@ -966,12 +977,10 @@
             left: 0;
             right: 0;
             height: 1px;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(78, 255, 78, .2),
-                transparent
-            );
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(78, 255, 78, .2),
+                    transparent);
         }
 
         .console-footer .dot-indicator {
@@ -987,7 +996,8 @@
         }
 
         @keyframes dotPulse {
-            0%, 100% {
+            0%,
+            100% {
                 opacity: .3;
                 box-shadow: 0 0 3px var(--neon-g);
             }
@@ -1048,11 +1058,9 @@
             width: 300px;
             height: 300px;
             border-radius: 50%;
-            background: radial-gradient(
-                circle,
-                rgba(78, 255, 78, .04),
-                transparent 70%
-            );
+            background: radial-gradient(circle,
+                    rgba(78, 255, 78, .04),
+                    transparent 70%);
             pointer-events: none;
             z-index: 1;
             transform: translate(-50%, -50%);
@@ -1166,7 +1174,6 @@
                 width: 9px;
                 height: 9px;
             }
-
             .console-dots {
                 gap: 5px;
             }
@@ -1271,11 +1278,9 @@
             </div>
 
             <div class="module-body">
-                <textarea
-                    id="steamidInput"
+                <textarea id="steamidInput"
                     placeholder="在此粘贴包含 SteamID 的文本，例如：&#10;steamid : [A:1:3538182148:50710](90289793877172228)"
-                    rows="3"
-                ></textarea>
+                    rows="3"></textarea>
 
                 <div class="module-actions">
                     <button id="extractBtn" class="action-btn primary">
@@ -1289,11 +1294,7 @@
                 <div class="result-area" id="resultArea" style="display:none;">
                     <span class="result-label">生成的指令：</span>
                     <code class="result-code" id="resultCode"></code>
-                    <button
-                        id="copyConnectBtn"
-                        class="copy-btn"
-                        data-cmd=""
-                    >
+                    <button id="copyConnectBtn" class="copy-btn" data-cmd="">
                         复制指令
                     </button>
                 </div>
@@ -1302,12 +1303,7 @@
 
         <!-- 剪切板入口 -->
         <div class="clipboard-module">
-            <a
-                href="https://ykjtb.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="clipboard-btn"
-            >
+            <a href="https://ykjtb.com/" target="_blank" rel="noopener noreferrer" class="clipboard-btn">
                 📋 剪切板
             </a>
         </div>
@@ -1924,7 +1920,8 @@
                             </code>
                             <span class="comment">// 困难模式</span>
                         </div>
-                        <button class="copy-btn" data-cmd="bot_kick; custom_bot_difficulty 5; mp_restartgame 1; bot_add">
+                        <button class="copy-btn"
+                            data-cmd="bot_kick; custom_bot_difficulty 5; mp_restartgame 1; bot_add">
                             复制
                         </button>
                     </div>
@@ -1936,7 +1933,8 @@
                             </code>
                             <span class="comment">// 简单模式</span>
                         </div>
-                        <button class="copy-btn" data-cmd="bot_kick; custom_bot_difficulty 1; mp_restartgame 1; bot_add">
+                        <button class="copy-btn"
+                            data-cmd="bot_kick; custom_bot_difficulty 1; mp_restartgame 1; bot_add">
                             复制
                         </button>
                     </div>
@@ -2248,49 +2246,51 @@
         </div>
     </main>
 
-<!-- =========================
-     资源链接区
-     ========================= -->
-<div class="resources-module">
-    <a
-        href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="resource-link"
-    >
-        📚 V 社官方开发文档维基站
-    </a>
+    <!-- =========================
+         资源链接区（四个按钮，高度一致）
+         ========================= -->
+    <div class="resources-module">
+        <a href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables"
+            target="_blank" rel="noopener noreferrer" class="resource-link">
+            📚 V 社官方开发文档维基站
+        </a>
 
-    <!-- 【新增】开发者按钮 -->
-    <button id="devBtn" class="resource-link" style="cursor:pointer;">
-        ⚙️ 开发者
-    </button>
+        <!-- 【新增】开发者按钮 -->
+        <button id="devBtn" class="resource-link" style="cursor:pointer;">
+            ⚙️ 开发者
+        </button>
 
-    <!-- 【新增】走个面按钮（赞赏码） -->
-    <button id="donateBtn" class="resource-link" style="cursor:pointer;">
-        ✨ 走个面
-    </button>
-</div>
+        <!-- 【新增】走个面按钮（赞赏码） -->
+        <button id="donateBtn" class="resource-link" style="cursor:pointer;">
+            ✨ 走个面
+        </button>
 
-<!-- 【新增】赞赏码模态框 -->
-<div id="donateModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.8); z-index:999; justify-content:center; align-items:center;">
-    <div style="background:#1a1b1f; border:1px solid #4eff4e; border-radius:12px; padding:24px; text-align:center; max-width:320px; width:90%; box-shadow:0 0 30px rgba(78,255,78,.3);">
-        <div style="color:var(--cmd); font-family:var(--mono); font-size:1rem; margin-bottom:16px;">
-           🍃 表示认可，再接再厉！
-        </div>
-        <!-- 替换成你自己的赞赏码图片，建议宽高 260x260 左右 -->
-        <img 
-            src="donate-qrcode.png" 
-            alt="赞赏码" 
-            style="width:100%; max-width:260px; border-radius:8px; border:1px solid var(--border);"
-            onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
-        >
-        <div style="display:none; color:var(--text2); padding:20px;">
-            请将赞赏码图片命名为<br>donate-qrcode.png<br>放在同目录下
-        </div>
-        <button id="closeDonateBtn" class="action-btn secondary" style="margin-top:16px;">关闭</button>
+        <!-- 【新增】反馈按钮（B站私信） -->
+        <a href="https://space.bilibili.com/1476255996"
+            target="_blank" rel="noopener noreferrer" class="resource-link"
+            title="前往B站空间私信反馈">
+            💬 反馈
+        </a>
     </div>
-</div>
+
+    <!-- 【新增】赞赏码模态框 -->
+    <div id="donateModal"
+        style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.8); z-index:999; justify-content:center; align-items:center;">
+        <div
+            style="background:#1a1b1f; border:1px solid #4eff4e; border-radius:12px; padding:24px; text-align:center; max-width:320px; width:90%; box-shadow:0 0 30px rgba(78,255,78,.3);">
+            <div style="color:var(--cmd); font-family:var(--mono); font-size:1rem; margin-bottom:16px;">
+                🍃 表示认可，再接再厉！
+            </div>
+            <!-- 替换成你自己的赞赏码图片，建议宽高 260x260 左右 -->
+            <img src="donate-qrcode.png" alt="赞赏码"
+                style="width:100%; max-width:260px; border-radius:8px; border:1px solid var(--border);"
+                onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
+            <div style="display:none; color:var(--text2); padding:20px;">
+                请将赞赏码图片命名为<br>donate-qrcode.png<br>放在同目录下
+            </div>
+            <button id="closeDonateBtn" class="action-btn secondary" style="margin-top:16px;">关闭</button>
+        </div>
+    </div>
 
     <!-- 【新增】开发者面板 -->
     <div id="devPanel" style="display:none; margin-top:20px; width:100%; max-width:900px;">
@@ -2309,11 +2309,7 @@
                 修改开发者姓名：
             </label>
 
-            <input
-                id="devNameInput"
-                type="text"
-                placeholder="输入新名字"
-                style="
+            <input id="devNameInput" type="text" placeholder="输入新名字" style="
                     width:100%;
                     margin-top:6px;
                     padding:8px 12px;
@@ -2323,8 +2319,7 @@
                     color:var(--cmd);
                     font-family:var(--mono);
                     outline:none;
-                "
-            >
+                ">
 
             <button id="saveDevName" class="action-btn primary" style="margin-top:12px;">
                 保存
@@ -2719,27 +2714,27 @@
 
         })();
 
-/* =========================
-   【新增】赞赏码弹窗控制
-   ========================= */
-const donateBtn = document.getElementById('donateBtn');
-const donateModal = document.getElementById('donateModal');
-const closeDonateBtn = document.getElementById('closeDonateBtn');
+        /* =========================
+           【新增】赞赏码弹窗控制
+           ========================= */
+        const donateBtn = document.getElementById('donateBtn');
+        const donateModal = document.getElementById('donateModal');
+        const closeDonateBtn = document.getElementById('closeDonateBtn');
 
-donateBtn.addEventListener('click', () => {
-    donateModal.style.display = 'flex';
-});
+        donateBtn.addEventListener('click', () => {
+            donateModal.style.display = 'flex';
+        });
 
-closeDonateBtn.addEventListener('click', () => {
-    donateModal.style.display = 'none';
-});
+        closeDonateBtn.addEventListener('click', () => {
+            donateModal.style.display = 'none';
+        });
 
-// 点击遮罩层也可关闭
-donateModal.addEventListener('click', (e) => {
-    if (e.target === donateModal) {
-        donateModal.style.display = 'none';
-    }
-});
+        // 点击遮罩层也可关闭
+        donateModal.addEventListener('click', (e) => {
+            if (e.target === donateModal) {
+                donateModal.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
