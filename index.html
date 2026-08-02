@@ -509,6 +509,40 @@
         }
 
         /* =========================
+           【新增】粒子漩涡徽章
+           ========================= */
+        .vortex-badge {
+            position: relative;
+            width: 90px;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        #vortexCanvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .vortex-text {
+            position: relative;
+            z-index: 2;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #4eff4e;
+            text-shadow: 0 0 8px #4eff4e;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            transition: opacity 0.4s;
+        }
+
+        /* =========================
            控制台窗口主体
            ========================= */
         .console-window {
@@ -1114,6 +1148,10 @@
             .resource-link {
                 width: 100%;
                 justify-content: center;
+            }
+
+            .vortex-badge {
+                margin: 0 auto;
             }
 
             .module-header {
@@ -2247,7 +2285,7 @@
     </main>
 
     <!-- =========================
-         资源链接区（四个按钮，高度一致）
+         资源链接区（四个按钮 + 粒子漩涡徽章）
          ========================= -->
     <div class="resources-module">
         <a href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables"
@@ -2255,22 +2293,28 @@
             📚 V 社官方开发文档维基站
         </a>
 
-        <!-- 【新增】开发者按钮 -->
+        <!-- 开发者按钮 -->
         <button id="devBtn" class="resource-link" style="cursor:pointer;">
             ⚙️ 开发者
         </button>
 
-        <!-- 【新增】走个面按钮（赞赏码） -->
+        <!-- 走个面按钮（赞赏码） -->
         <button id="donateBtn" class="resource-link" style="cursor:pointer;">
             ✨ 走个面
         </button>
 
-        <!-- 【新增】反馈按钮（B站私信） -->
+        <!-- 反馈按钮（B站私信） -->
         <a href="https://space.bilibili.com/1476255996"
             target="_blank" rel="noopener noreferrer" class="resource-link"
             title="前往B站空间私信反馈">
             💬 反馈
         </a>
+
+        <!-- 粒子漩涡徽章装饰 -->
+        <div class="vortex-badge" id="vortexBadge">
+            <canvas id="vortexCanvas" width="90" height="90"></canvas>
+            <div class="vortex-text" id="vortexText"></div>
+        </div>
     </div>
 
     <!-- 【新增】赞赏码模态框 -->
@@ -2324,6 +2368,36 @@
             <button id="saveDevName" class="action-btn primary" style="margin-top:12px;">
                 保存
             </button>
+
+            <!-- 漩涡徽章文字设置 -->
+            <div style="margin-top:20px; border-top:1px solid var(--border); padding-top:16px;">
+                <div style="font-family:var(--mono); color:var(--cmd); margin-bottom:8px;">
+                    🌀 漩涡徽章文字
+                </div>
+                <label style="font-size:.85rem; color:var(--text2);">
+                    自定义显示文字：
+                </label>
+                <input
+                    id="vortexTextInput"
+                    type="text"
+                    placeholder="输入新文字（默认ELSHt）"
+                    maxlength="8"
+                    style="
+                        width:100%;
+                        margin-top:6px;
+                        padding:8px 12px;
+                        border-radius:6px;
+                        border:1px solid var(--border);
+                        background:#0a0a0b;
+                        color:var(--cmd);
+                        font-family:var(--mono);
+                        outline:none;
+                    "
+                >
+                <button id="saveVortexText" class="action-btn primary" style="margin-top:12px;">
+                    保存
+                </button>
+            </div>
         </div>
     </div>
 
@@ -2331,7 +2405,7 @@
     <div class="page-footer">
         CS2 控制台指令速查 · 官匹 / 人机房常用 · cs-brx.pages.dev
         <br>
-        <!-- 【新增】开发者姓名展示位 -->
+        <!-- 开发者姓名展示位 -->
         <span id="devNameDisplay" style="color:var(--cmd); font-family:var(--mono);"></span>
     </div>
 
@@ -2512,6 +2586,9 @@
                 }, 1600);
             }
 
+            // 暴露到全局以便漩涡徽章逻辑使用
+            window.showToast = showToast;
+
             /* =========================
                复制逻辑（优先 Clipboard API）
                ========================= */
@@ -2660,7 +2737,7 @@
             });
 
             /* =========================
-               【修复】开发者模式（整蛊专用）
+               开发者模式（整蛊专用）
                ========================= */
             const devBtn = document.getElementById('devBtn');
             const devPanel = document.getElementById('devPanel');
@@ -2674,7 +2751,6 @@
             // 页面加载时自动读取之前保存的名字
             (function initDevName() {
                 const savedName = localStorage.getItem(STORAGE_KEY);
-                // 修复：只有 trim 后非空才显示
                 if (savedName && savedName.trim()) {
                     devNameDisplay.textContent = '⚙️ 开发者：' + savedName;
                 }
@@ -2683,7 +2759,6 @@
             // 点击开发者按钮弹密码框
             devBtn.addEventListener('click', function () {
                 const pwd = prompt('🔐 请输入开发者密码：');
-                // 修复：用户点取消时 pwd 为 null，直接返回不弹任何提示
                 if (pwd === null) {
                     return;
                 }
@@ -2698,7 +2773,6 @@
             // 保存整蛊名字
             saveDevName.addEventListener('click', function () {
                 const newName = devNameInput.value.trim();
-                // 修复：纯空格或空字符串 → 清除存储并隐藏显示
                 if (!newName) {
                     localStorage.removeItem(STORAGE_KEY);
                     devNameDisplay.textContent = '';
@@ -2715,7 +2789,172 @@
         })();
 
         /* =========================
-           【新增】赞赏码弹窗控制
+           【修改】粒子漩涡徽章动画与自定义文字
+           支持空格保存 + 循环：逐字显示 → 闪烁2次 → 第3次定住0.5秒 → 循环
+           ========================= */
+        (function() {
+            const canvas = document.getElementById('vortexCanvas');
+            const ctx = canvas.getContext('2d');
+            const textEl = document.getElementById('vortexText');
+            const inputEl = document.getElementById('vortexTextInput');
+            const saveBtn = document.getElementById('saveVortexText');
+
+            const STORAGE_KEY = 'cs2_vortex_text';
+            const DEFAULT_TEXT = 'ELSHt';
+
+            // 读取存储的文字，空字符串视为空格（支持空格）
+            let savedText = localStorage.getItem(STORAGE_KEY);
+            let displayWord;
+            if (savedText === null || savedText === '') {
+                displayWord = DEFAULT_TEXT;
+            } else {
+                displayWord = savedText;
+            }
+
+            let particles = [];
+            let angle = 0;
+            let textIndex = 0;
+            let animationFrameId = null;
+            let typingTimer = null;
+            let vortexAnimationId = 0; // 用于中断动画
+
+            // 初始化粒子
+            function initParticles() {
+                particles = [];
+                for (let i = 0; i < 20; i++) {
+                    const a = (i / 20) * Math.PI * 2;
+                    particles.push({
+                        angle: a,
+                        radius: 30 + Math.random() * 10,
+                        speed: 0.01 + Math.random() * 0.02,
+                        size: 1 + Math.random() * 2
+                    });
+                }
+            }
+            initParticles();
+
+            function draw() {
+                ctx.clearRect(0, 0, 90, 90);
+                angle += 0.008;
+                particles.forEach(p => {
+                    p.angle += p.speed;
+                    const x = 45 + Math.cos(p.angle + angle) * p.radius;
+                    const y = 45 + Math.sin(p.angle + angle) * p.radius;
+                    ctx.beginPath();
+                    ctx.arc(x, y, p.size, 0, Math.PI*2);
+                    ctx.fillStyle = `rgba(78,255,78,${0.4 + Math.sin(p.angle) * 0.3})`;
+                    ctx.fill();
+                });
+                animationFrameId = requestAnimationFrame(draw);
+            }
+            draw();
+
+            // 文字动画：逐字显示 → 闪烁2次 → 第3次定住0.5s → 清空重新开始
+            function startTyping(word) {
+                vortexAnimationId++;
+                const currentId = vortexAnimationId;
+
+                if (typingTimer) clearTimeout(typingTimer);
+                textIndex = 0;
+                textEl.textContent = '';
+                textEl.style.opacity = '1';
+                textEl.style.transition = 'opacity 0.4s';
+
+                function typeChar() {
+                    if (currentId !== vortexAnimationId) return;
+                    if (textIndex < word.length) {
+                        textEl.textContent += word[textIndex];
+                        textIndex++;
+                        typingTimer = setTimeout(typeChar, 250);
+                    } else {
+                        // 完整文字显示后，开始闪烁
+                        typingTimer = setTimeout(() => {
+                            if (currentId !== vortexAnimationId) return;
+                            startBlinkCycle(currentId);
+                        }, 300);
+                    }
+                }
+
+                function startBlinkCycle(id) {
+                    doBlink(0, id);
+                }
+
+                function doBlink(count, id) {
+                    if (id !== vortexAnimationId) return;
+                    if (count < 2) {
+                        // 闪烁：消失 -> 出现
+                        textEl.style.transition = 'opacity 0.08s';
+                        textEl.style.opacity = '0';
+                        typingTimer = setTimeout(() => {
+                            if (id !== vortexAnimationId) return;
+                            textEl.style.opacity = '1';
+                            typingTimer = setTimeout(() => {
+                                if (id !== vortexAnimationId) return;
+                                doBlink(count + 1, id);
+                            }, 150);
+                        }, 150);
+                    } else {
+                        // 闪烁2次完成，第3次定住不闪烁0.5秒
+                        textEl.style.transition = 'opacity 0.4s';
+                        textEl.style.opacity = '1';
+                        typingTimer = setTimeout(() => {
+                            if (id !== vortexAnimationId) return;
+                            // 清空文字，准备下一次循环
+                            textEl.textContent = '';
+                            textIndex = 0;
+                            textEl.style.transition = 'opacity 0.4s';
+                            typingTimer = setTimeout(() => {
+                                if (id !== vortexAnimationId) return;
+                                typeChar();
+                            }, 300);
+                        }, 500);
+                    }
+                }
+
+                typeChar();
+            }
+
+            // 启动第一次动画
+            startTyping(displayWord);
+
+            // 暴露给外部的更新函数
+            window.updateVortexText = function(newWord) {
+                // 当传入空字符串或null/undefined时，回退到默认文字
+                if (newWord === undefined || newWord === null || newWord === '') {
+                    newWord = DEFAULT_TEXT;
+                }
+                displayWord = newWord;
+                localStorage.setItem(STORAGE_KEY, newWord);
+                // 中断当前动画，重新开始
+                vortexAnimationId++;
+                if (typingTimer) clearTimeout(typingTimer);
+                startTyping(displayWord);
+            };
+
+            // 保存按钮：仅当输入框完全为空（长度为0）时使用默认值，支持空格
+            saveBtn.addEventListener('click', function() {
+                let newText = inputEl.value;
+                // 输入框完全空白才重置为默认
+                if (newText === '') {
+                    newText = DEFAULT_TEXT;
+                }
+                newText = newText.substring(0, 8);
+                inputEl.value = '';
+                window.updateVortexText(newText);
+                if (typeof window.showToast === 'function') {
+                    window.showToast('✅ 漩涡文字已更新：' + newText);
+                }
+            });
+
+            // 清理
+            window.addEventListener('beforeunload', function() {
+                if (animationFrameId) cancelAnimationFrame(animationFrameId);
+                if (typingTimer) clearTimeout(typingTimer);
+            });
+        })();
+
+        /* =========================
+           赞赏码弹窗控制
            ========================= */
         const donateBtn = document.getElementById('donateBtn');
         const donateModal = document.getElementById('donateModal');
@@ -2729,7 +2968,6 @@
             donateModal.style.display = 'none';
         });
 
-        // 点击遮罩层也可关闭
         donateModal.addEventListener('click', (e) => {
             if (e.target === donateModal) {
                 donateModal.style.display = 'none';
