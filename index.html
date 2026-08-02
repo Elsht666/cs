@@ -2248,24 +2248,49 @@
         </div>
     </main>
 
-    <!-- =========================
-         资源链接区
-         ========================= -->
-    <div class="resources-module">
-        <a
-            href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="resource-link"
-        >
-            📚 V 社官方开发文档维基站
-        </a>
+<!-- =========================
+     资源链接区
+     ========================= -->
+<div class="resources-module">
+    <a
+        href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="resource-link"
+    >
+        📚 V 社官方开发文档维基站
+    </a>
 
-        <!-- 【新增】开发者按钮 -->
-        <button id="devBtn" class="resource-link" style="cursor:pointer;">
-            ⚙️ 开发者
-        </button>
+    <!-- 【新增】开发者按钮 -->
+    <button id="devBtn" class="resource-link" style="cursor:pointer;">
+        ⚙️ 开发者
+    </button>
+
+    <!-- 【新增】走个面按钮（赞赏码） -->
+    <button id="donateBtn" class="resource-link" style="cursor:pointer;">
+        ✨ 走个面
+    </button>
+</div>
+
+<!-- 【新增】赞赏码模态框 -->
+<div id="donateModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.8); z-index:999; justify-content:center; align-items:center;">
+    <div style="background:#1a1b1f; border:1px solid #4eff4e; border-radius:12px; padding:24px; text-align:center; max-width:320px; width:90%; box-shadow:0 0 30px rgba(78,255,78,.3);">
+        <div style="color:var(--cmd); font-family:var(--mono); font-size:1rem; margin-bottom:16px;">
+           🍃 表示认可，再接再厉！
+        </div>
+        <!-- 替换成你自己的赞赏码图片，建议宽高 260x260 左右 -->
+        <img 
+            src="donate-qrcode.png" 
+            alt="赞赏码" 
+            style="width:100%; max-width:260px; border-radius:8px; border:1px solid var(--border);"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
+        >
+        <div style="display:none; color:var(--text2); padding:20px;">
+            请将赞赏码图片命名为<br>donate-qrcode.png<br>放在同目录下
+        </div>
+        <button id="closeDonateBtn" class="action-btn secondary" style="margin-top:16px;">关闭</button>
     </div>
+</div>
 
     <!-- 【新增】开发者面板 -->
     <div id="devPanel" style="display:none; margin-top:20px; width:100%; max-width:900px;">
@@ -2693,6 +2718,28 @@
             });
 
         })();
+
+/* =========================
+   【新增】赞赏码弹窗控制
+   ========================= */
+const donateBtn = document.getElementById('donateBtn');
+const donateModal = document.getElementById('donateModal');
+const closeDonateBtn = document.getElementById('closeDonateBtn');
+
+donateBtn.addEventListener('click', () => {
+    donateModal.style.display = 'flex';
+});
+
+closeDonateBtn.addEventListener('click', () => {
+    donateModal.style.display = 'none';
+});
+
+// 点击遮罩层也可关闭
+donateModal.addEventListener('click', (e) => {
+    if (e.target === donateModal) {
+        donateModal.style.display = 'none';
+    }
+});
     </script>
 </body>
 </html>
