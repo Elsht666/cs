@@ -2298,10 +2298,12 @@
             ⚙️ 开发者
         </button>
 
-        <!-- 走个面按钮（赞赏码） -->
+        <!-- 走个面按钮（赞赏码）—— 已注释 -->
+        <!--
         <button id="donateBtn" class="resource-link" style="cursor:pointer;">
             ✨ 走个面
         </button>
+        -->
 
         <!-- 反馈按钮（B站私信） -->
         <a href="https://space.bilibili.com/1476255996"
@@ -2317,7 +2319,8 @@
         </div>
     </div>
 
-    <!-- 【新增】赞赏码模态框 -->
+    <!-- 【新增】赞赏码模态框 —— 已注释 -->
+    <!--
     <div id="donateModal"
         style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.8); z-index:999; justify-content:center; align-items:center;">
         <div
@@ -2325,7 +2328,6 @@
             <div style="color:var(--cmd); font-family:var(--mono); font-size:1rem; margin-bottom:16px;">
                 🍃 表示认可，再接再厉！
             </div>
-            <!-- 替换成你自己的赞赏码图片，建议宽高 260x260 左右 -->
             <img src="donate-qrcode.png" alt="赞赏码"
                 style="width:100%; max-width:260px; border-radius:8px; border:1px solid var(--border);"
                 onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
@@ -2335,6 +2337,7 @@
             <button id="closeDonateBtn" class="action-btn secondary" style="margin-top:16px;">关闭</button>
         </div>
     </div>
+    -->
 
     <!-- 【新增】开发者面板 -->
     <div id="devPanel" style="display:none; margin-top:20px; width:100%; max-width:900px;">
@@ -2954,8 +2957,9 @@
         })();
 
         /* =========================
-           赞赏码弹窗控制
+           赞赏码弹窗控制 —— 已注释
            ========================= */
+        /*
         const donateBtn = document.getElementById('donateBtn');
         const donateModal = document.getElementById('donateModal');
         const closeDonateBtn = document.getElementById('closeDonateBtn');
@@ -2973,6 +2977,7 @@
                 donateModal.style.display = 'none';
             }
         });
+        */
     </script>
 </body>
 </html>
