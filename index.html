@@ -1103,11 +1103,340 @@
         }
 
         /* =========================
-           【新增】开发者面板样式
+           开发者面板样式
            ========================= */
-        #devPanel input:focus {
+        .dev-panel {
+            background: rgba(14, 15, 17, .98);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, .6),
+                0 0 40px rgba(78, 255, 78, .04);
+            animation: fadeInUp .4s ease-out;
+        }
+
+        .dev-panel-title {
+            font-family: var(--mono);
+            color: var(--cmd);
+            font-size: .95rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-shadow: 0 0 10px rgba(78, 255, 78, .4);
+            letter-spacing: .03em;
+        }
+
+        .dev-form-group {
+            margin-bottom: 16px;
+        }
+
+        .dev-form-label {
+            display: block;
+            font-size: .82rem;
+            color: var(--text2);
+            margin-bottom: 6px;
+            font-family: var(--ui);
+            letter-spacing: .02em;
+        }
+
+        .dev-form-row {
+            display: flex;
+            gap: 8px;
+            align-items: stretch;
+        }
+
+        .dev-input {
+            flex: 1;
+            padding: 10px 14px;
+            border-radius: var(--r);
+            border: 1px solid var(--border);
+            background: rgba(10, 10, 11, .95);
+            color: var(--cmd);
+            font-family: var(--mono);
+            font-size: .85rem;
+            outline: none;
+            transition: all .3s;
+            user-select: text;
+        }
+
+        .dev-input:focus {
             border-color: var(--cmd);
-            box-shadow: 0 0 10px rgba(78, 255, 78, .2);
+            box-shadow:
+                0 0 15px rgba(78, 255, 78, .12),
+                inset 0 0 15px rgba(78, 255, 78, .03);
+        }
+
+        .dev-input::placeholder {
+            color: rgba(107, 109, 118, .6);
+        }
+
+        .dev-save-btn {
+            padding: 10px 20px;
+            border-radius: var(--r);
+            border: 1px solid var(--cmd-dim);
+            background: transparent;
+            color: var(--cmd);
+            font-family: var(--ui);
+            font-size: .82rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .3s;
+            white-space: nowrap;
+            letter-spacing: .03em;
+            touch-action: manipulation;
+        }
+
+        .dev-save-btn:hover {
+            background: var(--btn-h-bg);
+            border-color: var(--btn-h-b);
+            box-shadow: 0 0 20px var(--glow);
+            text-shadow: 0 0 8px rgba(78, 255, 78, .5);
+        }
+
+        .dev-save-btn:active {
+            transform: scale(.96);
+        }
+
+        .dev-divider {
+            height: 1px;
+            background: linear-gradient(90deg, var(--border), rgba(78, 255, 78, .2), var(--border));
+            margin: 18px 0;
+        }
+
+        .dev-links-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .dev-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 9px 18px;
+            background: rgba(10, 10, 11, .8);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text2);
+            font-size: .85rem;
+            font-weight: 500;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all .3s;
+            font-family: var(--ui);
+            touch-action: manipulation;
+        }
+
+        .dev-link-btn:hover {
+            border-color: var(--cmd);
+            color: var(--cmd);
+            background: rgba(31, 51, 32, .9);
+            box-shadow: 0 0 18px rgba(78, 255, 78, .1);
+            text-shadow: 0 0 8px rgba(78, 255, 78, .3);
+        }
+
+        .dev-link-btn:active {
+            transform: scale(.97);
+        }
+
+        /* =========================
+           验证码模态框（开发者入口）
+           ========================= */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, .7);
+            z-index: 9998;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            animation: modalFadeIn .2s ease;
+        }
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 24px 24px;
+            width: 100%;
+            max-width: 340px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, .6),
+                0 0 40px rgba(78, 255, 78, .08);
+            animation: modalSlideIn .25s ease;
+            position: relative;
+        }
+
+        .modal-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--neon-g), transparent);
+            opacity: .5;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(20px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .modal-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin: 0 0 6px;
+            text-align: center;
+            color: var(--cmd);
+            font-family: var(--mono);
+            text-shadow: 0 0 10px rgba(78, 255, 78, .4);
+            letter-spacing: .03em;
+        }
+
+        .modal-subtitle {
+            font-size: .82rem;
+            color: var(--text2);
+            text-align: center;
+            margin: 0 0 20px;
+        }
+
+        .code-input-wrap {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .code-input {
+            width: 48px;
+            height: 56px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 1.4rem;
+            font-weight: 700;
+            background: rgba(10, 10, 11, .9);
+            color: var(--cmd);
+            outline: none;
+            transition: border-color .2s, box-shadow .2s, transform .1s;
+            -webkit-tap-highlight-color: transparent;
+            box-sizing: border-box;
+            font-family: var(--mono);
+            text-shadow: 0 0 8px rgba(78, 255, 78, .3);
+            user-select: text;
+        }
+
+        .code-input:focus {
+            border-color: var(--cmd);
+            box-shadow:
+                0 0 15px rgba(78, 255, 78, .15),
+                inset 0 0 10px rgba(78, 255, 78, .04);
+            transform: scale(1.05);
+        }
+
+        .code-input.error {
+            border-color: #ef4444;
+            box-shadow: 0 0 12px rgba(239, 68, 68, .2);
+            animation: shake .4s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-6px); }
+            40% { transform: translateX(6px); }
+            60% { transform: translateX(-4px); }
+            80% { transform: translateX(4px); }
+        }
+
+        .modal-btns {
+            display: flex;
+            gap: 10px;
+        }
+
+        .modal-btn {
+            flex: 1;
+            padding: 11px 0;
+            border: 0;
+            border-radius: 10px;
+            font-size: .85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+            touch-action: manipulation;
+            -webkit-user-select: none;
+            user-select: none;
+            letter-spacing: .03em;
+            font-family: var(--ui);
+        }
+
+        .modal-btn:active {
+            transform: scale(0.96);
+        }
+
+        .modal-btn.cancel {
+            background: rgba(127, 127, 127, .15);
+            color: var(--text2);
+            border: 1px solid var(--border);
+        }
+
+        .modal-btn.cancel:hover {
+            background: rgba(127, 127, 127, .25);
+            color: var(--text);
+        }
+
+        .modal-btn.confirm {
+            background: linear-gradient(135deg, var(--cmd-dim), var(--cmd));
+            color: #0a0a0b;
+            box-shadow: 0 0 20px rgba(78, 255, 78, .2);
+        }
+
+        .modal-btn.confirm:hover {
+            box-shadow: 0 0 28px rgba(78, 255, 78, .35);
+        }
+
+        .modal-error-msg {
+            text-align: center;
+            color: #ef4444;
+            font-size: .8rem;
+            margin-bottom: 10px;
+            min-height: 18px;
+            opacity: 0;
+            transition: opacity .2s;
+            text-shadow: 0 0 6px rgba(239, 68, 68, .3);
+        }
+
+        .modal-error-msg.show {
+            opacity: 1;
+        }
+
+        @media (max-width: 640px) {
+            .code-input { width: 44px; height: 52px; font-size: 1.3rem; }
+            .modal-box { padding: 24px 20px 20px; border-radius: 14px; }
+            .dev-panel { padding: 16px; }
+            .dev-form-row { flex-direction: column; }
+            .dev-save-btn { width: 100%; padding: 12px; }
+            .dev-links-row { flex-direction: column; }
+            .dev-link-btn { justify-content: center; }
         }
 
         /* =========================
@@ -2304,7 +2633,7 @@
     </main>
 
     <!-- =========================
-         资源链接区（四个按钮 + 粒子漩涡徽章）
+         资源链接区
          ========================= -->
     <div class="resources-module">
         <a href="https://developer.valvesoftware.com/wiki/List_of_Counter-Strike_2_console_commands_and_variables"
@@ -2312,22 +2641,10 @@
             📚 V 社官方开发文档维基站
         </a>
 
-        <!-- 开发者按钮 -->
+        <!-- 开发者按钮（密码保护入口） -->
         <button id="devBtn" class="resource-link" style="cursor:pointer;">
             ⚙️ 开发者
         </button>
-
-        <!-- 走个面按钮（赞赏码） -->
-        <button id="donateBtn" class="resource-link" style="cursor:pointer;">
-            ✨ 走个面
-        </button>
-
-        <!-- 反馈按钮（B站私信） -->
-        <a href="https://space.bilibili.com/1476255996"
-            target="_blank" rel="noopener noreferrer" class="resource-link"
-            title="前往B站空间私信反馈">
-            💬 反馈
-        </a>
 
         <!-- 粒子漩涡徽章装饰 -->
         <div class="vortex-badge" id="vortexBadge">
@@ -2336,7 +2653,26 @@
         </div>
     </div>
 
-    <!-- 【新增】赞赏码模态框 -->
+    <!-- 验证码模态框（开发者入口） -->
+    <div class="modal-overlay" id="devModal">
+        <div class="modal-box">
+            <h3 class="modal-title">🔐 开发者验证</h3>
+            <p class="modal-subtitle" id="devModalSubtitle">请输入4位访问码</p>
+            <div class="modal-error-msg" id="devModalError">验证码错误，请重试</div>
+            <div class="code-input-wrap" id="devCodeInputs">
+                <input class="code-input" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" />
+                <input class="code-input" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" />
+                <input class="code-input" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" />
+                <input class="code-input" type="text" maxlength="1" inputmode="numeric" pattern="[0-9]" autocomplete="off" />
+            </div>
+            <div class="modal-btns">
+                <button class="modal-btn cancel" id="devModalCancel">取消</button>
+                <button class="modal-btn confirm" id="devModalConfirm">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 赞赏码模态框 -->
     <div id="donateModal"
         style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.8); z-index:999; justify-content:center; align-items:center;">
         <div
@@ -2344,7 +2680,6 @@
             <div style="color:var(--cmd); font-family:var(--mono); font-size:1rem; margin-bottom:16px;">
                 🍃 表示认可，再接再厉！
             </div>
-            <!-- 替换成你自己的赞赏码图片，建议宽高 260x260 左右 -->
             <img src="donate-qrcode.png" alt="赞赏码"
                 style="width:100%; max-width:260px; border-radius:8px; border:1px solid var(--border);"
                 onerror="this.style.display='none';this.nextElementSibling.style.display='block';">
@@ -2355,68 +2690,40 @@
         </div>
     </div>
 
-    <!-- 【新增】开发者面板 -->
-    <div id="devPanel" style="display:none; margin-top:20px; width:100%; max-width:900px;">
-        <div style="
-            background:rgba(20,21,23,.95);
-            border:1px solid #4eff4e;
-            border-radius:12px;
-            padding:18px;
-            box-shadow:0 0 20px rgba(78,255,78,.15);
-        ">
-            <div style="font-family:var(--mono); color:var(--cmd); margin-bottom:12px;">
-                🔐 开发者面板
+    <!-- 开发者面板（密码验证后显示） -->
+    <div id="devPanel" class="dev-panel" style="display:none; margin-top:20px; width:100%; max-width:900px;">
+        <div class="dev-panel-title">
+            🔐 开发者面板
+        </div>
+
+        <div class="dev-form-group">
+            <label class="dev-form-label">修改开发者姓名</label>
+            <div class="dev-form-row">
+                <input id="devNameInput" type="text" class="dev-input" placeholder="输入新名字，留空则清除">
+                <button id="saveDevName" class="dev-save-btn">保存</button>
             </div>
+        </div>
 
-            <label style="font-size:.85rem; color:var(--text2);">
-                修改开发者姓名：
-            </label>
+        <div class="dev-form-group">
+            <label class="dev-form-label">自定义漩涡徽章文字（最多8字）</label>
+            <div class="dev-form-row">
+                <input id="vortexTextInput" type="text" class="dev-input" placeholder="输入新文字" maxlength="8">
+                <button id="saveVortexText" class="dev-save-btn">保存</button>
+            </div>
+        </div>
 
-            <input id="devNameInput" type="text" placeholder="输入新名字" style="
-                    width:100%;
-                    margin-top:6px;
-                    padding:8px 12px;
-                    border-radius:6px;
-                    border:1px solid var(--border);
-                    background:#0a0a0b;
-                    color:var(--cmd);
-                    font-family:var(--mono);
-                    outline:none;
-                ">
+        <div class="dev-divider"></div>
 
-            <button id="saveDevName" class="action-btn primary" style="margin-top:12px;">
-                保存
+        <div class="dev-form-label" style="margin-bottom:10px;">🔗 隐藏功能</div>
+        <div class="dev-links-row">
+            <button id="donateBtnFromDev" class="dev-link-btn" style="cursor:pointer;">
+                ✨ 走个面（赞赏码）
             </button>
-
-            <!-- 漩涡徽章文字设置 -->
-            <div style="margin-top:20px; border-top:1px solid var(--border); padding-top:16px;">
-                <div style="font-family:var(--mono); color:var(--cmd); margin-bottom:8px;">
-                    🌀 漩涡徽章文字
-                </div>
-                <label style="font-size:.85rem; color:var(--text2);">
-                    自定义显示文字：
-                </label>
-                <input
-                    id="vortexTextInput"
-                    type="text"
-                    placeholder="输入新文字"
-                    maxlength="8"
-                    style="
-                        width:100%;
-                        margin-top:6px;
-                        padding:8px 12px;
-                        border-radius:6px;
-                        border:1px solid var(--border);
-                        background:#0a0a0b;
-                        color:var(--cmd);
-                        font-family:var(--mono);
-                        outline:none;
-                    "
-                >
-                <button id="saveVortexText" class="action-btn primary" style="margin-top:12px;">
-                    保存
-                </button>
-            </div>
+            <a href="https://space.bilibili.com/1476255996"
+                target="_blank" rel="noopener noreferrer" class="dev-link-btn"
+                title="前往B站空间私信反馈">
+                💬 问题反馈（B站私信）
+            </a>
         </div>
     </div>
 
@@ -2764,8 +3071,9 @@
             const saveDevName = document.getElementById('saveDevName');
             const devNameDisplay = document.getElementById('devNameDisplay');
 
-            const DEV_PASSWORD = 'Elsht5168'; // 你的专属密码
+            const DEV_CODE = '5168';
             const STORAGE_KEY = 'cs2_dev_name';
+            let devUnlocked = false;
 
             // 页面加载时自动读取之前保存的名字
             (function initDevName() {
@@ -2775,17 +3083,122 @@
                 }
             })();
 
-            // 点击开发者按钮弹密码框
-            devBtn.addEventListener('click', function () {
-                const pwd = prompt('🔐 请输入开发者密码：');
-                if (pwd === null) {
+            /* ====== 验证码模态框逻辑 ====== */
+            const devModal = document.getElementById('devModal');
+            const devCodeInputs = devModal.querySelectorAll('.code-input');
+            const devModalCancel = document.getElementById('devModalCancel');
+            const devModalConfirm = document.getElementById('devModalConfirm');
+            const devModalError = document.getElementById('devModalError');
+
+            function openDevModal() {
+                devModalError.classList.remove('show');
+                devCodeInputs.forEach((inp, i) => {
+                    inp.value = '';
+                    inp.classList.remove('error');
+                });
+                devModal.classList.add('show');
+                setTimeout(() => devCodeInputs[0].focus(), 100);
+            }
+
+            function closeDevModal() {
+                devModal.classList.remove('show');
+                devCodeInputs.forEach(inp => { inp.value = ''; inp.classList.remove('error'); });
+                devModalError.classList.remove('show');
+            }
+
+            function getEnteredCode() {
+                return Array.from(devCodeInputs).map(i => i.value).join('');
+            }
+
+            function showDevError(msg) {
+                devModalError.textContent = msg;
+                devModalError.classList.add('show');
+            }
+
+            function verifyDevCode() {
+                const code = getEnteredCode();
+                if (code.length !== 4) {
+                    showDevError('请输入完整的4位验证码');
                     return;
                 }
-                if (pwd === DEV_PASSWORD) {
+                if (code === DEV_CODE) {
+                    devUnlocked = true;
+                    closeDevModal();
                     devPanel.style.display = 'block';
-                    showToast('✅ 已进入开发者模式');
+                    devPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    showToast('✅ 验证通过，已进入开发者面板');
                 } else {
-                    showToast('❌ 密码错误');
+                    showDevError('验证码错误，请重试');
+                    devCodeInputs.forEach(inp => {
+                        inp.classList.add('error');
+                        inp.value = '';
+                    });
+                    setTimeout(() => devCodeInputs[0].focus(), 100);
+                }
+            }
+
+            // 输入框自动跳转
+            devCodeInputs.forEach((inp, idx) => {
+                inp.addEventListener('input', e => {
+                    const v = e.target.value.replace(/[^0-9]/g, '');
+                    e.target.value = v;
+                    inp.classList.remove('error');
+                    devModalError.classList.remove('show');
+                    if (v && idx < 3) {
+                        devCodeInputs[idx + 1].focus();
+                    }
+                    if (idx === 3 && v) {
+                        const all = Array.from(devCodeInputs).every(i => i.value);
+                        if (all) setTimeout(verifyDevCode, 150);
+                    }
+                });
+                inp.addEventListener('keydown', e => {
+                    if (e.key === 'Backspace' && !e.target.value && idx > 0) {
+                        devCodeInputs[idx - 1].focus();
+                    }
+                    if (e.key === 'Enter') {
+                        verifyDevCode();
+                    }
+                });
+                inp.addEventListener('focus', e => {
+                    e.target.select();
+                });
+                inp.addEventListener('paste', e => {
+                    e.preventDefault();
+                    const text = (e.clipboardData || window.clipboardData).getData('text').replace(/[^0-9]/g, '').substring(0, 4);
+                    text.split('').forEach((ch, i) => {
+                        if (devCodeInputs[i]) {
+                            devCodeInputs[i].value = ch;
+                            devCodeInputs[i].classList.remove('error');
+                        }
+                    });
+                    devModalError.classList.remove('show');
+                    if (text.length === 4) {
+                        setTimeout(verifyDevCode, 150);
+                    } else if (text.length > 0) {
+                        devCodeInputs[Math.min(text.length, 3)].focus();
+                    }
+                });
+            });
+
+            devBtn.addEventListener('click', function () {
+                if (devUnlocked) {
+                    devPanel.style.display = devPanel.style.display === 'none' ? 'block' : 'none';
+                    return;
+                }
+                openDevModal();
+            });
+
+            devModalCancel.addEventListener('click', closeDevModal);
+            devModalConfirm.addEventListener('click', verifyDevCode);
+            devModal.addEventListener('click', e => {
+                if (e.target === devModal) closeDevModal();
+            });
+
+            // ESC 关闭模态框
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape' && devModal.classList.contains('show')) {
+                    closeDevModal();
                 }
             });
 
@@ -2975,11 +3388,11 @@
         /* =========================
            赞赏码弹窗控制
            ========================= */
-        const donateBtn = document.getElementById('donateBtn');
+        const donateBtnFromDev = document.getElementById('donateBtnFromDev');
         const donateModal = document.getElementById('donateModal');
         const closeDonateBtn = document.getElementById('closeDonateBtn');
 
-        donateBtn.addEventListener('click', () => {
+        donateBtnFromDev.addEventListener('click', () => {
             donateModal.style.display = 'flex';
         });
 
