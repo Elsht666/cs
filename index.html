@@ -2200,6 +2200,38 @@
 
                     <div class="cmd-row">
                         <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_cache</code>
+                            <span class="comment">// 死城之谜</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_cache">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_boulder</code>
+                            <span class="comment">// 岩岛修道院</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_boulder">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_fachwerk</code>
+                            <span class="comment">// 木筋屋小镇</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_fachwerk">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
+                            <code class="cmd-code">changelevel de_shelter</code>
+                            <span class="comment">// 动物收容所</span>
+                        </div>
+                        <button class="copy-btn" data-cmd="changelevel de_shelter">复制</button>
+                    </div>
+
+                    <div class="cmd-row">
+                        <div class="cmd-text-wrapper">
                             <code class="cmd-code">changelevel cs_office</code>
                             <span class="comment">// 办公室</span>
                         </div>
@@ -3232,7 +3264,7 @@
             const saveBtn = document.getElementById('saveVortexText');
 
             const STORAGE_KEY = 'cs2_vortex_text';
-            const DEFAULT_TEXT = 'Openness';
+            const DEFAULT_TEXT = 'Muradin';
 
             // 读取存储的文字，空字符串视为空格（支持空格）
             let savedText = localStorage.getItem(STORAGE_KEY);
