@@ -973,29 +973,21 @@
         .copy-btn::before {
             content: '';
             position: absolute;
-            top: 50%;
+            bottom: 0;
             left: 50%;
             width: 0;
-            height: 0;
-            background: radial-gradient(circle,
-                    rgba(78, 255, 78, .3),
-                    transparent);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width .4s, height .4s;
+            height: 2px;
+            background: var(--neon-g);
+            transform: translateX(-50%);
+            transition: width .3s;
+            box-shadow: 0 0 8px var(--neon-g);
         }
 
         .copy-btn:hover {
-            border-color: var(--btn-h-b);
-            color: var(--cmd);
-            background: var(--btn-h-bg);
-            box-shadow: 0 0 15px var(--glow);
-            text-shadow: 0 0 6px rgba(78, 255, 78, .4);
             transform: translateY(-3px) scale(1.05);
         }
         .copy-btn:hover::before {
-            width: 100px;
-            height: 100px;
+            width: 60%;
         }
         .copy-btn:active {
             transform: scale(.94);
