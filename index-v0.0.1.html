@@ -275,36 +275,18 @@
         .action-btn {
             padding: 8px 18px;
             border-radius: var(--r);
-            border: 1px solid rgba(255,255,255,.1);
-            background: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
+            border: 1px solid var(--btn-b);
+            background: transparent;
             color: #9a9ba5;
             font-family: var(--ui);
             font-size: .85rem;
             font-weight: 500;
             cursor: pointer;
-            transition: transform .18s cubic-bezier(.2,.9,.3,1.2), box-shadow .3s, border-color .3s, color .3s, background .3s;
+            transition: all .3s;
             letter-spacing: .03em;
             touch-action: manipulation;
             position: relative;
             overflow: hidden;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 2px 6px rgba(0,0,0,.2);
-        }
-
-        .action-btn::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            width: 0;
-            height: 2px;
-            background: var(--neon-g);
-            transform: translateX(-50%);
-            transition: width .3s;
-            box-shadow: 0 0 8px var(--neon-g);
-        }
-
-        .action-btn:hover::before {
-            width: 60%;
         }
 
         .action-btn::after {
@@ -335,14 +317,12 @@
             border-color: var(--btn-h-b);
             box-shadow: 0 0 20px var(--glow);
             text-shadow: 0 0 8px rgba(78, 255, 78, .5);
-            transform: translateY(-3px) scale(1.05);
         }
 
         .action-btn.secondary:hover {
             border-color: #666;
             color: #ccc;
             background: #1a1b1f;
-            transform: translateY(-3px) scale(1.05);
         }
 
         .result-area {
@@ -764,53 +744,47 @@
            ========================= */
         .tab-nav {
             display: flex;
-            gap: 10px;
-            padding: 10px 14px;
-            margin: 8px 18px 12px;
-            border-radius: 18px;
-            background: rgba(0, 0, 0, .35);
-            border: 1px solid rgba(255, 255, 255, .12);
-            backdrop-filter: blur(20px) saturate(1.6);
-            -webkit-backdrop-filter: blur(20px) saturate(1.6);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, .4);
+            gap: 8px;
+            padding: 8px 18px 12px;
+            border-bottom: 1px solid var(--border);
             flex-wrap: wrap;
             position: relative;
-            justify-content: center;
         }
 
         .tab-nav::after {
-            display: none;
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 18px;
+            right: 18px;
+            height: 1px;
+            background: linear-gradient(90deg,
+                    transparent,
+                    rgba(78, 255, 78, .15),
+                    transparent);
         }
 
         .tab-btn {
-            width: 64px;
-            height: 64px;
-            padding: 4px;
-            border: 1px solid rgba(255,255,255,.1);
-            background: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
+            padding: 6px 14px;
+            border: 1px solid var(--btn-b);
+            background: transparent;
             color: var(--text2);
-            font-size: .7rem;
+            font-size: .82rem;
             font-weight: 500;
-            border-radius: 12px;
+            border-radius: var(--r);
             cursor: pointer;
-            transition: transform .18s cubic-bezier(.2,.9,.3,1.2), box-shadow .18s, border-color .3s, color .3s, background .3s;
-            white-space: normal;
-            text-align: center;
-            line-height: 1.3;
+            transition: all .3s;
+            white-space: nowrap;
             touch-action: manipulation;
             flex-shrink: 0;
             position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: visible;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 2px 6px rgba(0,0,0,.2);
+            overflow: hidden;
         }
 
         .tab-btn::before {
             content: '';
             position: absolute;
-            bottom: -1px;
+            bottom: 0;
             left: 50%;
             width: 0;
             height: 2px;
@@ -821,9 +795,8 @@
         }
 
         .tab-btn:hover {
-            color: #ccc;
             border-color: #666;
-            transform: translateY(-6px) scale(1.1);
+            color: #ccc;
         }
         .tab-btn:hover::before {
             width: 60%;
@@ -833,7 +806,7 @@
             border-color: var(--cmd);
             color: var(--cmd);
             background: rgba(78, 255, 78, .08);
-            box-shadow: 0 0 12px rgba(78, 255, 78, .15), inset 0 0 0 1px rgba(255,255,255,.05);
+            box-shadow: 0 0 12px rgba(78, 255, 78, .15);
             text-shadow: 0 0 8px rgba(78, 255, 78, .4);
         }
         .tab-btn.active::before {
@@ -955,11 +928,11 @@
             min-width: 50px;
             min-height: 36px;
             border-radius: var(--r);
-            border: 1px solid rgba(255,255,255,.1);
-            background: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
+            border: 1px solid var(--btn-b);
+            background: transparent;
             color: #9a9ba5;
             cursor: pointer;
-            transition: transform .18s cubic-bezier(.2,.9,.3,1.2), box-shadow .25s, border-color .25s, color .25s, background .25s;
+            transition: all .25s;
             letter-spacing: .03em;
             white-space: nowrap;
             outline: none;
@@ -967,7 +940,6 @@
             position: relative;
             overflow: hidden;
             touch-action: manipulation;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 2px 6px rgba(0,0,0,.2);
         }
 
         .copy-btn::before {
@@ -991,7 +963,6 @@
             background: var(--btn-h-bg);
             box-shadow: 0 0 15px var(--glow);
             text-shadow: 0 0 6px rgba(78, 255, 78, .4);
-            transform: translateY(-3px) scale(1.05);
         }
         .copy-btn:hover::before {
             width: 100px;
@@ -1586,17 +1557,13 @@
             }
 
             .tab-nav {
-                padding: 8px 10px;
-                margin: 6px 12px 10px;
-                gap: 8px;
-                border-radius: 14px;
+                padding: 6px 12px 10px;
+                gap: 6px;
             }
 
             .tab-btn {
-                width: 56px;
-                height: 56px;
-                font-size: .65rem;
-                padding: 3px;
+                font-size: .78rem;
+                padding: 6px 12px;
             }
 
             .cmd-row {
