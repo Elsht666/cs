@@ -142,7 +142,7 @@
            ========================= */
         .top-modules {
             width: 100%;
-            max-width: 1050px;
+            max-width: 900px;
             display: flex;
             gap: 16px;
             margin-bottom: 20px;
@@ -179,27 +179,19 @@
         .connect-module {
             flex: 1 1 320px;
             min-width: 280px;
-            background:
-                linear-gradient(180deg,
-                    #272a2f 0%,
-                    #1b1d21 32%,
-                    #151619 64%,
-                    #101113 100%);
+            background: var(--surface);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid #3a3e45;
-            border-radius: 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
             overflow: hidden;
             box-shadow:
-                0 22px 44px rgba(0, 0, 0, .65),
-                0 8px 18px rgba(0, 0, 0, .45),
-                0 0 30px rgba(78, 255, 78, .04),
-                inset 0 1px 0 rgba(255, 255, 255, .10),
-                inset 0 -2px 8px rgba(0, 0, 0, .55);
+                0 4px 24px rgba(0, 0, 0, .5),
+                0 0 30px rgba(78, 255, 78, .03);
             display: flex;
             flex-direction: column;
             position: relative;
-            transition: transform .3s, box-shadow .3s, border-color .3s;
+            transition: all .3s;
         }
 
         .connect-module::before {
@@ -217,25 +209,16 @@
         }
 
         .connect-module:hover {
-            border-color: rgba(78, 255, 78, .35);
+            border-color: rgba(78, 255, 78, .3);
             box-shadow:
-                0 26px 52px rgba(0, 0, 0, .7),
-                0 10px 22px rgba(0, 0, 0, .5),
-                0 0 40px rgba(78, 255, 78, .07),
-                inset 0 1px 0 rgba(255, 255, 255, .12),
-                inset 0 -2px 8px rgba(0, 0, 0, .55);
-            transform: translateY(-2px);
+                0 4px 24px rgba(0, 0, 0, .5),
+                0 0 40px rgba(78, 255, 78, .06);
         }
 
         .module-header {
             padding: 12px 18px;
-            background:
-                linear-gradient(180deg, #34373d 0%, #26292e 55%, #1c1e23 100%);
-            border-bottom: 1px solid #2a2d32;
-            box-shadow:
-                inset 0 1px 0 rgba(255, 255, 255, .08),
-                inset 0 -1px 0 rgba(0, 0, 0, .45),
-                0 1px 0 rgba(0, 0, 0, .3);
+            background: rgba(28, 29, 33, .95);
+            border-bottom: 1px solid var(--border);
             font-family: var(--mono);
             font-size: .85rem;
             color: #9a9ba5;
@@ -252,7 +235,7 @@
         }
 
         .module-body {
-            padding: 22px 20px 20px;
+            padding: 16px 18px;
             flex: 1;
             display: flex;
             flex-direction: column;
@@ -260,51 +243,33 @@
 
         .module-body textarea {
             width: 100%;
-            padding: 13px 14px;
-            background: rgba(6, 6, 7, .96);
-            border: 1px solid #2c2f34;
+            padding: 10px 12px;
+            background: rgba(10, 10, 11, .95);
+            border: 1px solid var(--border);
             border-radius: var(--r);
             color: var(--text);
             font-family: var(--mono);
-            font-size: .87rem;
+            font-size: .85rem;
             resize: vertical;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             outline: none;
             transition: all .3s;
-            line-height: 1.55;
+            line-height: 1.5;
             user-select: text;
-            box-shadow:
-                inset 0 3px 10px rgba(0, 0, 0, .65),
-                inset 0 -1px 0 rgba(255, 255, 255, .04),
-                0 1px 0 rgba(255, 255, 255, .03);
         }
 
         .module-body textarea:focus {
             border-color: var(--cmd);
             box-shadow:
-                0 0 0 2px rgba(78, 255, 78, .12),
-                0 0 15px rgba(78, 255, 78, .15),
-                inset 0 3px 10px rgba(0, 0, 0, .6);
+                0 0 15px rgba(78, 255, 78, .1),
+                inset 0 0 15px rgba(78, 255, 78, .02);
         }
 
         .module-actions {
             display: flex;
-            gap: 12px;
-            margin-bottom: 18px;
+            gap: 8px;
+            margin-bottom: 14px;
             flex-wrap: wrap;
-        }
-
-        /* 模块内按钮放大（不影响其它区域按钮） */
-        .connect-module .action-btn {
-            padding: 12px 26px;
-            font-size: .92rem;
-            border-radius: 9px;
-        }
-
-        .connect-module .result-area .copy-btn {
-            padding: 9px 18px;
-            font-size: .82rem;
-            min-height: 40px;
         }
 
         .action-btn {
@@ -381,9 +346,8 @@
         }
 
         .result-area {
-            background:
-                linear-gradient(180deg, #0d0e0f 0%, #111214 100%);
-            border: 1px solid #2c2f34;
+            background: rgba(10, 10, 11, .95);
+            border: 1px solid var(--border);
             border-radius: var(--r);
             padding: 12px 14px;
             display: flex;
@@ -391,9 +355,6 @@
             align-items: center;
             gap: 10px;
             margin-top: auto;
-            box-shadow:
-                inset 0 2px 8px rgba(0, 0, 0, .55),
-                inset 0 -1px 0 rgba(255, 255, 255, .03);
         }
 
         .result-label {
@@ -506,7 +467,7 @@
            ========================= */
         .resources-module {
             width: 100%;
-            max-width: 1050px;
+            max-width: 900px;
             margin-top: 20px;
             padding: 16px 0;
             border-top: 1px solid var(--border);
@@ -607,7 +568,7 @@
            ========================= */
         .console-window {
             width: 100%;
-            max-width: 1050px;
+            max-width: 900px;
             background: rgba(14, 15, 17, .96);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -803,7 +764,7 @@
            ========================= */
         .tab-nav {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             padding: 10px 14px;
             margin: 8px 18px 12px;
             border-radius: 18px;
@@ -822,15 +783,15 @@
         }
 
         .tab-btn {
-            width: 76px;
-            height: 76px;
+            width: 64px;
+            height: 64px;
             padding: 4px;
             border: 1px solid rgba(255,255,255,.1);
             background: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
             color: var(--text2);
-            font-size: .78rem;
-            font-weight: 600;
-            border-radius: 13px;
+            font-size: .7rem;
+            font-weight: 500;
+            border-radius: 12px;
             cursor: pointer;
             transition: transform .18s cubic-bezier(.2,.9,.3,1.2), box-shadow .18s, border-color .3s, color .3s, background .3s;
             white-space: normal;
@@ -988,11 +949,11 @@
            ========================= */
         .copy-btn {
             flex-shrink: 0;
-            font-size: .82rem;
+            font-size: .78rem;
             font-weight: 500;
-            padding: 8px 18px;
-            min-width: 60px;
-            min-height: 40px;
+            padding: 6px 14px;
+            min-width: 50px;
+            min-height: 36px;
             border-radius: var(--r);
             border: 1px solid rgba(255,255,255,.1);
             background: linear-gradient(145deg, rgba(255,255,255,.1), rgba(255,255,255,.03));
@@ -1619,14 +1580,14 @@
             .tab-nav {
                 padding: 8px 10px;
                 margin: 6px 12px 10px;
-                gap: 10px;
+                gap: 8px;
                 border-radius: 14px;
             }
 
             .tab-btn {
-                width: 64px;
-                height: 64px;
-                font-size: .72rem;
+                width: 56px;
+                height: 56px;
+                font-size: .65rem;
                 padding: 3px;
             }
 
@@ -1656,10 +1617,10 @@
             }
 
             .copy-btn {
-                font-size: .78rem;
-                padding: 8px 16px;
-                min-height: 40px;
-                min-width: 58px;
+                font-size: .73rem;
+                padding: 7px 14px;
+                min-height: 38px;
+                min-width: 54px;
                 margin-left: auto;
             }
 
@@ -1712,7 +1673,7 @@
             <div class="module-body">
                 <textarea id="steamidInput"
                     placeholder="在此粘贴包含 SteamID 的文本，例如：&#10;steamid : [A:1:3538182148:50710](90289793877172228)"
-                    rows="4"></textarea>
+                    rows="3"></textarea>
 
                 <div class="module-actions">
                     <button id="extractBtn" class="action-btn primary">
@@ -2827,7 +2788,7 @@
     </div>
 
     <!-- 开发者面板（密码验证后显示） -->
-    <div id="devPanel" class="dev-panel" style="display:none; margin-top:20px; width:100%; max-width:1050px;">
+    <div id="devPanel" class="dev-panel" style="display:none; margin-top:20px; width:100%; max-width:900px;">
         <div class="dev-panel-title">
             🔐 开发者面板
         </div>
