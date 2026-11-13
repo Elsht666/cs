@@ -1,41 +1,93 @@
-# CS2 控制台指令速查（cs）
+<div align="center">
 
-面向《反恐精英 2》（CS2）玩家的控制台指令速查单页站。集中收录常用指令、改刀指令、消音器指令等实用命令，并内置「SteamID 转 Connect 指令」小工具，一键复制即用。
+# 🎮 CS2 Console Commands Cheat Sheet
 
-## 功能特性
+One-click copy · 11 categories · Bilingual (EN / 中文) · Zero-dependency single file
 
-- **指令分类速查**：
-  - ⚡ 常用指令（含作弊指令，仅本地 / 人机生效）
-  - 📂 指令分类分隔线（多色渐变上边框，按类分组）
-  - 改刀指令、消音器指令、其他实用指令
-- **一键复制**：每条指令提供复制按钮，点击即复制到剪贴板
-- **SteamID 转 Connect 指令**：输入 SteamID 自动生成 `connect` 指令，方便联机建房
-- **指令行高亮**：命令与注释分色显示（霓虹绿命令 + 灰色注释）
-- **动态背景**：粒子动画 + 移动网格背景，鼠标互动粒子跟随
-- **深色霓虹风格**：黑底 + 荧光绿（`#4eff4e`）赛博朋克视觉
-- **纯本地运行**：单 HTML 文件，无任何外部依赖
+**English** · [简体中文](README.zh-CN.md)
 
-## 使用
+</div>
 
-直接用浏览器打开 `index.html` 即可，无需构建、无需服务器。
+A pure static **Counter-Strike 2 console command cheat sheet**. 100 frequently used commands organised into 11 categories — click to copy, paste into the in-game console, done. The whole project is a single `index.html`: no framework, no build step, no external dependencies.
 
-## 目录结构
+## ✨ Features
 
+- 📋 **One-click copy** — every command has a copy button with visual feedback
+- 🗂 **11 categories** — from practice/cheats and knife models to the pet chicken
+- 🔗 **SteamID → `connect`** — paste any text containing `[A:1:xxxx:xxxxx](xxxxxxxxxx)` (e.g. `status` output) and get a ready-to-use `connect` command
+- 🌐 **Bilingual UI** — switch between 中文 / EN in the top-right corner; defaults to your browser language and remembers your choice
+- 🎨 **Neumorphic UI** — Gemini-style light neumorphism, particle background and liquid-crystal pill buttons
+- 📱 **Responsive** — works on desktop and mobile
+- 🧩 **Zero dependencies** — plain HTML / CSS / JavaScript in one file
+
+## 🗂 Categories
+
+| Category | Count | What's inside |
+| --- | :---: | --- |
+| ⚡ Common | 7 | `status`, `bot_kick`, `mp_restartgame`, `sv_cheats`, `clear`, silencer mode |
+| Practice & cheats | 8 | God mode, noclip, infinite ammo, grenade trajectory, bullet impacts |
+| Knife models | 20 | Switch between knife skins |
+| Map switching | 20 | Quick load of practice / competitive maps |
+| Bot management | 8 | Add, kick, difficulty, freeze bots |
+| Match control | 13 | Restart, freeze time, round length, overtime, friendly fire, C4 timer, respawn |
+| Economy & items | 7 | Buy time, buy anywhere, money limit, drop settings |
+| Server & connection | 2 | `status` for server / player info, `disconnect` to leave the server |
+| Display & HUD | 2 | `cl_draw_only_deathnotices` — keep kill feed only, hide the rest of the HUD |
+| Voice | 6 | All-talk, dead talk, voice toggles, mute enemy team |
+| Other utilities | 3 | `kill`, `clear`, `kick` |
+| Pet chicken | 4 | `cl_ent_scale` to resize the chicken |
+
+> Commands change between game updates; a few may not work in every version or on every server.
+
+## 🚀 Deploy to GitHub Pages
+
+1. Create a new GitHub repository and upload `index.html` (plus `README.md` and `README.zh-CN.md` if you like) to the root
+2. Open `Settings → Pages`
+3. Set `Source` to `Deploy from a branch`, choose branch `main` and folder `/ (root)`, then save
+4. Wait a minute, then visit `https://<your-username>.github.io/<repo-name>/`
+
+**Local preview**: just double-click `index.html`, or run
+
+```bash
+python -m http.server 8080
+# open http://localhost:8080
 ```
-cs/
-├── index.html          # 单页应用（速查表 + 工具 + 背景特效）
-├── donate-qrcode.png   # 捐赠二维码
-├── favicon.ico         # 站点图标
-└── README.md
+
+**Enable the in-game console**: `Settings → Game → Enable Developer Console → Yes`, then press `~` in game.
+
+## 🌐 Language switching
+
+| Method | Behaviour |
+| --- | --- |
+| URL parameter | `?lang=en` forces English, `?lang=zh` forces Chinese — handy for sharing with players of either language |
+| Top-right buttons | Click 中文 / EN; the choice is stored in `localStorage` (key `cs2_lang`) |
+| Default | Follows the browser language (`navigator.language`) |
+
+## ➕ Add your own command
+
+Append a `cmd-row` block inside the matching `<div class="tab-content" id="...">`:
+
+```html
+<div class="cmd-row">
+    <div class="cmd-text-wrapper">
+        <code class="cmd-code">sv_cheats 1</code>
+        <span class="comment">// 开启作弊指令</span>
+    </div>
+    <button class="copy-btn" data-cmd="sv_cheats 1">复制</button>
+</div>
 ```
 
-## 技术栈
+- `data-cmd` is what actually gets copied — keep it identical to the text inside `<code>`
+- To show an English comment in English mode, add the Chinese comment as a key in the page's `DICT` map, e.g. `"开启作弊指令": "Enable cheats"`
+- A new category needs both a `tab-btn` and a matching `tab-content` block
 
-- 原生 HTML / CSS / JavaScript
-- Canvas 粒子系统 + CSS 动画背景
-- 全中文界面，移动端适配
+## ⚠️ Notes
 
-## 说明
+- Commands marked "local / bot match only" usually require `sv_cheats 1` and do nothing on official matchmaking servers
+- Using cheat commands on official servers may result in a VAC ban — use your own judgement
+- Commands were collected and tested against the current CS2 build and may break after updates
+- This project is not affiliated with Valve or Counter-Strike in any way
 
-- 作弊类指令仅限本地练习 / 人机房使用，联机竞技请遵守平台规则
-- 指令参数可能随游戏版本更新变化，请以当前游戏版本为准
+## 📄 License
+
+MIT — free to use, modify and redistribute.
