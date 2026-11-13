@@ -39,19 +39,6 @@ A pure static **Counter-Strike 2 console command cheat sheet**. 100 frequently u
 
 > Commands change between game updates; a few may not work in every version or on every server.
 
-## 🚀 Deploy to GitHub Pages
-
-1. Create a new GitHub repository and upload `index.html` (plus `README.md` and `README.zh-CN.md` if you like) to the root
-2. Open `Settings → Pages`
-3. Set `Source` to `Deploy from a branch`, choose branch `main` and folder `/ (root)`, then save
-4. Wait a minute, then visit `https://<your-username>.github.io/<repo-name>/`
-
-**Local preview**: just double-click `index.html`, or run
-
-```bash
-python -m http.server 8080
-# open http://localhost:8080
-```
 
 **Enable the in-game console**: `Settings → Game → Enable Developer Console → Yes`, then press `~` in game.
 

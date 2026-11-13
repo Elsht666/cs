@@ -39,19 +39,7 @@
 
 > 指令会随游戏更新变化，个别指令可能在特定版本或服务器上失效。
 
-## 🚀 部署到 GitHub Pages
 
-1. 新建一个 GitHub 仓库，把 `index.html`（建议连同 `README.md`、`README.zh-CN.md` 一起）上传到根目录
-2. 进入仓库 `Settings → Pages`
-3. `Source` 选择 `Deploy from a branch`，分支选 `main`，目录选 `/ (root)`，保存
-4. 等一两分钟，访问 `https://<你的用户名>.github.io/<仓库名>/`
-
-**本地预览**：直接双击 `index.html` 即可；或在该目录执行
-
-```bash
-python -m http.server 8080
-# 浏览器打开 http://localhost:8080
-```
 
 **游戏内开启控制台**：`设置 → 游戏 → 启用开发者控制台 → 是`，游戏中按 `~` 呼出。
 
