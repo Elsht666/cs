@@ -751,15 +751,6 @@
             content: none;
         }
 
-        .cmd-text-wrapper {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            gap: 4px 8px;
-        }
-
         code.cmd-code {
             font-family: var(--mono);
             font-size: .88rem;
@@ -786,22 +777,72 @@
             background: rgba(63, 106, 216, .22);
         }
 
+        /* ============ 三栏指令布局：指令 | 注释 | 复制键 ============ */
+        .code-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1.15fr) 1px minmax(0, 1fr);
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 指令名称（注释文字）：黑体粗、深色 */
+        .cheat-name {
+            font-size: .86rem;
+            font-weight: 800;
+            color: #101c2e;
+            font-family: 'SimHei', '黑体', var(--ui);
+            letter-spacing: .01em;
+            line-height: 1.25;
+        }
+
+        /* 注释容器：名称在上、说明在下，整体居中 */
+        .cheat-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            gap: 3px;
+            min-width: 0;
+            padding: 0 2px;
+        }
+
+        /* 指令 / 复制键之间的竖向分隔线 + 中间菱形 */
+        .code-divider {
+            width: 1px;
+            align-self: stretch;
+            min-height: 36px;
+            position: relative;
+            background: linear-gradient(180deg,
+                rgba(146, 168, 193, 0) 0%,
+                rgba(146, 168, 193, .55) 22%,
+                rgba(146, 168, 193, .55) 78%,
+                rgba(146, 168, 193, 0) 100%);
+        }
+
+        .code-divider::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 5px;
+            height: 5px;
+            transform: translate(-50%, -50%) rotate(45deg);
+            background: #cbd7e5;
+            box-shadow: 0 0 0 3px #edf2f8;
+        }
+
         span.comment {
-            font-family: var(--mono);
-            font-size: .8rem;
-            font-weight: 500;
-            color: var(--comment);
             user-select: none;
-            white-space: nowrap;
-            flex-shrink: 1;
             overflow: hidden;
             text-overflow: ellipsis;
-            min-width: 0;
+            max-width: 100%;
         }
 
         /* 复制键：凸起小键 */
         .copy-btn {
             flex-shrink: 0;
+            justify-self: center;
             font-family: var(--ui);
             font-size: .78rem;
             font-weight: 700;
@@ -1408,32 +1449,39 @@
 
             .cmd-row {
                 padding: 9px 10px;
-                gap: 8px;
-                flex-wrap: wrap;
                 border-radius: 12px;
             }
 
-            .cmd-text-wrapper {
-                gap: 3px 6px;
-                flex-basis: 100%;
-                margin-bottom: 2px;
+            .code-grid {
+                grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1.15fr);
+                gap: 8px 6px;
+            }
+
+            .code-divider:nth-of-type(2) {
+                display: none;
             }
 
             code.cmd-code {
-                font-size: .78rem;
-                padding: 3px 7px;
+                font-size: .72rem;
+                padding: 3px 6px;
             }
 
-            span.comment {
-                font-size: .72rem;
+            .cheat-name {
+                font-size: .74rem;
+            }
+
+            .code-divider {
+                min-height: 32px;
             }
 
             .copy-btn {
-                font-size: .74rem;
-                padding: 7px 14px;
+                grid-column: 1 / -1;
+                justify-self: center;
+                width: auto;
+                font-size: .72rem;
+                padding: 6px 14px;
                 min-height: 36px;
-                min-width: 56px;
-                margin-left: auto;
+                min-width: 52px;
             }
 
             .section-label {
@@ -1934,60 +1982,74 @@
         <div class="console-body" id="cmdList">
             <div class="section-label">⚡ 常用指令</div>
 
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">status</code>
-                    <span class="comment">// 查看服务器状态及玩家信息</span>
+            <div class="cmd-row code-grid">
+                <code class="cmd-code">status</code>
+                <span class="code-divider" aria-hidden="true"></span>
+                <div class="cheat-info">
+                    <span class="cheat-name comment">查看服务器状态及玩家信息</span>
                 </div>
+                <span class="code-divider" aria-hidden="true"></span>
                 <button class="copy-btn" data-cmd="status">复制</button>
             </div>
 
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">bot_kick</code>
-                    <span class="comment">// 踢出所有机器人</span>
+            <div class="cmd-row code-grid">
+                <code class="cmd-code">bot_kick</code>
+                <span class="code-divider" aria-hidden="true"></span>
+                <div class="cheat-info">
+                    <span class="cheat-name comment">踢出所有机器人</span>
                 </div>
+                <span class="code-divider" aria-hidden="true"></span>
                 <button class="copy-btn" data-cmd="bot_kick">复制</button>
             </div>
 
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">mp_restartgame 1</code>
-                    <span class="comment">// 1秒后重启当前对局</span>
+            <div class="cmd-row code-grid">
+                <code class="cmd-code">mp_restartgame 1</code>
+                <span class="code-divider" aria-hidden="true"></span>
+                <div class="cheat-info">
+                    <span class="cheat-name comment">1秒后重启当前对局</span>
                 </div>
+                <span class="code-divider" aria-hidden="true"></span>
                 <button class="copy-btn" data-cmd="mp_restartgame 1">复制</button>
             </div>
 
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">sv_cheats 1</code>
-                    <span class="comment">// 开启作弊指令（仅本地/人机）</span>
+            <div class="cmd-row code-grid">
+                <code class="cmd-code">sv_cheats 1</code>
+                <span class="code-divider" aria-hidden="true"></span>
+                <div class="cheat-info">
+                    <span class="cheat-name comment">开启作弊指令（仅本地/人机）</span>
                 </div>
+                <span class="code-divider" aria-hidden="true"></span>
                 <button class="copy-btn" data-cmd="sv_cheats 1">复制</button>
             </div>
 
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">clear</code>
-                    <span class="comment">// 清空控制台屏幕</span>
+            <div class="cmd-row code-grid">
+                <code class="cmd-code">clear</code>
+                <span class="code-divider" aria-hidden="true"></span>
+                <div class="cheat-info">
+                    <span class="cheat-name comment">清空控制台屏幕</span>
                 </div>
+                <span class="code-divider" aria-hidden="true"></span>
                 <button class="copy-btn" data-cmd="clear">复制</button>
             </div>
 
             <!-- ====== 以下为新增的消音器指令 ====== -->
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">cl_silencer_mode 1</code>
-                    <span class="comment">// 允许卸消音器</span>
+            <div class="cmd-row code-grid">
+                <code class="cmd-code">cl_silencer_mode 1</code>
+                <span class="code-divider" aria-hidden="true"></span>
+                <div class="cheat-info">
+                    <span class="cheat-name comment">允许卸消音器</span>
                 </div>
+                <span class="code-divider" aria-hidden="true"></span>
                 <button class="copy-btn" data-cmd="cl_silencer_mode 1">复制</button>
             </div>
 
-            <div class="cmd-row">
-                <div class="cmd-text-wrapper">
-                    <code class="cmd-code">cl_silencer_mode 0</code>
-                    <span class="comment">// 不允许卸消音器</span>
+            <div class="cmd-row code-grid">
+                <code class="cmd-code">cl_silencer_mode 0</code>
+                <span class="code-divider" aria-hidden="true"></span>
+                <div class="cheat-info">
+                    <span class="cheat-name comment">不允许卸消音器</span>
                 </div>
+                <span class="code-divider" aria-hidden="true"></span>
                 <button class="copy-btn" data-cmd="cl_silencer_mode 0">复制</button>
             </div>
             <!-- ====== 消音器指令新增结束 ====== -->
@@ -2040,67 +2102,83 @@
                         🔧 练习与作弊（需 sv_cheats 1）
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">sv_cheats 1</code>
-                            <span class="comment">// 开启作弊指令</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">sv_cheats 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">开启作弊指令</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="sv_cheats 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">god</code>
-                            <span class="comment">// 无敌模式</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">god</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">无敌模式</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="god">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">noclip</code>
-                            <span class="comment">// 穿墙飞行模式</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">noclip</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">穿墙飞行模式</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="noclip">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">sv_infinite_ammo 1</code>
-                            <span class="comment">// 无限弹药（无需换弹）</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">sv_infinite_ammo 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">无限弹药（无需换弹）</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="sv_infinite_ammo 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">sv_infinite_ammo 2</code>
-                            <span class="comment">// 无限弹药（需换弹）</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">sv_infinite_ammo 2</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">无限弹药（需换弹）</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="sv_infinite_ammo 2">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">sv_rethrow_last_grenade</code>
-                            <span class="comment">// 重放最后一颗手雷轨迹</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">sv_rethrow_last_grenade</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">重放最后一颗手雷轨迹</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="sv_rethrow_last_grenade">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">sv_showimpacts 1</code>
-                            <span class="comment">// 显示子弹弹着点</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">sv_showimpacts 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">显示子弹弹着点</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="sv_showimpacts 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">sv_showimpacts 0</code>
-                            <span class="comment">// 关闭子弹弹着点显示</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">sv_showimpacts 0</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">关闭子弹弹着点显示</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="sv_showimpacts 0">复制</button>
                     </div>
                 </div>
@@ -2111,241 +2189,281 @@
                         🔪 改刀指令（需 sv_cheats 1）
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 500
                             </code>
-                            <span class="comment">// 刺刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">刺刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 500">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 503
                             </code>
-                            <span class="comment">// 海豹短刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">海豹短刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 503">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 505
                             </code>
-                            <span class="comment">// 折叠刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">折叠刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 505">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 506
                             </code>
-                            <span class="comment">// 穿肠刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">穿肠刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 506">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 507
                             </code>
-                            <span class="comment">// 爪子刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">爪子刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 507">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 508
                             </code>
-                            <span class="comment">// M9刺刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">M9刺刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 508">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 509
                             </code>
-                            <span class="comment">// 猎杀者匕首</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">猎杀者匕首</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 509">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 512
                             </code>
-                            <span class="comment">// 弯刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">弯刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 512">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 514
                             </code>
-                            <span class="comment">// 鲍伊猎刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">鲍伊猎刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 514">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 515
                             </code>
-                            <span class="comment">// 蝴蝶刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">蝴蝶刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 515">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 516
                             </code>
-                            <span class="comment">// 暗影双匕</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">暗影双匕</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 516">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 517
                             </code>
-                            <span class="comment">// 系绳匕首</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">系绳匕首</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 517">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 518
                             </code>
-                            <span class="comment">// 求生匕首</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">求生匕首</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 518">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 519
                             </code>
-                            <span class="comment">// 熊刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">熊刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 519">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 520
                             </code>
-                            <span class="comment">// 折刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">折刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 520">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 521
                             </code>
-                            <span class="comment">// 流浪者匕首</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">流浪者匕首</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 521">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 522
                             </code>
-                            <span class="comment">// 短剑</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">短剑</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 522">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 523
                             </code>
-                            <span class="comment">// 锯齿爪刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">锯齿爪刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 523">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 525
                             </code>
-                            <span class="comment">// 骷髅匕首</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">骷髅匕首</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 525">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 ent_fire weapon_knife changesubclass 526
                             </code>
-                            <span class="comment">// 廓尔喀刀</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">廓尔喀刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="ent_fire weapon_knife changesubclass 526">
                             复制
                         </button>
@@ -2356,163 +2474,203 @@
                 <div class="tab-content" id="maps">
                     <div class="section-label">🗺️ 地图切换</div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_ancient</code>
-                            <span class="comment">// 远古遗迹（白天）</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_ancient</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">远古遗迹（白天）</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_ancient">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_ancient_night</code>
-                            <span class="comment">// 远古遗迹（夜间）</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_ancient_night</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">远古遗迹（夜间）</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_ancient_night">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_anubis</code>
-                            <span class="comment">// 阿努比斯</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_anubis</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">阿努比斯</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_anubis">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_dust2</code>
-                            <span class="comment">// 炙热沙城2</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_dust2</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">炙热沙城2</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_dust2">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_inferno</code>
-                            <span class="comment">// 炼狱小镇</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_inferno</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">炼狱小镇</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_inferno">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_mirage</code>
-                            <span class="comment">// 荒漠迷城</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_mirage</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">荒漠迷城</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_mirage">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_nuke</code>
-                            <span class="comment">// 核子危机</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_nuke</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">核子危机</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_nuke">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_overpass</code>
-                            <span class="comment">// 死亡游乐园</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_overpass</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">死亡游乐园</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_overpass">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_train</code>
-                            <span class="comment">// 列车停放站</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_train</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">列车停放站</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_train">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_vertigo</code>
-                            <span class="comment">// 殒命大厦</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_vertigo</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">殒命大厦</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_vertigo">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_cache</code>
-                            <span class="comment">// 死城之谜</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_cache</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">死城之谜</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_cache">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_boulder</code>
-                            <span class="comment">// 岩岛修道院</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_boulder</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">岩岛修道院</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_boulder">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_fachwerk</code>
-                            <span class="comment">// 木筋屋小镇</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_fachwerk</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">木筋屋小镇</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_fachwerk">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel de_shelter</code>
-                            <span class="comment">// 动物收容所</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel de_shelter</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">动物收容所</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel de_shelter">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel cs_office</code>
-                            <span class="comment">// 办公室</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel cs_office</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">办公室</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel cs_office">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel cs_italy</code>
-                            <span class="comment">// 意大利小镇</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel cs_italy</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">意大利小镇</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel cs_italy">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel ar_baggage</code>
-                            <span class="comment">// 行李仓库</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel ar_baggage</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">行李仓库</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel ar_baggage">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel ar_pool_day</code>
-                            <span class="comment">// 泳池激战</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel ar_pool_day</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">泳池激战</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel ar_pool_day">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel ar_shoots</code>
-                            <span class="comment">// 遗迹射击场</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel ar_shoots</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">遗迹射击场</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel ar_shoots">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">changelevel ar_shoots_night</code>
-                            <span class="comment">// 遗迹射击场夜间</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">changelevel ar_shoots_night</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">遗迹射击场夜间</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="changelevel ar_shoots_night">复制</button>
                     </div>
                 </div>
@@ -2521,74 +2679,90 @@
                 <div class="tab-content" id="bots">
                     <div class="section-label">🤖 机器人管理</div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">bot_kick</code>
-                            <span class="comment">// 踢出所有机器人</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">bot_kick</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">踢出所有机器人</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="bot_kick">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">bot_add</code>
-                            <span class="comment">// 添加一个机器人</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">bot_add</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">添加一个机器人</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="bot_add">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">bot_add_ct</code>
-                            <span class="comment">// 添加一个CT方机器人</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">bot_add_ct</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">添加一个CT方机器人</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="bot_add_ct">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">bot_add_t</code>
-                            <span class="comment">// 添加一个T方机器人</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">bot_add_t</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">添加一个T方机器人</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="bot_add_t">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">bot_stop 1</code>
-                            <span class="comment">// 机器人停止移动</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">bot_stop 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">机器人停止移动</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="bot_stop 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">bot_place</code>
-                            <span class="comment">// 在准星处放置一个机器人</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">bot_place</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">在准星处放置一个机器人</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="bot_place">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 bot_kick; custom_bot_difficulty 5; mp_restartgame 1; bot_add
                             </code>
-                            <span class="comment">// 困难模式</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">困难模式</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn"
                             data-cmd="bot_kick; custom_bot_difficulty 5; mp_restartgame 1; bot_add">
                             复制
                         </button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">
                                 bot_kick; custom_bot_difficulty 1; mp_restartgame 1; bot_add
                             </code>
-                            <span class="comment">// 简单模式</span>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">简单模式</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn"
                             data-cmd="bot_kick; custom_bot_difficulty 1; mp_restartgame 1; bot_add">
                             复制
@@ -2600,107 +2774,133 @@
                 <div class="tab-content" id="match">
                     <div class="section-label">🎮 对局控制</div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_restartgame 1</code>
-                            <span class="comment">// 1秒后重启当前对局</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_restartgame 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">1秒后重启当前对局</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_restartgame 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_freezetime 0</code>
-                            <span class="comment">// 取消开局冻结时间</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_freezetime 0</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">取消开局冻结时间</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_freezetime 0">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_roundtime_defuse 60</code>
-                            <span class="comment">// 拆弹图每局时长60分钟</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_roundtime_defuse 60</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">拆弹图每局时长60分钟</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_roundtime_defuse 60">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_limitteams 0</code>
-                            <span class="comment">// 取消队伍人数限制</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_limitteams 0</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">取消队伍人数限制</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_limitteams 0">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_autoteambalance 0</code>
-                            <span class="comment">// 关闭自动平衡队伍</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_autoteambalance 0</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">关闭自动平衡队伍</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_autoteambalance 0">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_overtime_enable 1</code>
-                            <span class="comment">// 允许加时赛</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_overtime_enable 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">允许加时赛</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_overtime_enable 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_overtime_maxrounds 3</code>
-                            <span class="comment">// 加时最大回合数 (可自定义)</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_overtime_maxrounds 3</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">加时最大回合数 (可自定义)</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_overtime_maxrounds 3">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_tkpunish 1</code>
-                            <span class="comment">// 友伤惩罚开启</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_tkpunish 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">友伤惩罚开启</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_tkpunish 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_friendlyfire 1</code>
-                            <span class="comment">// 开启友伤</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_friendlyfire 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">开启友伤</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_friendlyfire 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_c4timer 40</code>
-                            <span class="comment">// C4爆炸倒计时40秒 (可调)</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_c4timer 40</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">C4爆炸倒计时40秒 (可调)</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_c4timer 40">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_respawn_on_death_ct 1</code>
-                            <span class="comment">// CT死亡后立刻复活</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_respawn_on_death_ct 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">CT死亡后立刻复活</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_respawn_on_death_ct 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_respawn_on_death_t 1</code>
-                            <span class="comment">// T死亡后立刻复活</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_respawn_on_death_t 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">T死亡后立刻复活</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_respawn_on_death_t 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_allowspectators 1</code>
-                            <span class="comment">// 允许观战</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_allowspectators 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">允许观战</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_allowspectators 1">复制</button>
                     </div>
                 </div>
@@ -2709,59 +2909,73 @@
                 <div class="tab-content" id="economy">
                     <div class="section-label">💰 经济与物品</div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_buytime 9999</code>
-                            <span class="comment">// 购买时间无限制</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_buytime 9999</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">购买时间无限制</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_buytime 9999">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_buy_anywhere 1</code>
-                            <span class="comment">// 任意位置购买装备</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_buy_anywhere 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">任意位置购买装备</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_buy_anywhere 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_maxmoney 65535</code>
-                            <span class="comment">// 金钱上限65535</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_maxmoney 65535</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">金钱上限65535</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_maxmoney 65535">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_startmoney 65535</code>
-                            <span class="comment">// 开局金钱65535</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_startmoney 65535</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">开局金钱65535</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_startmoney 65535">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_afterroundmoney 65535</code>
-                            <span class="comment">// 回合结束自动补满钱</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_afterroundmoney 65535</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">回合结束自动补满钱</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_afterroundmoney 65535">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_drop_knife_enable 1</code>
-                            <span class="comment">// 允许丢弃小刀</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_drop_knife_enable 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">允许丢弃小刀</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_drop_knife_enable 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">mp_death_drop_gun 1</code>
-                            <span class="comment">// 死亡掉落枪械</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">mp_death_drop_gun 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">死亡掉落枪械</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="mp_death_drop_gun 1">复制</button>
                     </div>
                 </div>
@@ -2770,19 +2984,23 @@
                 <div class="tab-content" id="server">
                     <div class="section-label">🌐 服务器与连接</div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">status</code>
-                            <span class="comment">// 查看服务器状态及玩家信息</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">status</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">查看服务器状态及玩家信息</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="status">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">disconnect</code>
-                            <span class="comment">// 断开当前服务器连接</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">disconnect</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">断开当前服务器连接</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="disconnect">复制</button>
                     </div>
                 </div>
@@ -2791,19 +3009,23 @@
                 <div class="tab-content" id="display">
                     <div class="section-label">🖥️ 显示与界面</div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">cl_draw_only_deathnotices 1</code>
-                            <span class="comment">// 仅显示击杀信息（隐藏HUD）</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">cl_draw_only_deathnotices 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">仅显示击杀信息（隐藏HUD）</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="cl_draw_only_deathnotices 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">cl_draw_only_deathnotices 0</code>
-                            <span class="comment">// 恢复完整HUD显示</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">cl_draw_only_deathnotices 0</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">恢复完整HUD显示</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="cl_draw_only_deathnotices 0">复制</button>
                     </div>
                 </div>
@@ -2812,51 +3034,63 @@
                 <div class="tab-content" id="voice">
                     <div class="section-label">📢 语音通讯</div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">sv_alltalk 1</code>
-                            <span class="comment">// CT/T互相听见语音</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">sv_alltalk 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">CT/T互相听见语音</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="sv_alltalk 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">sv_deadtalk 1</code>
-                            <span class="comment">// 死人能和活人说话</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">sv_deadtalk 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">死人能和活人说话</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="sv_deadtalk 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">sv_full_alltalk 1</code>
-                            <span class="comment">// 所有人互通语音</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">sv_full_alltalk 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">所有人互通语音</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="sv_full_alltalk 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">voice_enable 1</code>
-                            <span class="comment">// 开启语音</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">voice_enable 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">开启语音</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="voice_enable 1">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">voice_enable 0</code>
-                            <span class="comment">// 关闭语音</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">voice_enable 0</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">关闭语音</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="voice_enable 0">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">cl_mute_enemy_team 1</code>
-                            <span class="comment">// 静音敌方</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">cl_mute_enemy_team 1</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">静音敌方</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="cl_mute_enemy_team 1">复制</button>
                     </div>
                 </div>
@@ -2865,27 +3099,33 @@
                 <div class="tab-content" id="others">
                     <div class="section-label">⚡ 其他实用指令</div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">kill</code>
-                            <span class="comment">// 自杀（重新出生）</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">kill</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">自杀（重新出生）</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="kill">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">clear</code>
-                            <span class="comment">// 清空控制台屏幕</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">clear</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">清空控制台屏幕</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="clear">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">kick</code>
-                            <span class="comment">// 踢出指定玩家 (后跟名称)</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">kick</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">踢出指定玩家 (后跟名称)</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="kick">复制</button>
                     </div>
                 </div>
@@ -2894,35 +3134,43 @@
                 <div class="tab-content" id="chicken">
                     <div class="section-label">🐔 宠物鸡仔</div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">cl_ent_scale 0.5 chicken</code>
-                            <span class="comment">// 标准</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">cl_ent_scale 0.5 chicken</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">标准</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="cl_ent_scale 0.5 chicken">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">cl_ent_scale 0.3 chicken</code>
-                            <span class="comment">// 缩小</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">cl_ent_scale 0.3 chicken</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">缩小</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="cl_ent_scale 0.3 chicken">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">cl_ent_scale 3 chicken</code>
-                            <span class="comment">// 放大</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">cl_ent_scale 3 chicken</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">放大</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="cl_ent_scale 3 chicken">复制</button>
                     </div>
 
-                    <div class="cmd-row">
-                        <div class="cmd-text-wrapper">
-                            <code class="cmd-code">cl_ent_scale 5 chicken</code>
-                            <span class="comment">// 巨大</span>
+                    <div class="cmd-row code-grid">
+                        <code class="cmd-code">cl_ent_scale 5 chicken</code>
+                        <span class="code-divider" aria-hidden="true"></span>
+                        <div class="cheat-info">
+                            <span class="cheat-name comment">巨大</span>
                         </div>
+                        <span class="code-divider" aria-hidden="true"></span>
                         <button class="copy-btn" data-cmd="cl_ent_scale 5 chicken">复制</button>
                     </div>
                 </div>
