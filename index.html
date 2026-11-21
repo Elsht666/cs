@@ -1880,6 +1880,84 @@
             }
         }
 
+        /* ============================================================
+           手机端排版重排（最终覆盖层）
+           原则：仅调整容器布局与文字排版，所有按钮外观（渐变/描边/
+           圆角/阴影/配色）保持桌面端一致，不作任何改动。
+           ============================================================ */
+        @media (max-width: 640px) {
+            /* ---- 控制台头部：标题独占一行，语言键换行靠右 ---- */
+            .console-header {
+                flex-wrap: wrap;
+                row-gap: 10px;
+            }
+
+            .console-title {
+                flex: 1 1 100%;
+                order: 1;
+                white-space: normal;
+                overflow: visible;
+                text-overflow: clip;
+                line-height: 1.35;
+            }
+
+            .console-dots {
+                order: 0;
+            }
+
+            .lang-switch {
+                order: 2;
+                margin-left: 0;
+                width: 100%;
+                justify-content: flex-end;
+            }
+
+            /* ---- 指令行：纵向卡片式，杜绝横向挤压重叠 ---- */
+            .cmd-row.code-grid {
+                display: grid;
+                grid-template-columns: minmax(0, 1fr);
+                gap: 8px;
+                justify-items: stretch;
+                padding: 12px 12px 14px;
+            }
+
+            /* 竖线分隔在纵向布局中隐藏 */
+            .cmd-row .code-divider {
+                display: none !important;
+            }
+
+            /* 指令代码：允许折行，完整显示，不再压住注释 */
+            code.cmd-code {
+                white-space: normal !important;
+                overflow-wrap: anywhere;
+                word-break: break-word;
+                text-align: left;
+                line-height: 1.45;
+                padding: 6px 10px;
+            }
+
+            /* 注释文字：整行显示，不省略 */
+            .cheat-info {
+                align-items: flex-start;
+                text-align: left;
+                padding: 0 2px;
+            }
+
+            .cheat-name {
+                white-space: normal;
+                overflow: visible;
+                line-height: 1.4;
+            }
+
+            /* 复制键：占满整行、居中，外观不变 */
+            .cmd-row .copy-btn {
+                grid-column: 1 / -1;
+                justify-self: start;
+                width: auto;
+                margin-top: 2px;
+            }
+        }
+
         @media (prefers-reduced-motion: reduce) {
             *,
             *::before,
